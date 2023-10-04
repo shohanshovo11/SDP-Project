@@ -6,6 +6,8 @@ import { Login } from './Components/Login'
 import { Profile } from './Components/Profile/Profile'
 import { Signup } from './Components/Signup/Signup/Signup'
 import { Job } from "./Components/postedJob/Job"
+import  CareerGrooming  from "./Components/Careergroom/CareerGrooming"
+import   RatingReview from "./Components/ratingrev/RatingReview"
 function App() {
   return (
     <BrowserRouter>
@@ -17,6 +19,8 @@ function App() {
           <Route path="/profile" element={<Profile/>} />
           <Route path="/posted-jobs" element={<Job/>} />
           <Route path="/sign-up" element={<Signup />} />
+          <Route path="/career" element={<CareerGrooming />} />
+          <Route path="/rate" element={<RatingReview />} />
         </Routes>
       </main>
     </BrowserRouter>
