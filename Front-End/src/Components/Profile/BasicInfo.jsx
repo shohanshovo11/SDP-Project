@@ -4,6 +4,7 @@ import "./style.css";
 
 export const BasicInfoBody = (props) => {
   const [value, setInputValue] = useState(props.obj.name);
+  const [selector, setSelector] = useState(1);
   const nameRef = useRef(null);
   const addressRef = useRef(null);
   const emailRef = useRef(null);
@@ -17,7 +18,7 @@ export const BasicInfoBody = (props) => {
     ref.current.focus();
   };
   return (
-    <div className="basic-info-body">
+    <div className="basic-info-body font-poppins">
       <div className="group">
         <div className="overlap-group">
           <div className="name">Name :</div>
@@ -109,13 +110,28 @@ export const BasicInfoBody = (props) => {
           </button>
         </div>
       </div>
-      <div className="selection">
-        <button className="basic-info">
-          <div className="text-wrapper-8">Basic information</div>
-          <div className="rectangle" />
+      <div className="selection flex flex-col ">
+        <button
+          className={`h-1/3 w-full flex items-center `}
+          onClick={() => setSelector(1)}
+        >
+          <div className={`h-1/3 transition-all duration-500 ${selector === 1 ? "rectangle" : ""}`} />
+          <div className={`w-full text-center text-lg ${selector === 1 ? "text-black transition-all duration-500 font-bold":""}`}>Basic information</div>
         </button>
-        <button className="text-wrapper-9">Education</button>
-        <button className="text-wrapper-10">CV/Resume</button>
+        <button
+          className={`h-1/3 w-full flex items-center `}
+          onClick={() => setSelector(2)}
+        >
+          <div className={`h-1/3 transition-all duration-500 ${selector === 2 ? "rectangle" : ""}`} />
+          <div className={`w-full text-center text-lg ${selector === 2 ? "text-black transition-all duration-500 font-bold":""}`}>Education</div>
+        </button>
+        <button
+          className={`h-1/3 w-full flex items-center `}
+          onClick={() => setSelector(3)}
+        >
+          <div className={`h-1/3 transition-all duration-500 ${selector === 3 ? "rectangle" : ""}`} />
+          <div className={`w-full text-center text-lg ${selector === 3 ? "text-black transition-all duration-500 font-bold":""}`}>CV/Resume</div>
+        </button>
       </div>
       <div className="button">
         <button className="text-wrapper-11">Save</button>

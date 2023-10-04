@@ -8,6 +8,7 @@ export default {
       {
         pinkSoft: '#EDC7B7',
         bt: '#165069',
+        card: '#CEDADF',
       },
     },
     fontFamily: {

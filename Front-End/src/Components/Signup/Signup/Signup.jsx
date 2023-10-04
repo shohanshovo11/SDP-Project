@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { default as eyeIcon, default as eyeSlashIcon } from "../Images/eye-off.png";
 
 import { Link } from "react-router-dom";
@@ -60,7 +63,7 @@ export const Signup = () => {
     // Check if passwords match
     if (password !== confirmPassword) {
       setPasswordsMatch(false);
-      alert("Password Doesn't Match");
+      toast("Password Doesn't Match");
       return;
     } else {
       setPasswordsMatch(true);
@@ -87,15 +90,15 @@ export const Signup = () => {
     })
       .then((res) => {
         if (res.status === 400) {
-          // If status is 400, email already exists, show an alert
-          alert("User already exists");
+          // If status is 400, email already exists, show an toast
+          toast("User already exists");
           throw new Error("User already exists");
         }
         return res.json();
       })
       .then((data) => {
         console.log(data, "userRegister");
-        alert("Account Created");
+        toast("Account Created");
         console.log("Form submitted");
       })
       .catch((e) => {
@@ -105,6 +108,7 @@ export const Signup = () => {
 
   return (
     <div className="container">
+      <ToastContainer />
       <form onSubmit={handleSubmit}>
         <img className="swnlogo_" src={Study_work_net_logo} alt="" />
 
@@ -204,7 +208,7 @@ export const Signup = () => {
           </button>
           <p className="alreadyhave">
             <span className="aha">Already have an account? </span>
-            <Link to="/"  className="login no-underline btn btn-sm bg-bt p-0 max-h-1 px-3 border-0">Log in</Link>
+            <Link to="/login"  className="login no-underline btn btn-sm bg-bt p-0 max-h-1 px-3 border-0">Log in</Link>
           </p>
           
         </div>

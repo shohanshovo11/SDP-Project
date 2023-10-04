@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 export const Navbar = () => {
   return (
     <>
@@ -9,7 +10,7 @@ export const Navbar = () => {
         <div className="navbar-center hidden lg:flex text-base font-bold font-poppins">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <a className="">Home</a>
+              <Link to="/">Home</Link>
             </li>
             <li>
               <a>About</a>
@@ -17,12 +18,18 @@ export const Navbar = () => {
             <li tabIndex={0}>
               <details>
                 <summary>Job Category</summary>
-                <ul className="p-2 bg-white">
+                <ul className="p-2 bg-white z-40">
                   <li>
-                    <a>Submenu 1</a>
+                    <Link to="/posted-jobs">Tuition</Link>
                   </li>
                   <li >
-                    <a>Submenu 2</a>
+                    <a>Internship</a>
+                  </li>
+                  <li >
+                    <a>Part-Time</a>
+                  </li>
+                  <li >
+                    <a>Freelancing</a>
                   </li>
                 </ul>
               </details>

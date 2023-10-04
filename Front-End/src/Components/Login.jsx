@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export const Login = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +11,7 @@ export const Login = () => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -21,10 +25,10 @@ export const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.email === "" || formData.password === "") {
-      alert("Please fill in all fields");
+      toast("Please fill in all fields");
       return;
     }
-    console.log("Form Data:", formData);
+    // console.log("Form Data:", formData);
     try {
       const response = await fetch("http://localhost:5000/login", {
         method: "POST",
@@ -34,18 +38,20 @@ export const Login = () => {
         body: JSON.stringify(formData),
       });
       if (response.ok) {
-        alert("Login Success");
+        toast("Login Success");
+        navigate("/profile");
       } else {
         const errorData = await response.json();
-        alert("Authentication Error");
+        toast("Authentication Error");
       }
     } catch (error) {
-      alert("Something went wrong");
+      toast("Something went wrong");
     }
   };
 
   return (
     <>
+      <ToastContainer />
       <div className="login  bg-slate-700 h-screen flex justify-center items-center font-cairo text-white my-img bg-no-repeat bg-cover bg-gradient-to-r from-bt to-bt">
         <div className="absolute w-[284px] top-[34px] left-[41px] [text-shadow:3px_4px_3px_#f5f5f526] [font-family:'Red_Rose-Bold',Helvetica] font-bold text-neutral-50 text-[35px] tracking-[0] leading-[normal]">Study WorkNet</div>
         <div className="bg-[#ffffff] bg-opacity-10 p-40 rounded-xl ">

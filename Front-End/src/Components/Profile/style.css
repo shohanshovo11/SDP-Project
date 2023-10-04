@@ -493,10 +493,9 @@
 .basic-info-body .rectangle {
   background-color: #165069;
   border-radius: 20px;
-  height: 80px;
+  /* height: 80px; */
   left: 0;
   position: absolute;
-  top: 0;
   width: 7px;
 }
 
