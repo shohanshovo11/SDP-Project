@@ -1,0 +1,38 @@
+.frameIcon,
+.vectorIcon,
+.vectorIcon1 {
+  position: absolute;
+  height: 8.83%;
+  width: 79.78%;
+  top: 79.31%;
+  right: 10.21%;
+  bottom: 11.87%;
+  left: 10.02%;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+}
+.frameIcon,
+.vectorIcon1 {
+  height: 9.71%;
+  width: 100%;
+  top: 57.89%;
+  right: 0;
+  bottom: 32.4%;
+  left: 0;
+}
+.frameIcon {
+  height: 46.31%;
+  width: 72.85%;
+  top: 0;
+  right: 17.13%;
+  bottom: 53.69%;
+  left: 10.02%;
+}
+.profile {
+  position: absolute;
+  top: 63px;
+  left: 969px;
+  width: 219.62px;
+  height: 345.5px;
+}
