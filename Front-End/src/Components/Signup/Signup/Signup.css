@@ -1,5 +1,5 @@
 .container {
-  background-color: #19526b;
+  background-color: #ffffff;
   height: 700px;
   overflow: hidden;
   position: relative;
@@ -24,7 +24,7 @@
 }
 
 .create {
-  color: #6695a0;
+  color: #000000;
   font-family: "Poppins", Helvetica;
   font-size: 30px;
   font-weight: 600;
@@ -37,9 +37,9 @@
 }
 
 .firstName {
-  background-color: #19526b;
+  background-color: #ffffff;
   border: 2px solid;
-  border-color: #ffffff;
+  border-color: #07718c;
   border-radius: 10px;
   height: 55px;
   left: 708px;
@@ -49,11 +49,12 @@
 }
 
 .inputBox {
-  background-color: #19526b;
+  background-color: #ffffff;
+  color: #000000;
   outline: none;
   width: 257px;
   height: 25px;
-  border-color: #19526b;
+  border-color: #000000;
 }
 
 .inputBox img {
@@ -62,9 +63,9 @@
 }
 
 .lastName {
-  background-color: #19526b;
+  background-color: #ffffff;
   border: 2px solid;
-  border-color: #ffffff;
+  border-color: #07718c;
   border-radius: 10px;
   height: 55px;
   left: 1024px;
@@ -74,9 +75,9 @@
 }
 
 .institution {
-  background-color: #19526b;
+  background-color: #ffffff;
   border: 2px solid;
-  border-color: #ffffff;
+  border-color: #07718c;
   border-radius: 10px;
   height: 55px;
   left: 708px;
@@ -86,7 +87,7 @@
 }
 
 .ins {
-  color: #ffffff;
+  color: #000000;
   font-family: "Poppins", Helvetica;
   font-size: 15px;
   font-weight: 400;
@@ -97,17 +98,18 @@
 }
 
 .l_inputBox {
-  background-color: #19526b;
+  background-color: #ffffff;
+  color: #000000;
   outline: none;
   width: 574px;
   height: 25px;
-  border-color: #19526b;
+  border-color: #000000;
 }
 
 .e-mail {
-  background-color: #19526b;
+  background-color: #ffffff;
   border: 2px solid;
-  border-color: #ffffff;
+  border-color: #07718c;
   border-radius: 10px;
   height: 55px;
   left: 708px;
@@ -117,9 +119,9 @@
 }
 
 .pass {
-  background-color: #19526b;
+  background-color: #ffffff;
   border: 2px solid;
-  border-color: #ffffff;
+  border-color: #07718c;
   border-radius: 10px;
   height: 55px;
   left: 708px;
@@ -129,9 +131,9 @@
 }
 
 .cpass {
-  background-color: #19526b;
+  background-color: #ffffff;
   border: 2px solid;
-  border-color: #ffffff;
+  border-color: #07718c;
   border-radius: 10px;
   height: 55px;
   left: 708px;
@@ -173,7 +175,7 @@
 }
 
 .aha {
-  color: #ffffff;
+  color: #6695a0;
 }
 
 .login {

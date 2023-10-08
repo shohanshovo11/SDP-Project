@@ -6,7 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { default as eyeIcon, default as eyeSlashIcon } from "../Images/eye-off.png";
 
 import { Link } from "react-router-dom";
-import Study_work_net_logo from "../Images/Study_WorkNet_Logo.png";
+import Footer from "../../Footer";
+import { NavNolog } from "../../navbar/NavNolog";
 import signin_logo from "../Images/sign_in.png";
 import "./Signup.css"; // Make sure to import your CSS file
 
@@ -107,11 +108,11 @@ export const Signup = () => {
     };
 
   return (
+    <>
+    <NavNolog />
     <div className="container">
       <ToastContainer />
       <form onSubmit={handleSubmit}>
-        <img className="swnlogo_" src={Study_work_net_logo} alt="" />
-
         <img className="signin_" src={signin_logo} alt="Image of a boy using phone" />
 
         <div className="create">Create Your Account</div>
@@ -121,7 +122,7 @@ export const Signup = () => {
             <legend className="ins">First Name</legend>
             <input
               type="text"
-              className="inputBox text-slate-50 pl-3"
+              className="inputBox pl-3"
               value={firstName}
               onChange={handleFirstNameChange}
               required
@@ -131,7 +132,7 @@ export const Signup = () => {
             <legend className="ins">Last Name</legend>
             <input
               type="text"
-              className="inputBox text-slate-50 pl-3"
+              className="inputBox pl-3"
               value={lastName}
               onChange={handleLastNameChange}
             />
@@ -140,7 +141,7 @@ export const Signup = () => {
             <legend className="ins">Institution</legend>
             <input
               type="text"
-              className="l_inputBox text-slate-50 pl-3"
+              className="l_inputBox pl-3"
               value={institution}
               onChange={handleInstitutionChange}
               required
@@ -150,7 +151,7 @@ export const Signup = () => {
             <legend className="ins">Email</legend>
             <input
               type="email"
-              className="l_inputBox text-slate-50 pl-3"
+              className="l_inputBox pl-3"
               value={email}
               onChange={handleEmailChange}
               required
@@ -160,7 +161,7 @@ export const Signup = () => {
           <legend className="ins">Password</legend>
           <input
             type={showPassword ? "text" : "password"} // Use "text" when showPassword is true
-            className="l_inputBox text-slate-50 pl-3"
+            className="l_inputBox pl-3"
             value={password}
             onChange={handlePasswordChange}
             required
@@ -181,20 +182,20 @@ export const Signup = () => {
           <legend className="ins">Confirm Password</legend>
           <input
             type={showConfirmPassword ? "text" : "password"} // Use "text" when showConfirmPassword is true
-            className="l_inputBox text-slate-50 pl-3"
+            className="l_inputBox pl-3"
             value={confirmPassword}
             onChange={handleConfirmPasswordChange}
             required
           />
           <button
             type="button"
-            className="password-toggle relative left-[540px] top-[-25px]"
+            className="password-toggle relative left-[540px] top-[-25px] "
             onClick={toggleConfirmPasswordVisibility}
           >
             {showConfirmPassword ? (
-              <img src={eyeSlashIcon} alt="Hide Password" />
+              <img className="" src={eyeSlashIcon} alt="Hide Password" />
             ) : (
-              <img src={eyeIcon} alt="Show Password" />
+              <img className="" src={eyeIcon} alt="Show Password" />
             )}
           </button>
         </fieldset>
@@ -203,7 +204,7 @@ export const Signup = () => {
               Password and confirm password do not match.
             </p>
           )}
-          <button className="createButton btn p-0 max-w-[582px] text-white" type="submit">
+          <button className="createButton btn p-0 max-w-[582px] text-white bg-bt" type="submit">
             Create Account
           </button>
           <p className="alreadyhave">
@@ -214,5 +215,7 @@ export const Signup = () => {
         </div>
       </form>
     </div>
+    <Footer />
+    </>
   );
 };
