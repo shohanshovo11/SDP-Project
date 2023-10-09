@@ -1,14 +1,21 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser"); // Import bodyParser to parse request bodies
+const bodyParser = require("body-parser");
 const db = require("./db");
 const cors = require("cors");
 require("./Schema/userDetails");
 const Job = require("./Schema/job");
-
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+const JWT_SECRET = "jwt-secret-key";
 const app = express();
 
-app.use(cors());
+app.use(cookieParser());
+app.use(cors({
+  origin:["http://localhost:5173"],
+  methods: ["GET", "POST"],
+  credentials: true
+}));
 app.use(bodyParser.json());
 // Define a middleware function to check the database connection status
 const checkDatabaseConnection = (req, res, next) => {
@@ -67,31 +74,62 @@ app.post("/register", async (req, res) => {
   }
 });
 
+const verifyUser = (req, res, next) => {
+  const token = req.cookies.token;
+  // console.log(token);
+  if(!token) return res.json("The token was not available")
+  else {
+    jwt.verify(token,"jwt-secret-key",(err, decoded) => {
+      if(err) return res.json("Token is wrong")
+      next();
+    })
+  }
+}
+
+app.get("/profile",verifyUser, (req, res) => {
+  return res.json("Success");
+})
+
 //login
 app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    // Find the user with the provided email in the database
     const user = await std.findOne({ email });
-
     if (!user) {
-      // If the user does not exist, send an error response
       return res.status(401).json({ error: "Invalid credentials" });
     }
-
-    // Check if the provided password matches the stored password
-    if (user.password !== password) {
-      // If the password does not match, send an error response
-      return res.status(401).json({ error: "Invalid credentials" });
+    if (user.password == password) {
+      const token = jwt.sign({email: user.email},"jwt-secret-key");
+      if(res.status(201))
+      {
+        return res.json({status:"ok", data:token});
+      }
+      else
+      {
+        return res.json({error:"error"});
+      }
     }
-
-    // If both email and password are correct, you can consider it a successful login
-    res.status(200).json({ status: "ok", user });
+    res.json({status:"error", error:"Invalid Password"});
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
+//user data
+app.post("/userData", async (req, res) => {
+  const {token} = req.body;
+  try{
+    const user = jwt.verify(token, JWT_SECRET);
+    const userEmail = user.email;
+    std.findOne({email: userEmail}).then((data) =>{
+      res.send({status: "ok", data});
+    }).catch((error) => {res.send({status: "error",data: error})});
+  }
+  catch(err){
+
+  }
+})
+
 
 app.get("/jobs", async (req, res) => {
   try {

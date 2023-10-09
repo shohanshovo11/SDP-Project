@@ -12,6 +12,12 @@ const userDetailsSchema = new mongoose.Schema(
       unique: true,
     },
     password: String,
+    gender: String,
+    age: Number,
+    birthdate: Date,
+    address: String,
+    phone: String,
+    profileImgUrl: String
   },
   {
     collection: 'StudentDetails',

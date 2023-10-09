@@ -1,15 +1,13 @@
 import React, { useState } from "react";
-
+import { Link } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import { default as eyeIcon, default as eyeSlashIcon } from "../Images/eye-off.png";
-
-import { Link } from "react-router-dom";
 import Footer from "../../Footer";
 import { NavNolog } from "../../navbar/NavNolog";
 import signin_logo from "../Images/sign_in.png";
-import "./Signup.css"; // Make sure to import your CSS file
+import "./Signup.css";
+import eyeOff from "/eye-off.svg";
+import eye from "/eye.svg";
 
 export const Signup = () => {
   const [firstName, setFirstName] = useState("");
@@ -112,17 +110,16 @@ export const Signup = () => {
     <NavNolog />
     <div className="container">
       <ToastContainer />
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="font-poppins">
         <img className="signin_" src={signin_logo} alt="Image of a boy using phone" />
-
-        <div className="create">Create Your Account</div>
-
+        <div className="vertical-line h-[33rem] absolute left-[43rem] top-[5rem]"></div>
+        <div className="create text-bt">Create Your Account</div>
         <div className="up">
           <fieldset className="firstName">
             <legend className="ins">First Name</legend>
             <input
               type="text"
-              className="inputBox pl-3"
+              className="inputBox pl-3 font-poppins"
               value={firstName}
               onChange={handleFirstNameChange}
               required
@@ -151,7 +148,7 @@ export const Signup = () => {
             <legend className="ins">Email</legend>
             <input
               type="email"
-              className="l_inputBox pl-3"
+              className="l_inputBox pl-3 font-poppins"
               value={email}
               onChange={handleEmailChange}
               required
@@ -161,7 +158,7 @@ export const Signup = () => {
           <legend className="ins">Password</legend>
           <input
             type={showPassword ? "text" : "password"} // Use "text" when showPassword is true
-            className="l_inputBox pl-3"
+            className="l_inputBox pl-3 font-poppins"
             value={password}
             onChange={handlePasswordChange}
             required
@@ -172,9 +169,9 @@ export const Signup = () => {
             onClick={togglePasswordVisibility}
           >
             {showPassword ? (
-              <img src={eyeSlashIcon} alt="Hide Password" />
+              <img src={eye} className="w-7" alt="Hide Password" />
             ) : (
-              <img src={eyeIcon} alt="Show Password" />
+              <img src={eyeOff} className="w-7" alt="Show Password" />
             )}
           </button>
         </fieldset>
@@ -193,9 +190,9 @@ export const Signup = () => {
             onClick={toggleConfirmPasswordVisibility}
           >
             {showConfirmPassword ? (
-              <img className="" src={eyeSlashIcon} alt="Hide Password" />
+              <img className="w-7" src={eye} alt="Hide Password" />
             ) : (
-              <img className="" src={eyeIcon} alt="Show Password" />
+              <img className="w-7" src={eyeOff} alt="Show Password" />
             )}
           </button>
         </fieldset>

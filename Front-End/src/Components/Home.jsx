@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AroundPpl from "./AroundPpl";
 import CourseProgram from "./CourseProgram";
 import Footer from "./Footer";
