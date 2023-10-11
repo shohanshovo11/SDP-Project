@@ -29,7 +29,7 @@ export const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.email === "" || formData.password === "") {
-      toast("Please fill in all fields");
+      toast.error("Please fill in all fields");
       return;
     }
     // console.log("Form Data:", formData);
@@ -46,17 +46,18 @@ export const Login = () => {
       .then((data) =>{
         console.log(data,"userReg");
         if(data.status == "ok"){
-          toast("Login Success");
+          
           window.localStorage.setItem("token", data.data);
           window.location.href = "/profile";
+          toast.success("Login Success");
         }
         else
         {
-          toast("Invalid Email or Password");
+          toast.error("Invalid Email or Password");
         }
       })
     } catch (error) {
-      toast("Something went wrong");
+      toast.error("Something went wrong");
     }
   };
 

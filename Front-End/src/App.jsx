@@ -22,7 +22,7 @@ function App() {
           <Route path="/posted-jobs" element={<Job/>} />
           <Route path="/sign-up" element={<Signup />} />
           <Route path="/otp" element={<VerifyPassword />} />
-          <Route path="/reset" element={<ResetPass />} />
+          <Route path="/reset-password" element={<ResetPass />} />
           <Route path="/courses" element={<CareerGrooming />} />
           <Route path="/ratings" element={<RatingReview />} />
         </Routes>
