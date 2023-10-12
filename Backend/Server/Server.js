@@ -5,10 +5,12 @@ const db = require("./db");
 const cors = require("cors");
 require("./Schema/userDetails");
 const Job = require("./Schema/job");
-const jwt = require("jsonwebtoken");
-const cookieParser = require("cookie-parser");
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+const UserModel = require("./Schema/userDetails");
 const JWT_SECRET = "jwt-secret-key";
 const app = express();
+const nodemailer = require('nodemailer');
 const Education = require("./Schema/education");
 
 app.use(bodyParser.json({ limit: "50mb" }));
@@ -116,6 +118,66 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+// Forgot Password
+app.post('/forgot-password', (req, res) => {
+  const {email} = req.body;
+  UserModel.findOne({ email : email})
+  .then(user => {
+    if(!user) {
+      return res.send({Status: "User do not exist."})
+    }
+
+    const token = jwt.sign({id: user._id}, JWT_SECRET, {expiresIn: "1d"})
+    
+    // nodemailer
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'studyworknet123@gmail.com',
+        pass: 'StudyWorkNet123'
+      }
+    });
+    
+    var mailOptions = {
+      from: 'studyworknet123@gmail.com',
+      to: 'rafsanprove420@gmail.com',
+      subject: 'Reset Your Password',
+      text: `http://localhost:5173/reset-password/${user.id}/${token}`
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+        return res.send({Status: "Success"})
+      }
+    });
+  })
+}) 
+
+// Reset Password 
+app.post('/reset-password/:id/:token', (req, res) => {
+  const {id, token} = req.params
+  const {password} = req.body
+
+  jwt.verify(token, JWT_SECRET, (err, decoded) => {
+    if(err) {
+      return res.json({Status: "Error with token"})
+    }else {
+      bcrypt.hash(password, 10)
+      .then(hash => {
+        UserModel.findByIdAndUpdate({_id: id}, {password: hash})
+        .then(u => res.send({Status: "Success"}))
+        .catch(err => res.send({Status: err}))
+      })
+      .catch(err => res.send({Status: err}))
+    }
+  })
+})
+
+
 //user data
 app.post("/userData", async (req, res) => {
   const { token } = req.body;

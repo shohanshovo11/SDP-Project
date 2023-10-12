@@ -82,7 +82,7 @@ export const VerifyPassword = () => {
               required
             />
           </div>
-          <Link to="/reset">
+          <Link to="/reset-password">
             <button type="submit" className="verify-btn text-white btn">
               Verify
             </button>

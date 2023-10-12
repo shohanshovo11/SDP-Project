@@ -62,7 +62,7 @@ export const Signup = () => {
     // Check if passwords match
     if (password !== confirmPassword) {
       setPasswordsMatch(false);
-      toast("Password Doesn't Match");
+      toast.error("Password Doesn't Match");
       return;
     } else {
       setPasswordsMatch(true);
@@ -90,14 +90,14 @@ export const Signup = () => {
       .then((res) => {
         if (res.status === 400) {
           // If status is 400, email already exists, show an toast
-          toast("User already exists");
+          toast.error("User already exists");
           throw new Error("User already exists");
         }
         return res.json();
       })
       .then((data) => {
         console.log(data, "userRegister");
-        toast("Account Created");
+        toast.success("Account Created");
         console.log("Form submitted");
       })
       .catch((e) => {

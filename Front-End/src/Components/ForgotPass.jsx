@@ -1,10 +1,29 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import verify from "../assets/forgotPass/fp-1.svg"; // Import your verification image here
 import Footer from "./Footer";
 import { NavNolog } from "./navbar/NavNolog";
+import axios from 'axios'
+
 
 export const ForgotPassword = () => {
+
+  const [email, setEmail] = useState()
+  const navigate = useNavigate()
+
+  axios.defaults.withCredentials = true;
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    axios.post('http://localhost:5000/forgot-password', {email})
+    .then(res => {
+      console.log("Login : " + res.data);
+      if(res.data.Status == "Success") {
+        navigate('/login')
+      }
+    }).catch(err => console.log(err))
+  }
+
+
   return (
     <>
       <NavNolog />
@@ -15,7 +34,7 @@ export const ForgotPassword = () => {
           alt="Forgot Password"
         />
         <div className="vertical-line h-80"></div>
-        <form>
+        <form onSubmit={handleSubmit}>
           <h2 className="text-3xl text-bt font-semibold pb-12">
             Forgot Password
           </h2>
@@ -27,13 +46,14 @@ export const ForgotPassword = () => {
             type="text"
             name="email"
             placeholder="Type here"
+            onChange={(change) => setEmail(change.target.value)}
             className="input bg-white w-96 block text-black border-2 border-bt mb-6"
           />
-          <Link to="/otp">
+          {/* <Link to="/otp"> */}
             <button type="submit" className="verify-btn text-white btn">
               Send Code
             </button>
-          </Link>
+          {/*</Link>*/}
         </form>
       </div>
       <Footer />
