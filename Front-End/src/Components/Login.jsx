@@ -48,6 +48,8 @@ export const Login = () => {
         if(data.status == "ok"){
           toast("Login Success");
           window.localStorage.setItem("token", data.data);
+          window.localStorage.setItem("email", formData.email);
+          // console.log(window.localStorage.getItem("email"),"shovo");
           window.location.href = "/profile";
         }
         else

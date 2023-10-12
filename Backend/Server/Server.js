@@ -5,25 +5,29 @@ const db = require("./db");
 const cors = require("cors");
 require("./Schema/userDetails");
 const Job = require("./Schema/job");
-const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser');
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 const JWT_SECRET = "jwt-secret-key";
 const app = express();
+const Education = require("./Schema/education");
+
+app.use(bodyParser.json({ limit: "50mb" }));
 
 app.use(cookieParser());
-app.use(cors({
-  origin:["http://localhost:5173"],
-  methods: ["GET", "POST"],
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
 app.use(bodyParser.json());
 // Define a middleware function to check the database connection status
 const checkDatabaseConnection = (req, res, next) => {
   if (mongoose.connection.readyState == 2) {
     // Connection is not open (1 is the readyState for an open connection)
     return res.status(503).json({ Message: "Database is Connecting" });
-  }
-  else if (mongoose.connection.readyState !== 1) {
+  } else if (mongoose.connection.readyState !== 1) {
     // Connection is not open (1 is the readyState for an open connection)
     return res.status(503).json({ error: "Database not connected" });
   }
@@ -43,7 +47,7 @@ app.post("/post", async (req, res) => {
   return res.send({ status: 200, statusText: "OK" });
 });
 
-const std = mongoose.model("StudentDetails");
+const User = mongoose.model("StudentDetails");
 //sign-up user
 app.post("/register", async (req, res) => {
   try {
@@ -55,14 +59,14 @@ app.post("/register", async (req, res) => {
     } = req.body;
 
     // Check if the email already exists in the database
-    const existingUser = await std.findOne({ email });
+    const existingUser = await User.findOne({ email });
 
     if (existingUser) {
       // If email exists, send an error response
       return res.status(400).send({ error: "Email Already Exists" });
     }
 
-    await std.create({
+    await User.create({
       name: { fname, lname },
       institution,
       email,
@@ -77,39 +81,36 @@ app.post("/register", async (req, res) => {
 const verifyUser = (req, res, next) => {
   const token = req.cookies.token;
   // console.log(token);
-  if(!token) return res.json("The token was not available")
+  if (!token) return res.json("The token was not available");
   else {
-    jwt.verify(token,"jwt-secret-key",(err, decoded) => {
-      if(err) return res.json("Token is wrong")
+    jwt.verify(token, "jwt-secret-key", (err, decoded) => {
+      if (err) return res.json("Token is wrong");
       next();
-    })
+    });
   }
-}
+};
 
-app.get("/profile",verifyUser, (req, res) => {
+app.get("/profile", verifyUser, (req, res) => {
   return res.json("Success");
-})
+});
 
 //login
 app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await std.findOne({ email });
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
     if (user.password == password) {
-      const token = jwt.sign({email: user.email},"jwt-secret-key");
-      if(res.status(201))
-      {
-        return res.json({status:"ok", data:token});
-      }
-      else
-      {
-        return res.json({error:"error"});
+      const token = jwt.sign({ email: user.email }, "jwt-secret-key");
+      if (res.status(201)) {
+        return res.json({ status: "ok", data: token });
+      } else {
+        return res.json({ error: "error" });
       }
     }
-    res.json({status:"error", error:"Invalid Password"});
+    res.json({ status: "error", error: "Invalid Password" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
@@ -117,19 +118,37 @@ app.post("/login", async (req, res) => {
 });
 //user data
 app.post("/userData", async (req, res) => {
-  const {token} = req.body;
-  try{
+  const { token } = req.body;
+  try {
     const user = jwt.verify(token, JWT_SECRET);
     const userEmail = user.email;
-    std.findOne({email: userEmail}).then((data) =>{
-      res.send({status: "ok", data});
-    }).catch((error) => {res.send({status: "error",data: error})});
-  }
-  catch(err){
-
-  }
-})
-
+    // console.log("coming");
+    User.findOne({ email: userEmail })
+      .then((data) => {
+        res.send({ status: "ok", data });
+        // console.log(data);
+      })
+      .catch((error) => {
+        res.send({ status: "error", data: error });
+      });
+  } catch (err) {}
+});
+app.post("/getEducation", async (req, res) => {
+  const { token } = req.body;
+  try {
+    const user = jwt.verify(token, JWT_SECRET);
+    const userEmail = user.email;
+    // console.log("coming");
+    Education.findOne({ email: userEmail })
+      .then((data) => {
+        res.send({ status: "ok", data });
+        console.log(data);
+      })
+      .catch((error) => {
+        res.send({ status: "error", data: error });
+      });
+  } catch (err) {}
+});
 
 app.get("/jobs", async (req, res) => {
   try {
@@ -142,4 +161,127 @@ app.get("/jobs", async (req, res) => {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
+});
+
+app.post("/update", async (req, res) => {
+  try {
+    const { fname, lname, email, gender, address, phone, base64 } = req.body;
+    const birthDate = req.body.birthDate ? new Date(req.body.birthDate) : null;
+    
+    // Find the user by email address
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update user data
+    user.name.fname = fname || user.name.fname;
+    user.name.lname = lname || user.name.lname;
+    user.gender = gender || user.gender;
+    user.birthDate = birthDate ? new Date(birthDate) : user.birthDate;
+    user.address = address || user.address;
+    user.phone = phone || user.phone;
+    user.profileImgUrl = base64 || user.profileImgUrl;
+
+    // Save the updated user
+    await user.save();
+
+    // Send a response indicating success
+    res
+      .status(200)
+      .json({ message: "User information updated successfully", user });
+  } catch (error) {
+    // Handle errors (e.g., validation, database errors)
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+});
+
+app.post("/education", async (req, res) => {
+  const {
+    email,
+    sscResult,
+    hscResult,
+    institutionName,
+    deptName,
+    bio,
+    sscCertificate,
+    hscCertificate,
+  } = req.body;
+
+  // Check if there's an existing education entry with the provided email
+  const existingEducation = await Education.findOne({ email });
+
+  if (existingEducation) {
+    // If an entry exists, update it
+    existingEducation.sscResult = sscResult;
+    existingEducation.hscResult = hscResult;
+    existingEducation.institutionName = institutionName;
+    existingEducation.deptName = deptName;
+    existingEducation.bio = bio;
+    existingEducation.sscCertificate = sscCertificate;
+    existingEducation.hscCertificate = hscCertificate;
+
+    existingEducation.save()
+      .then(() => {
+        console.log("Data updated successfully");
+        return res.status(200).send("Data updated successfully");
+      })
+      .catch((err) => {
+        console.error("Error while updating data:", err);
+        return res.status(500).send("Error while updating data");
+      });
+  } else {
+    // If no entry exists, create a new one
+    const newEducation = new Education({
+      email,
+      sscResult,
+      hscResult,
+      institutionName,
+      deptName,
+      bio,
+      sscCertificate,
+      hscCertificate,
+    });
+
+    newEducation.save()
+      .then(() => {
+        console.log("Data saved successfully");
+        return res.status(200).send("Data saved successfully");
+      })
+      .catch((err) => {
+        console.error("Error while saving data:", err);
+        return res.status(500).send("Error while saving data");
+      });
+  }
+});
+
+app.get("/api/profileImage", (req, res) => {
+  const { email } = req.query;
+
+  if (!email) {
+    return res.status(400).json({ error: "Email parameter is required." });
+  }
+
+  User.findOne({ email })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ error: "User not found." });
+      }
+
+      const profileImg = user.profileImgUrl; // Assuming profileImgUrl contains the Base64 image data
+      // console.log("shovo");
+
+      if (!profileImg) {
+        return res.status(404).json({ error: "Profile image not found." });
+      }
+
+      res.json({ profileImg });
+    })
+    .catch((error) => {
+      console.error("Error fetching profile image:", error);
+      res.status(500).json({ error: "Internal server error" });
+    });
 });

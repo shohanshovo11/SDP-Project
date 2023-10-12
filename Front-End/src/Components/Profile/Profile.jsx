@@ -1,48 +1,46 @@
+import axios from "axios";
 import React, { useEffect, useState } from 'react';
 import Footer from '../Footer';
+import { NavNolog } from '../navbar/NavNolog';
 import { Navbar } from '../navbar/Navbar';
-import BasicInfo from './BasicInfo';
+import FullSection from './FullSection';
 import './style.css';
 
 export const Profile = () => {
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    // Make the fetch request when the component mounts
-    fetch("http://localhost:5000/userData", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
-        token: window.localStorage.getItem("token"),
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // Set the received data into the user state
-        setUser(data.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
+  const [jwtToken, setJwtToken] = useState(localStorage.getItem("token") || "");
+  const [noNav, setNoNav] = useState(!jwtToken);
 
   useEffect(() => {
-    console.log(user, "shovo");
-  }, [user]);
+    if (jwtToken) {
+      console.log(`JWT Token: ${jwtToken}`);
+      axios
+        .post(
+          'http://localhost:5000/userData',
+          { token: jwtToken },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          setUser(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log('JWT Token not found in localStorage');
+    }
+  }, [jwtToken]);
 
   return (
     <>
       <div className='root pb-28'>
-        <Navbar />
+      {noNav ? <NavNolog /> : <Navbar />}
         <br />
         <br />
         <br />
         <br />
-        {user && <BasicInfo obj={user} />} {/* Render BasicInfo if user is loaded */}
+        {user && <FullSection obj={user} />}
       </div>
       <Footer />
     </>

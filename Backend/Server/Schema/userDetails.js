@@ -14,7 +14,7 @@ const userDetailsSchema = new mongoose.Schema(
     password: String,
     gender: String,
     age: Number,
-    birthdate: Date,
+    birthDate: Date,
     address: String,
     phone: String,
     profileImgUrl: String
