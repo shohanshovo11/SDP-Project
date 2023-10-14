@@ -1,22 +1,66 @@
-﻿import React, { useRef, useState } from "react";
+import axios from "axios";
+import React, { useRef, useState } from "react";
+import ImageModal from "../ImageModal";
 import TextEdit from "./assets/text-edit.png";
 import "./style.css";
 
-export const BasicInfoBody = (props) => {
-  const { email, institution, name } = props.obj;
+function BasicInfoTab(props) {
+  const { email, institution, name,gender,age,birthDate,address,phone,profileImgUrl  } = props.obj;
+  function calculate_age(birthDate) {
+    var diff_ms = Date.now() - new Date(birthDate).getTime();
+    var age_dt = new Date(diff_ms);
+    return Math.abs(age_dt.getUTCFullYear() - 1970);
+  }
+
+  const [showModal, setShowModal] = useState(false);
+
+  const openImageModal = () => {
+    setShowModal(true);
+  };
+
+  const closeImageModal = () => {
+    setShowModal(false);
+  };
+  
+
+//   name: {
+//     fname: String,
+//     lname: String,
+//   },
+//   institution: String,
+//   email: {
+//     type: String,
+//     unique: true,
+//   },
+//   password: String,
+//   gender: String,
+//   age: Number,
+//   birthDate: Date,
+//   address: String,
+//   phone: String,
+//   profileImgUrl: String
 
   // Create individual states for each input field
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Add 1 because months are zero-based
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
   const [emailValue, setEmailValue] = useState(email);
   const [institutionValue, setInstitutionValue] = useState(institution);
   const [firstNameValue, setFirstNameValue] = useState(name.fname);
   const [lastNameValue, setLastNameValue] = useState(name.lname);
-  const [phoneValue, setPhoneValue] = useState("01XXXXXXXXX"); // Example default value
-  const [genderValue, setGenderValue] = useState("Male"); // Example default value
-  const [ageValue, setAgeValue] = useState("20"); // Example default value
-  const [addressValue, setAddressValue] = useState("14/A Ranking Street"); // Example default value
-  const [birthdateValue, setBirthdateValue] = useState(""); // Example default value
+  const [phoneValue, setPhoneValue] = useState(phone); // Example default value
+  const [genderValue, setGenderValue] = useState(gender); // Example default value
+  const [addressValue, setAddressValue] = useState(address); // Example default value
+  const [birthdateValue, setBirthdateValue] = useState(formatDate(birthDate)); // Example default value
+  const [image, setImage] = useState(profileImgUrl);
+  const [ageValue, setAgeValue] = useState(calculate_age(birthdateValue)); // Example default value
+//   console.log(birthDate);
 
-  const [selector, setSelector] = useState(1);
   const nameRef = useRef(null);
   const addressRef = useRef(null);
   const emailRef = useRef(null);
@@ -25,8 +69,43 @@ export const BasicInfoBody = (props) => {
   const phoneRef = useRef(null);
   const birthdateRef = useRef(null);
 
+  const convertToBase64 = (e) => {
+    var reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      console.log(reader.result);
+      setImage(reader.result);
+    };
+    reader.onerror = (error) => {
+      console.log("Error", error);
+    };
+  };
+
+  const submitInfo = (e) => {
+    const user = {
+      fname: firstNameValue,
+      lname: lastNameValue,
+      email: emailValue,
+      gender: genderValue,
+      birthDate: birthdateValue,
+      address: addressValue,
+      phone: phoneValue,
+      base64: image,
+    };
+
+    axios
+      .post("http://localhost:5000/update", user)
+      .then(function (response) {
+        console.log("User information updated successfully:", response.data);
+      })
+      .catch(function (error) {
+        console.error("Error updating user information:", error);
+      });
+  };
+
   const handleBirthdateChange = (e) => {
     setBirthdateValue(e.target.value);
+    setAgeValue(calculate_age(e.target.value));
   };
 
   const handleChange = (e, stateUpdater) => {
@@ -44,9 +123,8 @@ export const BasicInfoBody = (props) => {
     const lastName = fullName.slice(firstName.length).trim();
     setLastNameValue(lastName);
   };
-
   return (
-    <div className="basic-info-body font-poppins">
+    <div>
       <div className="group">
         <div className="overlap-group">
           <div className="name">Name :</div>
@@ -72,7 +150,6 @@ export const BasicInfoBody = (props) => {
             ref={emailRef}
             className="email"
             value={emailValue}
-            onChange={(e) => handleChange(e, setEmailValue)}
           />
           <input
             ref={phoneRef}
@@ -89,11 +166,7 @@ export const BasicInfoBody = (props) => {
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
-          <input
-            ref={ageRef}
-            className="age"
-            value={ageValue}
-          />
+          <input ref={ageRef} className="age" value={ageValue} />
           <input
             ref={birthdateRef}
             className="date"
@@ -101,18 +174,29 @@ export const BasicInfoBody = (props) => {
             value={birthdateValue}
             onChange={handleBirthdateChange} // Use the new handler
           />
+          {image == null || image == "" || image === undefined ? (
+        <img
+          className="photo-frame rounded-full object-cover cursor-pointer"
+          alt="Photo frame"
+          src="/profile.svg"
+          onClick={openImageModal}
+        />
+      ) : (
+        <img
+          className="photo-frame rounded-full object-cover cursor-pointer"
+          alt="Photo frame"
+          src={image}
+          onClick={openImageModal}
+        />
+      )}
 
-          <img
-            className="photo-frame rounded-full object-cover"
-            alt="Photo frame"
-            src="navbar/profile.jpg"
-          />
           <div className="change-photo">
             <input
               type="file"
               className="p-1 w-60 font-poppins font-light border rounded-md bg-[#455a64]"
               name="Change Image"
               accept="image/*"
+              onChange={convertToBase64}
             ></input>
             {/* <div className="group-2">
                 <div className="text-wrapper-6">+</div>
@@ -126,21 +210,11 @@ export const BasicInfoBody = (props) => {
               onClick={() => handleClick(nameRef)}
             />
           </button>
-          <button className="age-edit">
-            <img alt="Age edit" src={TextEdit} />
-          </button>
           <button className="address-edit">
             <img
               alt="Address edit"
               src={TextEdit}
               onClick={() => handleClick(addressRef)}
-            />
-          </button>
-          <button className="email-edit">
-            <img
-              alt="Email edit"
-              src={TextEdit}
-              onClick={() => handleClick(emailRef)}
             />
           </button>
           <button className="phone-edit">
@@ -152,68 +226,14 @@ export const BasicInfoBody = (props) => {
           </button>
         </div>
       </div>
-      <div className="selection flex flex-col ">
-        <button
-          className={`h-1/3 w-full flex items-center `}
-          onClick={() => setSelector(1)}
-        >
-          <div
-            className={`h-1/3 transition-all duration-500 ${
-              selector === 1 ? "rectangle" : ""
-            }`}
-          />
-          <div
-            className={`w-full text-center text-lg ${
-              selector === 1
-                ? "text-black transition-all duration-500 font-bold"
-                : ""
-            }`}
-          >
-            Basic information
-          </div>
-        </button>
-        <button
-          className={`h-1/3 w-full flex items-center `}
-          onClick={() => setSelector(2)}
-        >
-          <div
-            className={`h-1/3 transition-all duration-500 ${
-              selector === 2 ? "rectangle" : ""
-            }`}
-          />
-          <div
-            className={`w-full text-center text-lg ${
-              selector === 2
-                ? "text-black transition-all duration-500 font-bold"
-                : ""
-            }`}
-          >
-            Education
-          </div>
-        </button>
-        <button
-          className={`h-1/3 w-full flex items-center `}
-          onClick={() => setSelector(3)}
-        >
-          <div
-            className={`h-1/3 transition-all duration-500 ${
-              selector === 3 ? "rectangle" : ""
-            }`}
-          />
-          <div
-            className={`w-full text-center text-lg ${
-              selector === 3
-                ? "text-black transition-all duration-500 font-bold"
-                : ""
-            }`}
-          >
-            CV/Resume
-          </div>
-        </button>
-      </div>
-      <button className="text-wrapper-11">Save</button>
+      <button className="text-wrapper-11" onClick={submitInfo}>
+        Save
+      </button>
+      {showModal && (
+        <ImageModal image={image} onClose={closeImageModal} />
+      )}
     </div>
   );
-};
+}
 
-export default BasicInfoBody;
+export default BasicInfoTab;

@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import AroundPpl from "./AroundPpl";
 import CourseProgram from "./CourseProgram";
 import Footer from "./Footer";
@@ -6,12 +7,32 @@ import Poster from "./Poster/Poster";
 import Card from "./card/Card";
 import { NavNolog } from "./navbar/NavNolog";
 import { Navbar } from "./navbar/Navbar";
-
 function Home(props) {
-  const noNav = props.obj2.email === "" ? true : false;
+  const [jwtToken, setJwtToken] = useState(localStorage.getItem("token") || "");
+  const [noNav, setNoNav] = useState(!jwtToken);
+  useEffect(() => {
+    if (jwtToken) {
+      console.log(`JWT Token: ${jwtToken}`);
+      axios
+        .post(
+          'http://localhost:5000/userData',
+          { token: jwtToken },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          console.log(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log('JWT Token not found in localStorage');
+    }
+  }, [jwtToken]);
+  
   return (
     <div className="bg-white font-poppins">
-      {noNav===true?<NavNolog />:<Navbar />}
+       {noNav ? <NavNolog /> : <Navbar />}
       <Poster />
       <div className="flex flex-col justify-center items-center bg-white font-poppins font-bold text-black">
         <h1 className="py-6 text-3xl">How It Works?</h1>
@@ -172,7 +193,6 @@ function Home(props) {
       <CourseProgram />
       <AroundPpl />
       <Footer/>
-
     </div>
   );
 }

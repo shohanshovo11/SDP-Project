@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
+import Footer from "../Footer";
+import { NavNolog } from "../navbar/NavNolog";
 import { Navbar } from "../navbar/Navbar";
 import { Tutor } from "./Tutor";
 
 export const Job = () => {
+  const tokenAvailable = !!localStorage.getItem("token");
   const apiUrl = "http://localhost:5000/jobs"; // Adjust the URL as needed
   // Make a GET request to fetch jobs using the fetch API
   const [jobs, setJobs] = useState([]);
@@ -21,7 +24,7 @@ export const Job = () => {
   }, []);
   return (
     <div className="bg-white h-screen text-black font-poppins">
-      <Navbar />
+      {tokenAvailable ? <Navbar /> : <NavNolog />}
       <hr />
       <div className="flex justify-between px-20 py-4">
         <h2>All Categories</h2>
@@ -147,6 +150,7 @@ export const Job = () => {
           ))}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
