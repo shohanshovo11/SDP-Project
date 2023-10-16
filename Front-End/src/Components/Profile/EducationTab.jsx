@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Dna } from "react-loader-spinner";
 import ImageModal from "../ImageModal";
 import "./style.css";
 
 function EducationTab(props) {
-  const [userDetails, setUserDetails] = useState({});
+  const [email, setEmail] = useState(window.localStorage.getItem('email'));
   const [edu, setEdu] = useState({});
   const [sscResult, setSscResult] = useState(edu.sscResult || "");
   const [hscResult, setHscResult] = useState(edu.hscResult || "");
@@ -21,6 +22,7 @@ function EducationTab(props) {
   );
   const [showModal, setShowModal] = useState(false);
   const [modalImage, setModalImage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const openImageModal = (image) => {
     setModalImage(image);
@@ -33,6 +35,7 @@ function EducationTab(props) {
   };
 
   useEffect(() => {
+    setLoading(true);
     fetch("http://localhost:5000/getEducation", {
       method: "POST",
       headers: {
@@ -46,13 +49,13 @@ function EducationTab(props) {
     })
       .then((res) => res.json())
       .then((data) => {
-        setEdu(data.data);
+        setEdu(data.data || {});
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
-      })
+      });
   }, []);
-  
 
   useEffect(() => {
     console.log(edu);
@@ -86,7 +89,7 @@ function EducationTab(props) {
 
   const sendDataToServer = () => {
     const postData = {
-      email: userDetails.email,
+      email: email,
       sscResult: sscResult,
       hscResult: hscResult,
       institutionName: institutionName,
@@ -99,7 +102,10 @@ function EducationTab(props) {
     axios
       .post("http://localhost:5000/education", postData)
       .then((res) => {
-        console.log("Data sent successfully", res.data);
+        if (res.status === 200) {
+          console.log("Data sent successfully", res.data);
+          window.location.reload();
+        }
       })
       .catch((err) => {
         console.error("Error sending data:", err);
@@ -107,39 +113,52 @@ function EducationTab(props) {
   };
 
   const handleSaveClick = () => {
-    // Log all the state variables to the console
-    console.log("Email: ", userDetails.email);
-    console.log("SSC Result:", sscResult);
-    console.log("HSC Result:", hscResult);
-    console.log("Institution Name:", institutionName);
-    console.log("Department Name:", deptName);
-    console.log("Bio:", bio);
-    console.log("SSC Certificate:", sscCertificate);
-    console.log("HSC Certificate:", hscCertificate);
+    // console.log("Email: ", email);
+    // console.log("SSC Result:", sscResult);
+    // console.log("HSC Result:", hscResult);
+    // console.log("Institution Name:", institutionName);
+    // console.log("Department Name:", deptName);
+    // console.log("Bio:", bio);
+    // console.log("SSC Certificate:", sscCertificate);
+    // console.log("HSC Certificate:", hscCertificate);
     sendDataToServer();
+
   };
 
-  const convertToBase64 = (e) => {
-    var reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
+  const convertToBase64 = (e, certificateType) => {
+    const reader = new FileReader();
     reader.onload = () => {
-      // console.log(reader.result);
-      // Update the appropriate state variable based on the input field
-      if (e.target.name === "sscCertificate") {
-        setSscCertificate(reader.result);
-      } else if (e.target.name === "hscCertificate") {
-        setHscCertificate(reader.result);
+      const base64Data = reader.result;
+  
+      if (certificateType === "sscCertificate") {
+        setSscCertificate(base64Data);
+      } else if (certificateType === "hscCertificate") {
+        setHscCertificate(base64Data);
       }
+      // console.log(`${certificateType} base64:`, base64Data); // Log the base64 data
     };
-    reader.onerror = (error) => {
-      console.log("Error", error);
-    };
+  
+    if (e.target.files.length > 0) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
   };
+  
+  
 
   return (
     <div>
       <div className="group">
         <div className="overlap-group flex flex-col items-center justify-center">
+          {loading ? (
+            <Dna
+              visible={true}
+              height="150"
+              width="150"
+              ariaLabel="dna-loading"
+              wrapperStyle={{}}
+              wrapperClass="dna-wrapper"
+            />
+          ) : (
             <div>
               <div className="flex justify-between pt-4 px-10">
                 <div className="form-control w-full max-w-xs">
@@ -151,7 +170,7 @@ function EducationTab(props) {
                   <input
                     type="text"
                     placeholder="SSC Result"
-                    className="input input-bordered w-full max-w-xs text-white"
+                    className="input input-bordered w-full max-w-xs "
                     value={sscResult}
                     onChange={(e) => setSscResult(e.target.value)}
                   />
@@ -165,7 +184,7 @@ function EducationTab(props) {
                   <input
                     type="text"
                     placeholder="HSC Result"
-                    className="input input-bordered w-full max-w-xs text-white"
+                    className="input input-bordered w-full max-w-xs "
                     value={hscResult}
                     onChange={(e) => setHscResult(e.target.value)}
                   />
@@ -181,7 +200,7 @@ function EducationTab(props) {
                   <input
                     type="text"
                     placeholder="Institution Name"
-                    className="input input-bordered w-full max-w-xs text-white"
+                    className="input input-bordered w-full max-w-xs "
                     value={institutionName}
                     onChange={(e) => setInstitutionName(e.target.value)}
                   />
@@ -195,7 +214,7 @@ function EducationTab(props) {
                   <input
                     type="text"
                     placeholder="Dept Name"
-                    className="input input-bordered w-full max-w-xs text-white"
+                    className="input input-bordered w-full max-w-xs "
                     value={deptName}
                     onChange={(e) => setDeptName(e.target.value)}
                   />
@@ -210,7 +229,7 @@ function EducationTab(props) {
                   </label>
                   <textarea
                     placeholder="Bio"
-                    className="textarea text-lg w-80 h-44 text-white"
+                    className="textarea text-lg w-80 h-44 "
                     value={bio}
                     onChange={(e) => setBio(e.target.value)}
                   ></textarea>
@@ -228,16 +247,16 @@ function EducationTab(props) {
                         className="p-1 w-60 font-poppins font-light border rounded-md bg-[#455a64] inline-block"
                         name="sscCertificate"
                         accept="image/*"
-                        onChange={convertToBase64}
+                        onChange={(e) => convertToBase64(e, "sscCertificate")}
                       ></input>
                     </div>
-                    <div className="w-28 h-24 inline-block rounded-md">
+                    <div className="w-28 h-24 inline-block rounded-md cursor-pointer">
                       {sscCertificate && (
                         <img
                           src={sscCertificate}
-                          className="object-contain w-28 h-24"
+                          className="object-contain w-28 h-24 ring ring-bt rounded-md"
                           onClick={() => openImageModal(sscCertificate)}
-                          />
+                        />
                       )}
                     </div>
                   </div>
@@ -253,22 +272,23 @@ function EducationTab(props) {
                         className="p-1 w-60 font-poppins font-light border rounded-md bg-[#455a64] inline-block"
                         name="hscCertificate"
                         accept="image/*"
-                        onChange={convertToBase64}
+                        onChange={(e) => convertToBase64(e, "hscCertificate")}
                       ></input>
                     </div>
-                    <div className="w-28 h-24 inline-block rounded-md">
+                    <div className="w-28 h-24 inline-block rounded-md cursor-pointer">
                       {hscCertificate && (
                         <img
                           src={hscCertificate}
-                          className="object-contain w-28 h-24"
+                          className="object-contain w-28 h-24 ring ring-bt rounded-md"
                           onClick={() => openImageModal(hscCertificate)}
-                          />
+                        />
                       )}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+          )}
         </div>
       </div>
       <button className="text-wrapper-11" onClick={handleSaveClick}>

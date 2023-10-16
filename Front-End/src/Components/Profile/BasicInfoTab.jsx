@@ -1,11 +1,23 @@
 import axios from "axios";
 import React, { useRef, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import ImageModal from "../ImageModal";
 import TextEdit from "./assets/text-edit.png";
 import "./style.css";
 
 function BasicInfoTab(props) {
-  const { email, institution, name,gender,age,birthDate,address,phone,profileImgUrl  } = props.obj;
+  const {
+    email,
+    institution,
+    name,
+    gender,
+    age,
+    birthDate,
+    address,
+    phone,
+    profileImgUrl,
+  } = props.obj;
   function calculate_age(birthDate) {
     var diff_ms = Date.now() - new Date(birthDate).getTime();
     var age_dt = new Date(diff_ms);
@@ -21,31 +33,30 @@ function BasicInfoTab(props) {
   const closeImageModal = () => {
     setShowModal(false);
   };
-  
 
-//   name: {
-//     fname: String,
-//     lname: String,
-//   },
-//   institution: String,
-//   email: {
-//     type: String,
-//     unique: true,
-//   },
-//   password: String,
-//   gender: String,
-//   age: Number,
-//   birthDate: Date,
-//   address: String,
-//   phone: String,
-//   profileImgUrl: String
+  //   name: {
+  //     fname: String,
+  //     lname: String,
+  //   },
+  //   institution: String,
+  //   email: {
+  //     type: String,
+  //     unique: true,
+  //   },
+  //   password: String,
+  //   gender: String,
+  //   age: Number,
+  //   birthDate: Date,
+  //   address: String,
+  //   phone: String,
+  //   profileImgUrl: String
 
   // Create individual states for each input field
   function formatDate(dateString) {
     const date = new Date(dateString);
     const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Add 1 because months are zero-based
-    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Add 1 because months are zero-based
+    const day = date.getDate().toString().padStart(2, "0");
     return `${year}-${month}-${day}`;
   }
 
@@ -59,7 +70,7 @@ function BasicInfoTab(props) {
   const [birthdateValue, setBirthdateValue] = useState(formatDate(birthDate)); // Example default value
   const [image, setImage] = useState(profileImgUrl);
   const [ageValue, setAgeValue] = useState(calculate_age(birthdateValue)); // Example default value
-//   console.log(birthDate);
+  //   console.log(birthDate);
 
   const nameRef = useRef(null);
   const addressRef = useRef(null);
@@ -96,10 +107,14 @@ function BasicInfoTab(props) {
     axios
       .post("http://localhost:5000/update", user)
       .then(function (response) {
-        console.log("User information updated successfully:", response.data);
+        // console.log("User information updated successfully:", response.data);
+        window.localStorage.setItem("profileImgUrl", user.base64);
+        window.location.reload();
+        // const items = { ...localStorage };
+        // console.log(items);
       })
       .catch(function (error) {
-        console.error("Error updating user information:", error);
+        toast("Error updating user information");
       });
   };
 
@@ -146,11 +161,7 @@ function BasicInfoTab(props) {
             value={addressValue}
             onChange={(e) => handleChange(e, setAddressValue)}
           />
-          <input
-            ref={emailRef}
-            className="email"
-            value={emailValue}
-          />
+          <input ref={emailRef} className="email" value={emailValue} />
           <input
             ref={phoneRef}
             className="phone"
@@ -175,20 +186,20 @@ function BasicInfoTab(props) {
             onChange={handleBirthdateChange} // Use the new handler
           />
           {image == null || image == "" || image === undefined ? (
-        <img
-          className="photo-frame rounded-full object-cover cursor-pointer"
-          alt="Photo frame"
-          src="/profile.svg"
-          onClick={openImageModal}
-        />
-      ) : (
-        <img
-          className="photo-frame rounded-full object-cover cursor-pointer"
-          alt="Photo frame"
-          src={image}
-          onClick={openImageModal}
-        />
-      )}
+            <img
+              className="photo-frame rounded-full object-cover cursor-pointer ring ring-bt"
+              alt="Photo frame"
+              src="/profile.svg"
+              onClick={openImageModal}
+            />
+          ) : (
+            <img
+              className="photo-frame rounded-full ring ring-bt object-cover cursor-pointer"
+              alt="Photo frame"
+              src={image}
+              onClick={openImageModal}
+            />
+          )}
 
           <div className="change-photo">
             <input
@@ -229,9 +240,8 @@ function BasicInfoTab(props) {
       <button className="text-wrapper-11" onClick={submitInfo}>
         Save
       </button>
-      {showModal && (
-        <ImageModal image={image} onClose={closeImageModal} />
-      )}
+      {showModal && <ImageModal image={image} onClose={closeImageModal} />}
+      <ToastContainer />
     </div>
   );
 }
