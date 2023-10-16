@@ -17,6 +17,7 @@ export const ForgotPassword = () => {
     axios.post('http://localhost:5000/forgot-password', {email})
     .then(res => {
       console.log("Login : " + res.data);
+      
       if(res.data.Status == "Success") {
         navigate('/login')
       }

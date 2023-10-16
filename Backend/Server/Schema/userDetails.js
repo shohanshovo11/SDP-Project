@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 
 const userDetailsSchema = new mongoose.Schema(
   {
-    name: {
-      fname: String,
+    name: {    fname: String,
       lname: String,
     },
     institution: String,
@@ -23,6 +22,7 @@ const userDetailsSchema = new mongoose.Schema(
     collection: 'StudentDetails',
   }
 );
+  
 
 const UserModel = mongoose.model('StudentDetails', userDetailsSchema);
 module.exports= UserModel

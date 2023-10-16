@@ -11,6 +11,20 @@ const UserModel = require("./Schema/userDetails");
 const JWT_SECRET = "jwt-secret-key";
 const app = express();
 const nodemailer = require('nodemailer');
+const dotenv = require("dotenv");
+
+const PORT= 5000
+
+dotenv.config()
+
+app.use(cookieParser());
+app.use(cors({
+  origin:["http://localhost:5173"],
+  methods: ["GET", "POST"],
+  credentials: true
+}));
+
+
 const Education = require("./Schema/education");
 
 
@@ -41,8 +55,8 @@ const checkDatabaseConnection = (req, res, next) => {
 // Apply the middleware to all routes
 app.use(checkDatabaseConnection);
 
-app.listen(5000, () => {
-  console.log("Server is running on port 5000");
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
 app.post("/post", async (req, res) => {
@@ -134,17 +148,23 @@ app.post('/forgot-password', (req, res) => {
     const token = jwt.sign({id: user._id}, JWT_SECRET, {expiresIn: "1d"})
     
     // nodemailer
-    var transporter = nodemailer.createTransport({
+    var transporter = nodemailer.createTransport({ 
       service: 'gmail',
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
       auth: {
-        user: 'studyworknet123@gmail.com',
-        pass: 'StudyWorkNet123'
+        user: process.env.COM_USER,
+        pass: process.env.COM_PASS 
+      },
+      tls: {
+        rejectUnauthorized: false 
       }
     });
     
     var mailOptions = {
-      from: 'studyworknet123@gmail.com',
-      to: 'rafsanprove420@gmail.com',
+      from: process.env.COM_NAME,
+      to: email,
       subject: 'Reset Your Password',
       text: `http://localhost:5173/reset-password/${user.id}/${token}`
     };
