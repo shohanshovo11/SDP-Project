@@ -26,6 +26,7 @@ app.use(cors({
 
 const Education = require("./Schema/education");
 
+
 app.use(bodyParser.json({ limit: "50mb" }));
 
 app.use(cookieParser());
@@ -114,23 +115,25 @@ app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
+
     if (!user) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
+
     if (user.password == password) {
       const token = jwt.sign({ email: user.email }, "jwt-secret-key");
-      if (res.status(201)) {
-        return res.json({ status: "ok", data: token });
-      } else {
-        return res.json({ error: "error" });
-      }
+
+      // Send the token and user's profile image URL in the response
+      return res.json({ status: "ok", token, profileImgUrl: user.profileImgUrl });
     }
+
     res.json({ status: "error", error: "Invalid Password" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
 
 // Forgot Password
 app.post('/forgot-password', (req, res) => {
@@ -291,9 +294,11 @@ app.post("/education", async (req, res) => {
     sscCertificate,
     hscCertificate,
   } = req.body;
+  // console.log(sscCertificate,hscCertificate,"Shovo");
 
   // Check if there's an existing education entry with the provided email
   const existingEducation = await Education.findOne({ email });
+  console.log(existingEducation , "shovo");
 
   if (existingEducation) {
     // If an entry exists, update it
