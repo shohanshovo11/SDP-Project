@@ -10,6 +10,7 @@ import { Signup } from './Components/Signup/Signup/Signup'
 import { VerifyPassword } from "./Components/VerifyPassword/VerifyPassword"
 import { Job } from "./Components/postedJob/Job"
 import RatingReview from "./Components/ratingrev/RatingReview"
+import Test from "./Components/Profile/CV_Resume"
 function App() {
   return (
     <BrowserRouter>
@@ -25,6 +26,7 @@ function App() {
           <Route path="/reset-password" element={<ResetPass />} />
           <Route path="/courses" element={<CareerGrooming />} />
           <Route path="/ratings" element={<RatingReview />} />
+          <Route path="/cv" element={<Test />} />
         </Routes>
       </main>
     </BrowserRouter>

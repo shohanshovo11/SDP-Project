@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const db = require("./db");
 const cors = require("cors");
-require("./Schema/userDetails");
 const Job = require("./Schema/job");
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
