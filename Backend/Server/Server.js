@@ -8,8 +8,11 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const UserModel = require("./Schema/userDetails");
 const JWT_SECRET = "jwt-secret-key";
+
 const app = express();
+
 const nodemailer = require('nodemailer');
+
 const dotenv = require("dotenv");
 
 const PORT= 5000
