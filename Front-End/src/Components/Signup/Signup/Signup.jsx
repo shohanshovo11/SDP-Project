@@ -4,10 +4,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Footer from "../../Footer";
 import { NavNolog } from "../../navbar/NavNolog";
-import signin_logo from "../Images/sign_in.png";
 import "./Signup.css";
 import eyeOff from "/eye-off.svg";
 import eye from "/eye.svg";
+import signin_logo from "/signup.png";
 
 export const Signup = () => {
   const [firstName, setFirstName] = useState("");

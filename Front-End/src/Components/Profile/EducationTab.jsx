@@ -9,8 +9,8 @@ function EducationTab(props) {
   const [edu, setEdu] = useState({});
   const [sscResult, setSscResult] = useState(edu.sscResult || "");
   const [hscResult, setHscResult] = useState(edu.hscResult || "");
-  const [institutionName, setInstitutionName] = useState(
-    edu.institutionName || ""
+  const [currentInstitution, setcurrentInstitution] = useState(
+    edu.currentInstitution || ""
   );
   const [deptName, setDeptName] = useState(edu.deptName || "");
   const [bio, setBio] = useState(edu.bio || "");
@@ -19,6 +19,12 @@ function EducationTab(props) {
   );
   const [hscCertificate, setHscCertificate] = useState(
     edu.hscCertificate || ""
+  );
+  const [school, setSchool] = useState(
+    edu.school || ""
+  );
+  const [college, setCollege] = useState(
+    edu.college || ""
   );
   const [showModal, setShowModal] = useState(false);
   const [modalImage, setModalImage] = useState("");
@@ -50,6 +56,7 @@ function EducationTab(props) {
       .then((res) => res.json())
       .then((data) => {
         setEdu(data.data || {});
+        // console.log(data.data)
         setLoading(false);
       })
       .catch((error) => {
@@ -58,14 +65,16 @@ function EducationTab(props) {
   }, []);
 
   useEffect(() => {
-    console.log(edu);
+    console.log(edu,"shovo");
     setSscResult(edu.sscResult);
     setHscResult(edu.hscResult);
-    setInstitutionName(edu.institutionName);
+    setcurrentInstitution(edu.currentInstitution);
     setDeptName(edu.deptName);
     setBio(edu.bio);
     setSscCertificate(edu.sscCertificate);
     setHscCertificate(edu.hscCertificate);
+    setSchool(edu.school);
+    setCollege(edu.college);
   }, [edu]);
 
   //   const checkLoginStatus = () => {
@@ -92,11 +101,13 @@ function EducationTab(props) {
       email: email,
       sscResult: sscResult,
       hscResult: hscResult,
-      institutionName: institutionName,
+      currentInstitution: currentInstitution,
       deptName: deptName,
       bio: bio,
       sscCertificate: sscCertificate,
       hscCertificate: hscCertificate,
+      school: school,
+      college: college,
     };
 
     axios
@@ -116,7 +127,7 @@ function EducationTab(props) {
     // console.log("Email: ", email);
     // console.log("SSC Result:", sscResult);
     // console.log("HSC Result:", hscResult);
-    // console.log("Institution Name:", institutionName);
+    // console.log("Institution Name:", currentInstitution);
     // console.log("Department Name:", deptName);
     // console.log("Bio:", bio);
     // console.log("SSC Certificate:", sscCertificate);
@@ -164,6 +175,36 @@ function EducationTab(props) {
                 <div className="form-control w-full max-w-xs">
                   <label className="label">
                     <span className="label-text text-black text-xl">
+                      School Name:
+                    </span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Your School"
+                    className="input input-bordered w-full max-w-xs "
+                    value={school}
+                    onChange={(e) => setSchool(e.target.value)}
+                  />
+                </div>
+                <div className="form-control w-full max-w-xs">
+                  <label className="label">
+                    <span className="label-text text-black text-xl">
+                      College Name:
+                    </span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Your College"
+                    className="input input-bordered w-full max-w-xs "
+                    value={college}
+                    onChange={(e) => setCollege(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="flex justify-between pt-4 px-10">
+                <div className="form-control w-full max-w-xs">
+                  <label className="label">
+                    <span className="label-text text-black text-xl">
                       SSC Result:(GPA)
                     </span>
                   </label>
@@ -201,8 +242,8 @@ function EducationTab(props) {
                     type="text"
                     placeholder="Institution Name"
                     className="input input-bordered w-full max-w-xs "
-                    value={institutionName}
-                    onChange={(e) => setInstitutionName(e.target.value)}
+                    value={currentInstitution}
+                    onChange={(e) => setcurrentInstitution(e.target.value)}
                   />
                 </div>
                 <div className="form-control w-full max-w-xs">

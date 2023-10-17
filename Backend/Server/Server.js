@@ -71,8 +71,6 @@ const User = mongoose.model("StudentDetails");
 app.post("/register", async (req, res) => {
   try {
     const {
-      name: { fname, lname },
-      institution,
       email,
       password,
     } = req.body;
@@ -84,10 +82,9 @@ app.post("/register", async (req, res) => {
       // If email exists, send an error response
       return res.status(400).send({ error: "Email Already Exists" });
     }
-
+    const fname="";
     await User.create({
-      name: { fname, lname },
-      institution,
+      name: { fname, fname },
       email,
       password,
     });
@@ -236,6 +233,68 @@ app.post("/getEducation", async (req, res) => {
       });
   } catch (err) {}
 });
+app.post("/getCvResume", async (req, res) => {
+  const { token } = req.body;
+  console.log(token);
+  try {
+    const user = jwt.verify(token, JWT_SECRET);
+    const userEmail = user.email;
+    // console.log("coming");
+    Education.findOne({ email: userEmail })
+      .then((data) => {
+        console.log(data.cvResume);
+        res.send({ status: "ok", cvResume:data.cvResume });
+      })
+      .catch((error) => {
+        res.send({ status: "error", data: error });
+      });
+  } catch (err) {}
+});
+app.post("/updateCvResume", async (req, res) => {
+  const { token, cvResume } = req.body; // Assuming you pass the newCvResume in the request body
+  try {
+    const user = jwt.verify(token, JWT_SECRET);
+    const userEmail = user.email;
+    // console.log(cvResume);
+
+    // Find the user's education information
+    Education.findOne({ email: userEmail })
+      .then((data) => {
+        if (data) {
+          // If the user's education information exists, update the 'cvResume' field
+          data.cvResume = cvResume;
+          data.save()
+            .then((updatedData) => {
+              res.send({ status: "ok", data: updatedData });
+            })
+            .catch((error) => {
+              res.send({ status: "error", message: error.message });
+            });
+        } else {
+          // If the user's education information doesn't exist, create a new record
+          const newEducation = new Education({
+            email: userEmail,
+            cvResume: cvResume,
+            // other fields as needed
+          });
+
+          newEducation.save()
+            .then((createdData) => {
+              res.send({ status: "ok", data: createdData });
+            })
+            .catch((error) => {
+              res.send({ status: "error", message: error.message });
+            });
+        }
+      })
+      .catch((error) => {
+        res.send({ status: "error", message: error.message });
+      });
+  } catch (err) {
+    res.send({ status: "error", message: "Token verification failed" });
+  }
+});
+
 
 app.get("/jobs", async (req, res) => {
   try {
@@ -285,33 +344,37 @@ app.post("/update", async (req, res) => {
       .json({ message: "Internal server error", error: error.message });
   }
 });
-
+//update education
 app.post("/education", async (req, res) => {
   const {
     email,
     sscResult,
     hscResult,
-    institutionName,
+    currentInstitution,
     deptName,
     bio,
     sscCertificate,
     hscCertificate,
+    school,
+    college,
   } = req.body;
   // console.log(sscCertificate,hscCertificate,"Shovo");
 
   // Check if there's an existing education entry with the provided email
   const existingEducation = await Education.findOne({ email });
-  console.log(existingEducation , "shovo");
+  // console.log(existingEducation , "shovo");
 
   if (existingEducation) {
     // If an entry exists, update it
     existingEducation.sscResult = sscResult;
     existingEducation.hscResult = hscResult;
-    existingEducation.institutionName = institutionName;
+    existingEducation.currentInstitution = currentInstitution;
     existingEducation.deptName = deptName;
     existingEducation.bio = bio;
     existingEducation.sscCertificate = sscCertificate;
     existingEducation.hscCertificate = hscCertificate;
+    existingEducation.school = school;
+    existingEducation.college = college;
 
     existingEducation.save()
       .then(() => {
@@ -328,11 +391,13 @@ app.post("/education", async (req, res) => {
       email,
       sscResult,
       hscResult,
-      institutionName,
+      currentInstitution,
       deptName,
       bio,
       sscCertificate,
       hscCertificate,
+      school,
+      college
     });
 
     newEducation.save()

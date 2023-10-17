@@ -6,11 +6,10 @@ import Home from './Components/Home'
 import { Login } from './Components/Login'
 import { Profile } from './Components/Profile/Profile'
 import { ResetPass } from "./Components/ResetPassword/ResetPass"
-import { Signup } from './Components/Signup/Signup/Signup'
+import { SignUp } from './Components/SignUp'
 import { VerifyPassword } from "./Components/VerifyPassword/VerifyPassword"
 import { Job } from "./Components/postedJob/Job"
 import RatingReview from "./Components/ratingrev/RatingReview"
-import Test from "./Components/Profile/CV_Resume"
 function App() {
   return (
     <BrowserRouter>
@@ -18,15 +17,15 @@ function App() {
         <Routes>
           <Route path="/" element={<Home obj2={{email:""}}/>} />
           <Route path="/login" element={<Login/>} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword/>} />
           <Route path="/profile" element={<Profile/>} />
           <Route path="/posted-jobs" element={<Job/>} />
-          <Route path="/sign-up" element={<Signup />} />
+          <Route path="/sign-up" element={<SignUp />} />
           <Route path="/otp" element={<VerifyPassword />} />
           <Route path="/reset-password" element={<ResetPass />} />
           <Route path="/courses" element={<CareerGrooming />} />
           <Route path="/ratings" element={<RatingReview />} />
-          <Route path="/cv" element={<Test />} />
         </Routes>
       </main>
     </BrowserRouter>
