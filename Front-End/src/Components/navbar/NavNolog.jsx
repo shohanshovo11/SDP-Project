@@ -18,7 +18,7 @@ export const NavNolog = () => {
             <li tabIndex={0}>
               <details>
                 <summary>Job Category</summary>
-                <ul className="p-2 bg-white">
+                <ul className="p-2 bg-white z-50">
                   <li>
                     <Link to="/posted-jobs">Tuition</Link>
                   </li>

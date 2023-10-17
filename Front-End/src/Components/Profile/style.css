@@ -525,8 +525,17 @@
   width: 129px;
 }
 
-.basic-info-body .button {
-  all: unset;
+.basic-info-body .text-wrapper-11 {
+  color: #ffffff;
+  font-family: "Poppins-SemiBold", Helvetica;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 28px;
+  position: absolute;
+  text-align: center;
+  top: 15px;
+  white-space: nowrap;
   background-color: #165069;
   border-radius: 5px;
   box-sizing: border-box;
@@ -535,18 +544,4 @@
   position: absolute;
   top: 483px;
   width: 200px;
-}
-
-.basic-info-body .text-wrapper-11 {
-  color: #ffffff;
-  font-family: "Poppins-SemiBold", Helvetica;
-  font-size: 20px;
-  font-weight: 600;
-  left: 74px;
-  letter-spacing: 0;
-  line-height: 28px;
-  position: absolute;
-  text-align: center;
-  top: 15px;
-  white-space: nowrap;
 }

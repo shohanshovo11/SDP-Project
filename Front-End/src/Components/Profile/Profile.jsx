@@ -1,10 +1,12 @@
+import Footer from '../Footer';
 import { Navbar } from '../navbar/Navbar';
 import BasicInfo from './BasicInfo';
 import './style.css';
 
 export const Profile = () => {
   return (
-    <div className='root'>
+    <>
+    <div className='root pb-28'>
       <Navbar />
       <br />
       <br />
@@ -12,6 +14,8 @@ export const Profile = () => {
       <br />
       <BasicInfo obj={{name: "Shovo"}} />
     </div>
+    <Footer />
+    </>
   );
 }
 

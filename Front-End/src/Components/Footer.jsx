@@ -5,9 +5,8 @@ import React from 'react'
 function Footer() {
   return (
     <div>
-    <div className='flex bg-[#E0E0E0] font-poppins font-bold pl-12 py-8 mt-28'>
+    <div className='flex bg-[#E0E0E0] font-poppins font-bold pl-12 py-8'>
       <div className='flex flex-col basis-3/5'>
-        <h1 className='text-bt text-xl pb-4'>Study WorkNet</h1>
         <p className='text-bt opacity-60 pr-40 pb-4'>help fresh graduates who need a job opportunity to develop themselves. so it will help the business owners to save a lot of effort, time and money to get there service at the best price.</p>
         <span className='text-black pb-2'><FontAwesomeIcon icon={faEnvelope} beatFade size='lg'/> /Studyworknet@yahoo.com</span>
         <span className='text-black pb-2'><FontAwesomeIcon icon={faFacebook} beatFade size='lg'/> /Studyworknet@facebook.com</span>

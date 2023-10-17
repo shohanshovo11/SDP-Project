@@ -133,9 +133,7 @@ export const BasicInfoBody = (props) => {
           <div className={`w-full text-center text-lg ${selector === 3 ? "text-black transition-all duration-500 font-bold":""}`}>CV/Resume</div>
         </button>
       </div>
-      <div className="button">
         <button className="text-wrapper-11">Save</button>
-      </div>
     </div>
   );
 };
