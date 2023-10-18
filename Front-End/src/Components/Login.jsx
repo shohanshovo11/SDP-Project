@@ -136,7 +136,7 @@ export const Login = () => {
                 <button type="submit" className="btn bg-bt text-white grow">
                   Login
                 </button>
-                <Link to="/sign-up" className="link no-underline btn grow">
+                <Link to="/signup-option" className="link no-underline btn grow">
                   Sign Up
                 </Link>
               </div>

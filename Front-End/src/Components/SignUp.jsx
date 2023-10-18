@@ -36,13 +36,13 @@ export const SignUp = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-  
+
     // Check if passwords match
     if (formData.password !== formData.confirmPassword) {
       toast.error("Passwords don't match");
       return;
     }
-  
+
     // If passwords match, continue with form submission logic
     fetch("http://localhost:5000/register", {
       method: "POST",
@@ -74,8 +74,6 @@ export const SignUp = () => {
         console.error(e.message);
       });
   };
-  
-  
 
   return (
     <>
@@ -94,7 +92,7 @@ export const SignUp = () => {
         ) : (
           <>
             <img
-              className="verify-image bg-bt h-[30rem] p-4 rounded-md"
+              className="verify-image h-[30rem] p-4 rounded-md"
               src={signup}
               alt="Login"
             />
@@ -173,13 +171,21 @@ export const SignUp = () => {
                   </button>
                 </div>
               </div>
-              <button type="submit" className="btn mb-2 bg-bt text-white grow mt-6 w-full">
+              <button
+                type="submit"
+                className="btn mb-2 bg-bt text-white grow mt-6 w-full"
+              >
                 Create Account
               </button>
               <p className="alreadyhave">
-            <span className="">Already have an account? </span>
-            <Link to="/login"  className="login no-underline btn btn-sm bg-bt p-0 max-h-1 px-3 border-0">Log in</Link>
-          </p>
+                <span className="">Already have an account? </span>
+                <Link
+                  to="/login"
+                  className="login no-underline btn btn-sm bg-bt p-0 max-h-1 px-3 border-0"
+                >
+                  Log in
+                </Link>
+              </p>
             </form>
           </>
         )}

@@ -157,7 +157,7 @@ function EducationTab(props) {
   
 
   return (
-    <div>
+    <div className="">
       <div className="group">
         <div className="overlap-group flex flex-col items-center justify-center">
           {loading ? (
@@ -170,9 +170,9 @@ function EducationTab(props) {
               wrapperClass="dna-wrapper"
             />
           ) : (
-            <div>
+            <div className="mt-8">
               <div className="flex justify-between pt-4 px-10">
-                <div className="form-control w-full max-w-xs">
+                <div className="form-control w-full max-w-xs ">
                   <label className="label">
                     <span className="label-text text-black text-xl">
                       School Name:
@@ -316,7 +316,7 @@ function EducationTab(props) {
                         onChange={(e) => convertToBase64(e, "hscCertificate")}
                       ></input>
                     </div>
-                    <div className="w-28 h-24 inline-block rounded-md cursor-pointer">
+                    <div className="w-28 h-24 inline-block rounded-md cursor-pointer mb-14">
                       {hscCertificate && (
                         <img
                           src={hscCertificate}
