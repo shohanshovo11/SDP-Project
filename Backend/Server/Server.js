@@ -4,10 +4,12 @@ const bodyParser = require("body-parser");
 const db = require("./db");
 const cors = require("cors");
 const Job = require("./Schema/job");
+const OTPModel = require("./Schema/otp")
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const UserModel = require("./Schema/userDetails");
 const JWT_SECRET = "jwt-secret-key";
+const otpGenerator = require("otp-generator");
 
 const app = express();
 
@@ -139,6 +141,7 @@ app.post("/login", async (req, res) => {
 
 
 // Forgot Password
+let forgotPassEmail="";
 app.post('/forgot-password', (req, res) => {
   const {email} = req.body;
   UserModel.findOne({ email : email})
@@ -146,9 +149,16 @@ app.post('/forgot-password', (req, res) => {
     if(!user) {
       return res.send({Status: "User do not exist."})
     }
-
-    const token = jwt.sign({id: user._id}, JWT_SECRET, {expiresIn: "1d"})
     
+    const token = jwt.sign({id: user._id}, JWT_SECRET, {expiresIn: "1d"})
+    let OTP = otpGenerator.generate(4, {lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false})
+    
+    forgotPassEmail = email
+
+    OTPModel.deleteOne({ email: email})
+    //OTPModel.insertMany({ email : email, otp : OTP, start : new Date()})
+    
+
     // nodemailer
     var transporter = nodemailer.createTransport({ 
       service: 'gmail',
@@ -168,7 +178,7 @@ app.post('/forgot-password', (req, res) => {
       from: process.env.COM_NAME,
       to: email,
       subject: 'Reset Your Password',
-      text: `http://localhost:5173/reset-password/${user.id}/${token}`
+      text: `Your OTP is ${OTP}. Do not share it with others.`
     };
     
     transporter.sendMail(mailOptions, function(error, info){
@@ -180,7 +190,37 @@ app.post('/forgot-password', (req, res) => {
       }
     });
   })
+  .catch(err => res.send({Status: err}))
 }) 
+
+app.post('/verify', (req, res) => {
+  const email = "rafsanprove420@gmail.com"
+  const otp = req.body
+  OTPModel.findOne({email: email})
+  .then(user => {
+    if(!user) {
+      return res.send({Status: "User do not exist."})
+    }
+
+    if(user.email === email && user.otp === otp)
+    {
+      const currentTime= new Date();
+      const diff = (currentTime - user.start)/60000;
+        if(diff<=10)
+          res.send({Status: "Success"})
+        else
+          res.send({Status: "OTP validation expired."})
+    }
+    else res.send({Status: "Incorrect OTP."})
+
+  })
+  .catch(err => res.send({Status: err}))
+
+
+  // console.log(req.body);
+  // if(req.body) res.send({Status: "Success"})
+  // else res.send({Status: "failed"}) 
+})
 
 // Reset Password 
 app.post('/reset-password/:id/:token', (req, res) => {

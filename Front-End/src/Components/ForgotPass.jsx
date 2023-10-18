@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import verify from "../assets/forgotPass/fp-1.svg"; // Import your verification image here
 import Footer from "./Footer";
 import { NavNolog } from "./navbar/NavNolog";
-import axios from 'axios'
+import axios from 'axios';
+import { ToastContainer, toast } from "react-toastify";
 
 
 export const ForgotPassword = () => {
@@ -16,10 +17,10 @@ export const ForgotPassword = () => {
     e.preventDefault()
     axios.post('http://localhost:5000/forgot-password', {email})
     .then(res => {
-      console.log("Login : " + res.data);
-      
       if(res.data.Status == "Success") {
-        navigate('/login')
+        toast.success("Email sent to the address")
+        console.log(email)
+        navigate('/otp')
       }
     }).catch(err => console.log(err))
   }
@@ -28,6 +29,7 @@ export const ForgotPassword = () => {
   return (
     <>
       <NavNolog />
+      <ToastContainer />
       <div className="font-poppins flex justify-center items-center bg-white gap-12 py-24">
         <img
           className="verify-image bg-bt w-96 rounded-md"
@@ -50,11 +52,11 @@ export const ForgotPassword = () => {
             onChange={(change) => setEmail(change.target.value)}
             className="input bg-white w-96 block text-black border-2 border-bt mb-6"
           />
-          {/* <Link to="/otp"> */}
+          {/* <Link to={{ pathname: '/otp' , state: {email : email}}}> */}
             <button type="submit" className="verify-btn text-white btn">
               Send Code
             </button>
-          {/*</Link>*/}
+          {/* </Link> */}
         </form>
       </div>
       <Footer />
