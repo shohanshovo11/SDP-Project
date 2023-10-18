@@ -37,6 +37,7 @@ function App() {
           <Route path="/signup-option" element={<SignUpOption />} />
           <Route path="/modal" element={<Modal />} />
         </Routes>
+        <ToastContainer />
       </main>
     </BrowserRouter>
   );
