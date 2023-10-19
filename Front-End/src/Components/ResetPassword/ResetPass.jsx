@@ -1,16 +1,24 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Footer from "../Footer";
 import reset from "../Images/reset.png";
 import { NavNolog } from "../navbar/NavNolog";
+import axios from "axios";
 
 // Import SVG eye icons for showing and hiding passwords
 import hidePasswordIcon from "/eye-off.svg";
 import showPasswordIcon from "/eye.svg";
 
 export const ResetPass = () => {
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [newPasswordVisible, setNewPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const { search, state } = useLocation();
+  const query = new URLSearchParams(search);
+  const email = query.get("data");
+  const navigate = useNavigate();
+  // console.log(email);
 
   const toggleNewPasswordVisibility = () => {
     setNewPasswordVisible(!newPasswordVisible);
@@ -18,6 +26,31 @@ export const ResetPass = () => {
 
   const toggleConfirmPasswordVisibility = () => {
     setConfirmPasswordVisible(!confirmPasswordVisible);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (newPassword === confirmPassword) {
+      axios
+        .post(`http://localhost:5000/reset-password/${email}`, {
+          password: newPassword,
+        })
+        .then((response) => {
+          if (response.data.Status === "Success") {
+            console.log("Password reset successfully.");
+            // toast.success("Password reset successfully.");
+            navigate("/login");
+          } else {
+            console.log("Password reset failed:", response.data.Status);
+          }
+        })
+        .catch((error) => {
+          console.error("API request failed:", error);
+        });
+    } else {
+      console.log("Passwords do not match");
+    }
   };
 
   return (
@@ -30,7 +63,7 @@ export const ResetPass = () => {
           alt="A girl"
         />
         <div className="vertical-line h-80"></div>
-        <form className="relative">
+        <form className="relative" onSubmit={handleSubmit}>
           <h2 className="text-3xl text-bt font-semibold pb-12">
             Reset Password
           </h2>
@@ -44,6 +77,8 @@ export const ResetPass = () => {
                 className="box-1 input bg-white w-96 block text-black border-2 border-bt pr-10"
                 type={newPasswordVisible ? "text" : "password"}
                 placeholder="New Password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
               />
               <button
                 type="button"
@@ -62,6 +97,8 @@ export const ResetPass = () => {
                 className="box-2 input bg-white w-96 block text-black border-2 border-bt pr-10"
                 type={confirmPasswordVisible ? "text" : "password"}
                 placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
               <button
                 type="button"
@@ -76,11 +113,13 @@ export const ResetPass = () => {
               </button>
             </div>
           </div>
-          <Link to="/login">
-            <button type="submit" className="verify-btn text-white btn">
-              Save
-            </button>
-          </Link>
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            className="verify-btn text-white btn"
+          >
+            Save
+          </button>
         </form>
       </div>
       <Footer />

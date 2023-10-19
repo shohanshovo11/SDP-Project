@@ -4,33 +4,33 @@ const bodyParser = require("body-parser");
 const db = require("./db");
 const cors = require("cors");
 const Job = require("./Schema/job");
-const OTPModel = require("./Schema/otp")
-const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser');
+const OTPModel = require("./Schema/otp");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 const UserModel = require("./Schema/userDetails");
 const JWT_SECRET = "jwt-secret-key";
 const otpGenerator = require("otp-generator");
 
 const app = express();
 
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
 const dotenv = require("dotenv");
 
-const PORT= 5000
+const PORT = 5000;
 
-dotenv.config()
+dotenv.config();
 
 app.use(cookieParser());
-app.use(cors({
-  origin:["http://localhost:5173"],
-  methods: ["GET", "POST"],
-  credentials: true
-}));
-
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
 
 const Education = require("./Schema/education");
-
 
 app.use(bodyParser.json({ limit: "50mb" }));
 
@@ -72,10 +72,7 @@ const User = mongoose.model("StudentDetails");
 //sign-up user
 app.post("/register", async (req, res) => {
   try {
-    const {
-      email,
-      password,
-    } = req.body;
+    const { email, password } = req.body;
 
     // Check if the email already exists in the database
     const existingUser = await User.findOne({ email });
@@ -84,7 +81,7 @@ app.post("/register", async (req, res) => {
       // If email exists, send an error response
       return res.status(400).send({ error: "Email Already Exists" });
     }
-    const fname="";
+    const fname = "";
     await User.create({
       name: { fname, fname },
       email,
@@ -126,7 +123,11 @@ app.post("/login", async (req, res) => {
       const token = jwt.sign({ email: user.email }, "jwt-secret-key");
 
       // Send the token and user's profile image URL in the response
-      return res.json({ status: "ok", token, profileImgUrl: user.profileImgUrl });
+      return res.json({
+        status: "ok",
+        token,
+        profileImgUrl: user.profileImgUrl,
+      });
     }
 
     res.json({ status: "error", error: "Invalid Password" });
@@ -136,110 +137,105 @@ app.post("/login", async (req, res) => {
   }
 });
 
-
 // Forgot Password
-let forgotPassEmail="";
-app.post('/forgot-password', (req, res) => {
-  const {email} = req.body;
-  UserModel.findOne({ email : email})
-  .then(user => {
-    if(!user) {
-      return res.send({Status: "User do not exist."})
+app.post("/forgot-password", async (req, res) => {
+  try {
+    const { email } = req.body;
+    // console.log(email)
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ status: "User does not exist." });
     }
-    
-    const token = jwt.sign({id: user._id}, JWT_SECRET, {expiresIn: "1d"})
-    let OTP = otpGenerator.generate(4, {lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false})
-    
-    forgotPassEmail = email
-
-    OTPModel.deleteOne({ email: email})
-    //OTPModel.insertMany({ email : email, otp : OTP, start : new Date()})
-    
-
-    // nodemailer
-    var transporter = nodemailer.createTransport({ 
-      service: 'gmail',
+    const existingOTP = await OTPModel.findOne({ email });
+    console.log(existingOTP);
+    if (existingOTP) {
+      return res
+        .status(400)
+        .json({ status: "OTP already sent. Try again after 1 hour." });
+    }
+    const min = 1000;
+    const max = 9999;
+    const OTP = Math.floor(Math.random() * (max - min + 1)) + min;
+    await OTPModel.create({ email, otp: OTP, start: new Date() });
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
       host: "smtp.gmail.com",
       port: 587,
       secure: false,
       auth: {
         user: process.env.COM_USER,
-        pass: process.env.COM_PASS 
+        pass: process.env.COM_PASS,
       },
       tls: {
-        rejectUnauthorized: false 
-      }
+        rejectUnauthorized: false,
+      },
     });
-    
-    var mailOptions = {
+
+    const mailOptions = {
       from: process.env.COM_NAME,
       to: email,
-      subject: 'Reset Your Password',
-      text: `Your OTP is ${OTP}. Do not share it with others.`
+      subject: "Reset Your Password",
+      text: `Your OTP is ${OTP}. Do not share it with others.`,
     };
-    
-    transporter.sendMail(mailOptions, function(error, info){
+
+    transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        console.log(error);
+        console.error("Email error:", error);
+        res.status(500).json({ status: "Email could not be sent." });
       } else {
-        console.log('Email sent: ' + info.response);
-        return res.send({Status: "Success"})
+        console.log("Email sent:", info.response);
+        res.status(200).json({ status: "Success" });
       }
     });
-  })
-  .catch(err => res.send({Status: err}))
-}) 
-
-app.post('/verify', (req, res) => {
-  const email = "rafsanprove420@gmail.com"
-  const otp = req.body
-  OTPModel.findOne({email: email})
-  .then(user => {
-    if(!user) {
-      return res.send({Status: "User do not exist."})
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ status: "An error occurred." });
+  }
+});
+app.post("/verify-otp", async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+    const user = await OTPModel.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ Status: "User does not exist." });
     }
-
-    if(user.email === email && user.otp === otp)
-    {
-      const currentTime= new Date();
-      const diff = (currentTime - user.start)/60000;
-        if(diff<=10)
-          res.send({Status: "Success"})
-        else
-          res.send({Status: "OTP validation expired."})
+    if (user.email === email && user.otp == otp) {
+      OTPModel.deleteMany({ email })
+        .then(() => {
+          console.log("OTP documents deleted successfully");
+        })
+        .catch((error) => {
+          console.error("Error deleting OTP documents:", error);
+          res
+            .status(500)
+            .json({ Status: "An error occurred while deleting OTP." });
+        });
+      return res.status(200).json({ Status: "Success" });
+    } else {
+      return res.status(401).json({ Status: "Otp Expired or Incorrect OTP." });
     }
-    else res.send({Status: "Incorrect OTP."})
-
-  })
-  .catch(err => res.send({Status: err}))
-
-
-  // console.log(req.body);
-  // if(req.body) res.send({Status: "Success"})
-  // else res.send({Status: "failed"}) 
-})
-
-// Reset Password 
-app.post('/reset-password/:id/:token', (req, res) => {
-  const {id, token} = req.params
-  const {password} = req.body
-
-  jwt.verify(token, JWT_SECRET, (err, decoded) => {
-    if(err) {
-      return res.json({Status: "Error with token"})
-    }else {
-      bcrypt.hash(password, 10)
-      .then(hash => {
-        UserModel.findByIdAndUpdate({_id: id}, {password: hash})
-        .then(u => res.send({Status: "Success"}))
-        .catch(err => res.send({Status: err}))
-      })
-      .catch(err => res.send({Status: err}))
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ Status: "An error occurred." });
+  }
+});
+// Reset Password
+app.post("/reset-password/:email", async (req, res) => {
+  try {
+    const { email } = req.params;
+    const { password } = req.body;
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ Status: "User not found." });
     }
-  })
-})
-
-
+    user.password = password;
+    await user.save();
+    res.status(200).json({ Status: "Success" });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ Status: "An error occurred." });
+  }
+});
 //user data
 app.post("/userData", async (req, res) => {
   const { token } = req.body;
@@ -283,7 +279,7 @@ app.post("/getCvResume", async (req, res) => {
     Education.findOne({ email: userEmail })
       .then((data) => {
         console.log(data.cvResume);
-        res.send({ status: "ok", cvResume:data.cvResume });
+        res.send({ status: "ok", cvResume: data.cvResume });
       })
       .catch((error) => {
         res.send({ status: "error", data: error });
@@ -303,7 +299,8 @@ app.post("/updateCvResume", async (req, res) => {
         if (data) {
           // If the user's education information exists, update the 'cvResume' field
           data.cvResume = cvResume;
-          data.save()
+          data
+            .save()
             .then((updatedData) => {
               res.send({ status: "ok", data: updatedData });
             })
@@ -318,7 +315,8 @@ app.post("/updateCvResume", async (req, res) => {
             // other fields as needed
           });
 
-          newEducation.save()
+          newEducation
+            .save()
             .then((createdData) => {
               res.send({ status: "ok", data: createdData });
             })
@@ -334,7 +332,6 @@ app.post("/updateCvResume", async (req, res) => {
     res.send({ status: "error", message: "Token verification failed" });
   }
 });
-
 
 app.get("/jobs", async (req, res) => {
   try {
@@ -353,7 +350,7 @@ app.post("/update", async (req, res) => {
   try {
     const { fname, lname, email, gender, address, phone, base64 } = req.body;
     const birthDate = req.body.birthDate ? new Date(req.body.birthDate) : null;
-    
+
     // Find the user by email address
     const user = await User.findOne({ email });
 
@@ -416,7 +413,8 @@ app.post("/education", async (req, res) => {
     existingEducation.school = school;
     existingEducation.college = college;
 
-    existingEducation.save()
+    existingEducation
+      .save()
       .then(() => {
         console.log("Data updated successfully");
         return res.status(200).send("Data updated successfully");
@@ -437,10 +435,11 @@ app.post("/education", async (req, res) => {
       sscCertificate,
       hscCertificate,
       school,
-      college
+      college,
     });
 
-    newEducation.save()
+    newEducation
+      .save()
       .then(() => {
         console.log("Data saved successfully");
         return res.status(200).send("Data saved successfully");

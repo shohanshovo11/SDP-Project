@@ -5,21 +5,15 @@ import verify from "../Images/verify.png";
 import { NavNolog } from "../navbar/NavNolog";
 import "./VerifyPassword.css";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
-export const VerifyPassword = (props) => {
-  const inputRefs = [useRef(), useRef(), useRef(), useRef()]; 
-  const email = useState(props.location);
-  const navigate = useNavigate()
-  console.log(props.email)
-
-  const getOTP = () => {
-    let otp = "";
-    inputRefs.forEach((ref) => {
-      otp += ref.current.value || ""; // Using ref's value property
-    });
-    return otp;
-  };
+export const VerifyPassword = () => {
+  const inputRefs = [useRef(), useRef(), useRef(), useRef()];
+  const navigate = useNavigate();
+  const { search, state } = useLocation();
+  const query = new URLSearchParams(search);
+  const email = query.get("data");
+  // console.log(email);
 
   const focusNextInput = (index) => {
     if (index < inputRefs.length - 1) {
@@ -31,6 +25,10 @@ export const VerifyPassword = (props) => {
     if (index > 0) {
       inputRefs[index - 1].current.focus();
     }
+  };
+  const getOTP = () => {
+    const otp = inputRefs.map((inputRef) => inputRef.current.value).join("");
+    return otp;
   };
 
   const handleInputChange = (e, index) => {
@@ -50,28 +48,45 @@ export const VerifyPassword = (props) => {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const otp = getOTP()
-    axios.post('http://localhost:5000/verify', {otp})
-    .then(res => {
-      if(res.data.Status == "Success") {
-        toast.success("Verification Successful.")
-        navigate('/reset-password')
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const otp = getOTP();
+    console.log(otp);
+
+    try {
+      const response = await axios.post("http://localhost:5000/verify-otp", {
+        email,
+        otp,
+      });
+
+      if (response.data.Status === "Success") {
+        // toast.success("Verification Successful.");
+        navigate(`/reset-password?data=${email}`);
+        // navigate("/reset-password");
+      } else {
+        toast.error(response.data.Status);
       }
-      else
-        toast.error(res.data.Status);
-    }).catch(err => console.log(err))
-  }
+    } catch (err) {
+      toast.error("Verification Failed.");
+      console.log(err);
+    }
+  };
 
   return (
     <>
       <NavNolog />
+      <ToastContainer />
       <div className="font-poppins flex justify-center items-center bg-white gap-12 py-24">
-        <img className="verify-image bg-bt w-96 rounded-md" src={verify} alt="A girl" />
+        <img
+          className="verify-image bg-bt w-96 rounded-md"
+          src={verify}
+          alt="A girl"
+        />
         <div className="vertical-line h-80"></div>
         <form onSubmit={(e) => handleSubmit(e)}>
-          <h2 className="text-3xl text-bt font-semibold pb-12">Verification Code</h2>
+          <h2 className="text-3xl text-bt font-semibold pb-12">
+            Verification Code
+          </h2>
           <p className="text-black pb-6">
             Enter the verification code we just sent you <br />
             On your email address.
@@ -111,11 +126,9 @@ export const VerifyPassword = (props) => {
             />
           </div>
           {/* <Link to="/reset-password"> */}
-            <button 
-            type="submit" 
-            className="verify-btn text-white btn">
-              Verify
-            </button>
+          <button type="submit" className="verify-btn text-white btn">
+            Verify
+          </button>
           {/* </Link> */}
           <div className="pt-6">
             <span className="didnt">Didn't receive a code?&nbsp;</span>

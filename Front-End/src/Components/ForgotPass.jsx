@@ -3,28 +3,35 @@ import { Link, useNavigate } from "react-router-dom";
 import verify from "../assets/forgotPass/fp-1.svg"; // Import your verification image here
 import Footer from "./Footer";
 import { NavNolog } from "./navbar/NavNolog";
-import axios from 'axios';
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
-
 export const ForgotPassword = () => {
+  const [email, setEmail] = useState();
+  const navigate = useNavigate();
 
-  const [email, setEmail] = useState()
-  const navigate = useNavigate()
-
-  axios.defaults.withCredentials = true;
   const handleSubmit = (e) => {
-    e.preventDefault()
-    axios.post('http://localhost:5000/forgot-password', {email})
-    .then(res => {
-      if(res.data.Status == "Success") {
-        toast.success("Email sent to the address")
-        console.log(email)
-        navigate('/otp')
-      }
-    }).catch(err => console.log(err))
-  }
-
+    e.preventDefault();
+    axios
+      .post("http://localhost:5000/forgot-password", { email }) // Send the email value in the request
+      .then((res) => {
+        if (res.data.status === "Success") {
+          console.log(email); // If you need to use email elsewhere
+          // toast.success("OTP sent to the email address");
+          navigate(`/otp?data=${email}`);
+        } else {
+          toast.error("OTP already sent to the email address");
+        }
+      })
+      .catch((err) => {
+        if (err.response.data.status == "User does not exist.") {
+          toast.error("User does not exist.");
+        } else {
+          // toast.error("OTP already sent to the email address");
+          navigate(`/otp?data=${email}`);
+        }
+      });
+  };
 
   return (
     <>
@@ -49,13 +56,17 @@ export const ForgotPassword = () => {
             type="text"
             name="email"
             placeholder="Type here"
-            onChange={(change) => setEmail(change.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             className="input bg-white w-96 block text-black border-2 border-bt mb-6"
           />
-          {/* <Link to={{ pathname: '/otp' , state: {email : email}}}> */}
-            <button type="submit" className="verify-btn text-white btn">
-              Send Code
-            </button>
+          {/* <Link to={{ pathname: "/otp", state: { email: email } }}> */}
+          <button
+            onClick={handleSubmit}
+            type="submit"
+            className="verify-btn text-white btn"
+          >
+            Send Code
+          </button>
           {/* </Link> */}
         </form>
       </div>
