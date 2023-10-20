@@ -348,39 +348,31 @@ app.get("/jobs", async (req, res) => {
 
 app.post("/update", async (req, res) => {
   try {
-    const { fname, lname, email, gender, address, phone, base64 } = req.body;
+    const { fname = "", lname = "", email = "", gender = "", address = "", phone = "", base64 = "" } = req.body;
+    if(req.body.birthDate == "NaN-NaN-NaN") req.body.birthDate = null;
     const birthDate = req.body.birthDate ? new Date(req.body.birthDate) : null;
-
-    // Find the user by email address
     const user = await User.findOne({ email });
-
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
-    // Update user data
-    user.name.fname = fname || user.name.fname;
-    user.name.lname = lname || user.name.lname;
-    user.gender = gender || user.gender;
-    user.birthDate = birthDate ? new Date(birthDate) : user.birthDate;
-    user.address = address || user.address;
-    user.phone = phone || user.phone;
-    user.profileImgUrl = base64 || user.profileImgUrl;
-
-    // Save the updated user
+    if (user.name) {
+      user.name.fname = fname;
+      user.name.lname = lname;
+    }
+    if (gender) user.gender = gender;
+    if (birthDate) user.birthDate = birthDate;
+    if (address) user.address = address;
+    if (phone) user.phone = phone;
+    if (base64) user.profileImgUrl = base64;
     await user.save();
-
-    // Send a response indicating success
-    res
-      .status(200)
-      .json({ message: "User information updated successfully", user });
+    res.status(200).json({ message: "User information updated successfully", user });
   } catch (error) {
-    // Handle errors (e.g., validation, database errors)
-    res
-      .status(500)
-      .json({ message: "Internal server error", error: error.message });
+    console.error(error);
+    res.status(500).json({ message: "Internal server error", error: error.message });
   }
 });
+
+
 //update education
 app.post("/education", async (req, res) => {
   const {

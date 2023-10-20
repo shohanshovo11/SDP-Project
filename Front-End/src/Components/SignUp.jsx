@@ -102,7 +102,7 @@ export const SignUp = () => {
               <div className="form-control w-full">
                 <label className="label">
                   <span className="label-text text-base text-black font-semibold">
-                    Username
+                    Email
                   </span>
                 </label>
                 <input

@@ -34,7 +34,7 @@ export const Login = () => {
       toast.error("Please fill in all fields");
       return;
     }
-  
+
     try {
       const response = await fetch("http://localhost:5000/login", {
         method: "POST",
@@ -44,7 +44,7 @@ export const Login = () => {
         },
         body: JSON.stringify(formData),
       });
-  
+
       if (response.status === 200) {
         const data = await response.json();
         if (data.status === "ok") {
@@ -63,7 +63,6 @@ export const Login = () => {
       toast.error("Something went wrong");
     }
   };
-  
 
   return (
     <>
@@ -92,7 +91,7 @@ export const Login = () => {
               <div className="form-control w-full">
                 <label className="label">
                   <span className="label-text text-base text-black font-semibold">
-                    Username
+                    Email
                   </span>
                 </label>
                 <input
@@ -136,7 +135,10 @@ export const Login = () => {
                 <button type="submit" className="btn bg-bt text-white grow">
                   Login
                 </button>
-                <Link to="/signup-option" className="link no-underline btn grow">
+                <Link
+                  to="/signup-option"
+                  className="link no-underline btn grow"
+                >
                   Sign Up
                 </Link>
               </div>
