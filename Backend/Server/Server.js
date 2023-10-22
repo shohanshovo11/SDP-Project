@@ -10,6 +10,7 @@ const cookieParser = require("cookie-parser");
 const UserModel = require("./Schema/userDetails");
 const JWT_SECRET = "jwt-secret-key";
 const otpGenerator = require("otp-generator");
+const EmployerModel = require("./Schema/employer")
 
 const app = express();
 

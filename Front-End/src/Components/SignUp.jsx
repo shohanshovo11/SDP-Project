@@ -180,7 +180,7 @@ export const SignUp = () => {
               <p className="alreadyhave">
                 <span className="">Already have an account? </span>
                 <Link
-                  to="/login"
+                  to="/login-option"
                   className="login no-underline btn btn-sm bg-bt p-0 max-h-1 px-3 border-0"
                 >
                   Log in
