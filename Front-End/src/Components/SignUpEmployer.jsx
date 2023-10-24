@@ -13,9 +13,17 @@ import signup from "/signup.png"; // Correct path
 export const SignUpEmployer = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
+    number: 0,
     password: "",
     confirmPassword: "",
+    dob: Date.now(),
+    address: "",
+    institution: "",
+    occupation: "",
+    position: "",
+    experience: "",
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -98,11 +106,27 @@ export const SignUpEmployer = () => {
                     <div className="form-control w-72">
                       <label className="label">
                         <span className="label-text text-base text-black font-semibold">
-                          Username
+                          Fullname
                         </span>
                       </label>
                       <input
                         type="text"
+                        name="name"
+                        value={formData.name}
+                        autoComplete="off"
+                        placeholder="Type here"
+                        className="input bg-white w-full text-black border-2 border-bt"
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    <div className="form-control w-72">
+                      <label className="label">
+                        <span className="label-text text-base text-black font-semibold">
+                          Email
+                        </span>
+                      </label>
+                      <input
+                        type="email"
                         name="email"
                         value={formData.email}
                         autoComplete="off"
@@ -114,29 +138,13 @@ export const SignUpEmployer = () => {
                     <div className="form-control w-72">
                       <label className="label">
                         <span className="label-text text-base text-black font-semibold">
-                          Username
+                          Contact No
                         </span>
                       </label>
                       <input
-                        type="text"
-                        name="email"
-                        value={formData.email}
-                        autoComplete="off"
-                        placeholder="Type here"
-                        className="input bg-white w-full text-black border-2 border-bt"
-                        onChange={handleInputChange}
-                      />
-                    </div>
-                    <div className="form-control w-72">
-                      <label className="label">
-                        <span className="label-text text-base text-black font-semibold">
-                          Username
-                        </span>
-                      </label>
-                      <input
-                        type="text"
-                        name="email"
-                        value={formData.email}
+                        type="number"
+                        name="number"
+                        value={formData.number}
                         autoComplete="off"
                         placeholder="Type here"
                         className="input bg-white w-full text-black border-2 border-bt"
@@ -220,13 +228,13 @@ export const SignUpEmployer = () => {
                     <div className="form-control w-72">
                       <label className="label">
                         <span className="label-text text-base text-black font-semibold">
-                          Username
+                          Date of Birth
                         </span>
                       </label>
                       <input
-                        type="text"
-                        name="email"
-                        value={formData.email}
+                        type="date"
+                        name="dob"
+                        value={formData.dob}
                         autoComplete="off"
                         placeholder="Type here"
                         className="input bg-white w-full text-black border-2 border-bt"
@@ -236,13 +244,13 @@ export const SignUpEmployer = () => {
                     <div className="form-control w-72">
                       <label className="label">
                         <span className="label-text text-base text-black font-semibold">
-                          Username
+                          Address
                         </span>
                       </label>
                       <input
                         type="text"
-                        name="email"
-                        value={formData.email}
+                        name="address"
+                        value={formData.address}
                         autoComplete="off"
                         placeholder="Type here"
                         className="input bg-white w-full text-black border-2 border-bt"
@@ -252,13 +260,13 @@ export const SignUpEmployer = () => {
                     <div className="form-control w-72">
                       <label className="label">
                         <span className="label-text text-base text-black font-semibold">
-                          Username
+                          Institution
                         </span>
                       </label>
                       <input
                         type="text"
-                        name="email"
-                        value={formData.email}
+                        name="institution"
+                        value={formData.institution}
                         autoComplete="off"
                         placeholder="Type here"
                         className="input bg-white w-full text-black border-2 border-bt"
@@ -268,13 +276,13 @@ export const SignUpEmployer = () => {
                     <div className="form-control w-72">
                       <label className="label">
                         <span className="label-text text-base text-black font-semibold">
-                          Username
+                          Occupation
                         </span>
                       </label>
                       <input
                         type="text"
-                        name="email"
-                        value={formData.email}
+                        name="occupation"
+                        value={formData.occupation}
                         autoComplete="off"
                         placeholder="Type here"
                         className="input bg-white w-full text-black border-2 border-bt"
@@ -284,13 +292,29 @@ export const SignUpEmployer = () => {
                     <div className="form-control w-72">
                       <label className="label">
                         <span className="label-text text-base text-black font-semibold">
-                          Username
+                          Position
                         </span>
                       </label>
                       <input
                         type="text"
-                        name="email"
-                        value={formData.email}
+                        name="position"
+                        value={formData.position}
+                        autoComplete="off"
+                        placeholder="Type here"
+                        className="input bg-white w-full text-black border-2 border-bt"
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    <div className="form-control w-72">
+                      <label className="label">
+                        <span className="label-text text-base text-black font-semibold">
+                          Experience
+                        </span>
+                      </label>
+                      <input
+                        type="text"
+                        name="experience"
+                        value={formData.experience}
                         autoComplete="off"
                         placeholder="Type here"
                         className="input bg-white w-full text-black border-2 border-bt"
