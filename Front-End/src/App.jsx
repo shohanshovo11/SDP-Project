@@ -14,6 +14,7 @@ import RatingReview from "./Components/ratingrev/RatingReview";
 import AdminDashboard from "./Components/AdminDashboard/AdminDashboard";
 import LoginOption from "./Components/LoginOption";
 import { SignUpEmployer } from "./Components/SignUpEmployer";
+import { ApplicantList } from "./Components/ApplicantList/ApplicantList";
 function App() {
   return (
     <BrowserRouter>
@@ -34,6 +35,7 @@ function App() {
           <Route path="/ratings" element={<RatingReview />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/signup-option" element={<SignUpOption />} />
+          <Route path="/ApplicantList" element={<ApplicantList />} />
         </Routes>
       </main>
     </BrowserRouter>
