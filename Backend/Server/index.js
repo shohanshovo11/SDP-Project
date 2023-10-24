@@ -26,7 +26,6 @@ dotenv.config();
 const PORT = 5000|| process.env.PORT;
 
 
-app.use(cookieParser());
 app.use(cors());
 
 
