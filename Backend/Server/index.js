@@ -3,13 +3,18 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const db = require("./db");
 const cors = require("cors");
-const Job = require("./Schema/job");
+const TuitionModel = require("./Schema/tuition");
 const OTPModel = require("./Schema/otp");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const UserModel = require("./Schema/userDetails");
 const JWT_SECRET = "jwt-secret-key";
 const otpGenerator = require("otp-generator");
+const EmployerModel = require("./Schema/employer")
+const FreelancerModel = require("./Schema/freelancerSchema");
+const InternshipModel = require("./Schema/internship");
+const CandidateEmployerModel = require("./Schema/candidateEmployer");
+const PartTimeJobModel = require("./Schema/partTime");
 
 const app = express();
 
@@ -17,58 +22,52 @@ const nodemailer = require("nodemailer");
 
 const dotenv = require("dotenv");
 
-const PORT = 5000;
-
 dotenv.config();
+const PORT = process.env.PORT || 5000;
 
-app.use(cookieParser());
-app.use(
-  cors({
-    origin: ["http://localhost:5173"],
-    methods: ["GET", "POST"],
-    credentials: true,
-  })
-);
+
+app.use(cors());
+// app.use(cors({
+//   origin: "*", // Replace with your frontend's URL
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Specify the HTTP methods you want to allow
+//   credentials: true, // Enable credentials (cookies, authorization headers)
+// }));
+
+
 
 const Education = require("./Schema/education");
 
 app.use(bodyParser.json({ limit: "50mb" }));
 
-app.use(cookieParser());
-app.use(
-  cors({
-    origin: ["http://localhost:5173"],
-    methods: ["GET", "POST"],
-    credentials: true,
-  })
-);
-app.use(bodyParser.json());
+
 // Define a middleware function to check the database connection status
-const checkDatabaseConnection = (req, res, next) => {
-  if (mongoose.connection.readyState == 2) {
-    // Connection is not open (1 is the readyState for an open connection)
-    return res.status(503).json({ Message: "Database is Connecting" });
-  } else if (mongoose.connection.readyState !== 1) {
-    // Connection is not open (1 is the readyState for an open connection)
-    return res.status(503).json({ error: "Database not connected" });
-  }
-  // Connection is open, continue processing the request
-  next();
-};
+// const checkDatabaseConnection = (req, res, next) => {
+//   if (mongoose.connection.readyState == 2) {
+//     // Connection is not open (1 is the readyState for an open connection)
+//     return res.status(503).json({ Message: "Database is Connecting" });
+//   } else if (mongoose.connection.readyState !== 1) {
+//     // Connection is not open (1 is the readyState for an open connection)
+//     return res.status(503).json({ error: "Database not connected" });
+//   }
+//   // Connection is open, continue processing the request
+//   next();
+// };
 
 // Apply the middleware to all routes
-app.use(checkDatabaseConnection);
+// app.use(checkDatabaseConnection);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
+app.get("/",(req, res) => {
+  res.json("Hello");
+})
 app.post("/post", async (req, res) => {
   console.log(req.body);
   return res.send({ status: 200, statusText: "OK" });
 });
 
-const User = mongoose.model("StudentDetails");
+const User = require("./Schema/userDetails");
 //sign-up user
 app.post("/register", async (req, res) => {
   try {
@@ -94,16 +93,22 @@ app.post("/register", async (req, res) => {
 });
 
 const verifyUser = (req, res, next) => {
-  const token = req.cookies.token;
+  const token = req.headers?.authorization?.split(" ")[1] || req.cookies.token;
   // console.log(token);
-  if (!token) return res.json("The token was not available");
-  else {
-    jwt.verify(token, "jwt-secret-key", (err, decoded) => {
-      if (err) return res.json("Token is wrong");
+  if (!token) {
+    return res.json("The token was not available");
+  } else {
+    jwt.verify(token, JWT_SECRET, (err, decoded) => {
+      if (err) {
+        return res.json("Token is wrong");
+      }
+      // Store the decoded data in req.user
+      req.user = decoded;
       next();
     });
   }
 };
+
 
 app.get("/profile", verifyUser, (req, res) => {
   return res.json("Success");
@@ -237,22 +242,26 @@ app.post("/reset-password/:email", async (req, res) => {
   }
 });
 //user data
-app.post("/userData", async (req, res) => {
-  const { token } = req.body;
+app.post("/userData", verifyUser, async (req, res) => {
   try {
-    const user = jwt.verify(token, JWT_SECRET);
+    const user = req.user;
     const userEmail = user.email;
-    // console.log("coming");
-    User.findOne({ email: userEmail })
-      .then((data) => {
+
+    try {
+      const data = await User.findOne({ email: userEmail });
+      if (data) {
         res.send({ status: "ok", data });
-        // console.log(data);
-      })
-      .catch((error) => {
-        res.send({ status: "error", data: error });
-      });
-  } catch (err) {}
+      } else {
+        res.send({ status: "error", data: "User not found" });
+      }
+    } catch (error) {
+      res.send({ status: "error", data: error.message });
+    }
+  } catch (err) {
+    res.send({ status: "error", message: "Token verification failed" });
+  }
 });
+
 app.post("/getEducation", async (req, res) => {
   const { token } = req.body;
   try {
@@ -336,8 +345,8 @@ app.post("/updateCvResume", async (req, res) => {
 app.get("/jobs", async (req, res) => {
   try {
     // Use the "Job" model to find all documents in the "Jobs" collection
-    const jobs = await Job.find();
-
+    const jobs = await TuitionModel.find();
+    console.log(jobs);
     // Send the job documents as a JSON response
     res.status(200).json(jobs);
   } catch (error) {

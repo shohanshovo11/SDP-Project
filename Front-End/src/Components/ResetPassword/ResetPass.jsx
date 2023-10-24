@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Footer from "../Footer";
 import reset from "../Images/reset.png";
 import { NavNolog } from "../navbar/NavNolog";
-import axios from "axios";
+import {Axios} from "../api/api";
 
 // Import SVG eye icons for showing and hiding passwords
 import hidePasswordIcon from "/eye-off.svg";
@@ -32,8 +32,8 @@ export const ResetPass = () => {
     e.preventDefault();
 
     if (newPassword === confirmPassword) {
-      axios
-        .post(`http://localhost:5000/reset-password/${email}`, {
+      Axios
+        .post(`/reset-password/${email}`, {
           password: newPassword,
         })
         .then((response) => {

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import verify from "../assets/forgotPass/fp-1.svg"; // Import your verification image here
 import Footer from "./Footer";
 import { NavNolog } from "./navbar/NavNolog";
-import axios from "axios";
+import { Axios } from "../Components/api/api";
 import { ToastContainer, toast } from "react-toastify";
 
 export const ForgotPassword = () => {
@@ -12,8 +12,7 @@ export const ForgotPassword = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:5000/forgot-password", { email }) // Send the email value in the request
+    Axios.post("/forgot-password", { email }) // Send the email value in the request
       .then((res) => {
         if (res.data.status === "Success") {
           console.log(email); // If you need to use email elsewhere

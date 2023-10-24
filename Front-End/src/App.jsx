@@ -14,7 +14,11 @@ import RatingReview from "./Components/ratingrev/RatingReview";
 import AdminDashboard from "./Components/AdminDashboard/AdminDashboard";
 import LoginOption from "./Components/LoginOption";
 import { SignUpEmployer } from "./Components/SignUpEmployer";
+<<<<<<< HEAD
 import { ApplicantList } from "./Components/ApplicantList/ApplicantList";
+=======
+import Modal from "./Components/postedJob/Modal";
+>>>>>>> 9b48636527405ccc53dfa587fd6be208f2182c9b
 function App() {
   return (
     <BrowserRouter>
@@ -35,7 +39,11 @@ function App() {
           <Route path="/ratings" element={<RatingReview />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/signup-option" element={<SignUpOption />} />
+<<<<<<< HEAD
           <Route path="/ApplicantList" element={<ApplicantList />} />
+=======
+          <Route path="/modal" element={<Modal />} />
+>>>>>>> 9b48636527405ccc53dfa587fd6be208f2182c9b
         </Routes>
       </main>
     </BrowserRouter>

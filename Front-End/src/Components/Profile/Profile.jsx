@@ -1,4 +1,4 @@
-import axios from "axios";
+import { Axios } from "../api/api";
 import React, { useEffect, useState } from "react";
 import { Dna } from "react-loader-spinner";
 import Footer from "../Footer";
@@ -18,12 +18,13 @@ export const Profile = () => {
     setLoading(true);
     if (jwtToken) {
       console.log(`JWT Token: ${jwtToken}`);
-      axios
-        .post(
-          "http://localhost:5000/userData",
-          { token: jwtToken },
-          { withCredentials: true }
-        )
+
+      // Create a headers object with the authorization header
+      const headers = {
+        Authorization: `Bearer ${jwtToken}`,
+      };
+
+      Axios.post("/userData", {}, { headers }) // Pass headers as the third argument
         .then((res) => {
           setUser(res.data.data);
           setLoading(false);

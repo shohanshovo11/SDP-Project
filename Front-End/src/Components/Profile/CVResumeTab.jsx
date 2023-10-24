@@ -1,8 +1,7 @@
-import axios from "axios";
+import { Axios } from "../api/api";
 import React, { useEffect, useState } from "react";
 import ImageModal from "../ImageModal";
 import "./style.css";
-
 
 function CVResumeTab(props) {
   const { email, institution, name } = props.obj;
@@ -46,8 +45,7 @@ function CVResumeTab(props) {
 
     if (token) {
       // Make a POST request to the getCvResume route
-      axios
-        .post("http://localhost:5000/getCvResume", { token })
+      Axios.post("/getCvResume", { token })
         .then((response) => {
           if (response.data.status === "ok") {
             setCvResume(response.data.cvResume);
@@ -62,7 +60,7 @@ function CVResumeTab(props) {
           setLoading(false); // Set loading to false after the API call
         });
     }
-  }, []); 
+  }, []);
   const handleSubmit = () => {
     const token = localStorage.getItem("token"); // Replace "token" with the key you use to store the token in localStorage
     if (!token) {
@@ -70,16 +68,15 @@ function CVResumeTab(props) {
       // Handle the case where the token is missing or expired
       return;
     }
-  
+
     // Define the data you want to send in the request body
     const requestData = {
       token: token,
       cvResume: cvResume,
     };
-  
+
     // Make an Axios POST request to update the cvResume
-    axios
-      .post("http://localhost:5000/updateCvResume", requestData) // Replace "/updateCvResume" with your actual API endpoint
+    Axios.post("/updateCvResume", requestData) // Replace "/updateCvResume" with your actual API endpoint
       .then((response) => {
         // Handle the response, e.g., show a success message
         console.log("CV/Resume updated successfully");
@@ -90,7 +87,7 @@ function CVResumeTab(props) {
         console.error("Error updating CV/Resume:", error);
       });
   };
-  
+
   return (
     <div>
       <div className="group">
@@ -120,7 +117,9 @@ function CVResumeTab(props) {
           </div>
         </div>
       </div>
-      <button className="text-wrapper-11" onClick={handleSubmit}>Save</button>
+      <button className="text-wrapper-11" onClick={handleSubmit}>
+        Save
+      </button>
       {showModal && <ImageModal image={modalImage} onClose={closeImageModal} />}
     </div>
   );
