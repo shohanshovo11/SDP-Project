@@ -19,6 +19,7 @@ import LoginOption from "./Components/LoginOption";
 import { SignUpEmployer } from "./Components/SignUpEmployer";
 import PostJobtutor from "./Components/PostJob/PostJobtutor";
 import Modal from "./Components/postedJob/Modal";
+import ApplicantList from "./Components/ApplicantList/ApplicantList";
 function App() {
   return (
     <BrowserRouter>
