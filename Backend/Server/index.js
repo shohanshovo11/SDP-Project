@@ -28,23 +28,13 @@ const PORT = 5000|| process.env.PORT;
 
 app.use(cookieParser());
 app.use(cors());
-app.use(express.json());
 
 
 const Education = require("./Schema/education");
 
 app.use(bodyParser.json({ limit: "50mb" }));
 
-app.use(cookieParser());
-app.use(
-  cors({
-    origin: ["https://deploy-mern-1whq.vercel.app"],
-    methods: ["GET", "POST"],
-    credentials: true,
-  })
-);
 
-app.use(bodyParser.json());
 // Define a middleware function to check the database connection status
 const checkDatabaseConnection = (req, res, next) => {
   if (mongoose.connection.readyState == 2) {
