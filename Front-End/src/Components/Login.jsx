@@ -1,3 +1,4 @@
+import { Axios } from "../Components/api/api";
 import React, { useState } from "react";
 import { Dna } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
@@ -30,23 +31,22 @@ export const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (formData.email === "" || formData.password === "") {
       toast.error("Please fill in all fields");
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:5000/login", {
-        method: "POST",
-        credentials: "include",
+      const response = await Axios.post("/login", formData, {
+        withCredentials: true,
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
       });
 
       if (response.status === 200) {
-        const data = await response.json();
+        const data = response.data;
         if (data.status === "ok") {
           window.localStorage.setItem("token", data.token);
           window.localStorage.setItem("email", formData.email);

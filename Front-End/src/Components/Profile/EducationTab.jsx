@@ -1,11 +1,11 @@
-import axios from "axios";
+import { Axios } from "../api/api";
 import React, { useEffect, useState } from "react";
 import { Dna } from "react-loader-spinner";
 import ImageModal from "../ImageModal";
 import "./style.css";
 
 function EducationTab(props) {
-  const [email, setEmail] = useState(window.localStorage.getItem('email'));
+  const [email, setEmail] = useState(window.localStorage.getItem("email"));
   const [edu, setEdu] = useState({});
   const [sscResult, setSscResult] = useState(edu.sscResult || "");
   const [hscResult, setHscResult] = useState(edu.hscResult || "");
@@ -20,12 +20,8 @@ function EducationTab(props) {
   const [hscCertificate, setHscCertificate] = useState(
     edu.hscCertificate || ""
   );
-  const [school, setSchool] = useState(
-    edu.school || ""
-  );
-  const [college, setCollege] = useState(
-    edu.college || ""
-  );
+  const [school, setSchool] = useState(edu.school || "");
+  const [college, setCollege] = useState(edu.college || "");
   const [showModal, setShowModal] = useState(false);
   const [modalImage, setModalImage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -42,21 +38,23 @@ function EducationTab(props) {
 
   useEffect(() => {
     setLoading(true);
-    fetch("http://localhost:5000/getEducation", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
+
+    Axios.post(
+      "/getEducation",
+      {
         token: window.localStorage.getItem("token"),
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    )
+      .then((response) => {
+        const data = response.data;
         setEdu(data.data || {});
-        // console.log(data.data)
         setLoading(false);
       })
       .catch((error) => {
@@ -65,7 +63,7 @@ function EducationTab(props) {
   }, []);
 
   useEffect(() => {
-    console.log(edu,"shovo");
+    console.log(edu, "shovo");
     setSscResult(edu.sscResult);
     setHscResult(edu.hscResult);
     setcurrentInstitution(edu.currentInstitution);
@@ -82,7 +80,7 @@ function EducationTab(props) {
   //   const jwtToken = localStorage.getItem('token');
   //   if (jwtToken) {
   //     // console.log(`JWT Token: ${jwtToken}`);
-  //     axios.post('http://localhost:5000/userData', { token: jwtToken }, { withCredentials: true })
+  //     Axios.post('/userData', { token: jwtToken }, { withCredentials: true })
   //       .then((res) => {
   //         // console.log(res.data.data);
   //         setUserDetails(res.data.data);
@@ -110,8 +108,7 @@ function EducationTab(props) {
       college: college,
     };
 
-    axios
-      .post("http://localhost:5000/education", postData)
+    Axios.post("/education", postData)
       .then((res) => {
         if (res.status === 200) {
           console.log("Data sent successfully", res.data);
@@ -133,14 +130,13 @@ function EducationTab(props) {
     // console.log("SSC Certificate:", sscCertificate);
     // console.log("HSC Certificate:", hscCertificate);
     sendDataToServer();
-
   };
 
   const convertToBase64 = (e, certificateType) => {
     const reader = new FileReader();
     reader.onload = () => {
       const base64Data = reader.result;
-  
+
       if (certificateType === "sscCertificate") {
         setSscCertificate(base64Data);
       } else if (certificateType === "hscCertificate") {
@@ -148,13 +144,11 @@ function EducationTab(props) {
       }
       // console.log(`${certificateType} base64:`, base64Data); // Log the base64 data
     };
-  
+
     if (e.target.files.length > 0) {
       reader.readAsDataURL(e.target.files[0]);
     }
   };
-  
-  
 
   return (
     <div className="">

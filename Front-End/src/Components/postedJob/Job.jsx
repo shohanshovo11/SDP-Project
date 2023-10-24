@@ -4,28 +4,29 @@ import Footer from "../Footer";
 import { NavNolog } from "../navbar/NavNolog";
 import { Navbar } from "../navbar/Navbar";
 import { Tutor } from "./Tutor";
+import { Axios } from "../api/api";
 
 export const Job = () => {
   const tokenAvailable = !!localStorage.getItem("token");
   const [loading, setLoading] = useState(false);
-  const apiUrl = "http://localhost:5000/jobs"; // Adjust the URL as needed
-  // Make a GET request to fetch jobs using the fetch API
+
+  const apiUrl = "/jobs"; // Adjust the URL as needed
+
   const [jobs, setJobs] = useState([]);
   useEffect(() => {
     setLoading(true);
-    // Fetch jobs data here, for example
-    fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        // Update the component state with the fetched data
+
+    Axios.get(apiUrl)
+      .then((response) => {
+        const data = response.data;
         setJobs(data);
         setLoading(false);
-        // console.log(jobs);
       })
       .catch((error) => {
         console.error("Error fetching jobs:", error);
       });
   }, []);
+
   return (
     <>
       {loading ? (

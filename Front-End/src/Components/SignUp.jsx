@@ -1,3 +1,4 @@
+import { Axios } from "../Components/api/api";
 import React, { useState } from "react";
 import { Dna } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
@@ -44,24 +45,17 @@ export const SignUp = () => {
     }
 
     // If passwords match, continue with form submission logic
-    fetch("http://localhost:5000/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        accept: "application/json",
-      },
-      body: JSON.stringify({
-        email: formData.email,
-        password: formData.password,
-      }),
+    Axios.post("/register", {
+      email: formData.email,
+      password: formData.password,
     })
-      .then((res) => {
-        if (res.status === 400) {
+      .then((response) => {
+        if (response.status === 400) {
           // If status is 400, email already exists, show a toast
           toast.error("User already exists");
           throw new Error("User already exists");
         }
-        return res.json();
+        return response.data;
       })
       .then((data) => {
         console.log(data, "userRegister");
@@ -69,9 +63,9 @@ export const SignUp = () => {
         console.log("Form submitted");
         // navigate("/"); // You can navigate to the profile page here
       })
-      .catch((e) => {
+      .catch((error) => {
         toast.error("Something went wrong");
-        console.error(e.message);
+        console.error(error.message);
       });
   };
 

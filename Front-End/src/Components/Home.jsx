@@ -1,4 +1,4 @@
-import axios from "axios";
+import { Axios } from "../Components/api/api";
 import React, { useEffect, useState } from "react";
 import AroundPpl from "./AroundPpl";
 import CourseProgram from "./CourseProgram";
@@ -13,12 +13,7 @@ function Home(props) {
   useEffect(() => {
     if (jwtToken) {
       console.log(`JWT Token: ${jwtToken}`);
-      axios
-        .post(
-          'http://localhost:5000/userData',
-          { token: jwtToken },
-          { withCredentials: true }
-        )
+      Axios.post("/userData", { token: jwtToken }, { withCredentials: true })
         .then((res) => {
           console.log(res.data.data);
         })
@@ -26,13 +21,13 @@ function Home(props) {
           console.log(err);
         });
     } else {
-      console.log('JWT Token not found in localStorage');
+      console.log("JWT Token not found in localStorage");
     }
   }, [jwtToken]);
-  
+
   return (
     <div className="bg-white font-poppins">
-       {noNav ? <NavNolog /> : <Navbar />}
+      {noNav ? <NavNolog /> : <Navbar />}
       <Poster />
       <div className="flex flex-col justify-center items-center bg-white font-poppins font-bold text-black">
         <h1 className="py-6 text-3xl">How It Works?</h1>
@@ -152,7 +147,7 @@ function Home(props) {
       <div className="flex flex-col justify-center items-center bg-white font-poppins font-bold text-black mt-28 mb-28">
         <h1 className="py-6 text-3xl">Our Present Service</h1>
         <div className="flex gap-12">
-        <Card
+          <Card
             obj={{
               text: "Registered Tutors",
               col: "#CEDADF",
@@ -192,7 +187,7 @@ function Home(props) {
       </div>
       <CourseProgram />
       <AroundPpl />
-      <Footer/>
+      <Footer />
     </div>
   );
 }

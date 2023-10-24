@@ -4,7 +4,7 @@ import Footer from "../Footer";
 import verify from "../Images/verify.png";
 import { NavNolog } from "../navbar/NavNolog";
 import "./VerifyPassword.css";
-import axios from "axios";
+import { Axios } from "../api/api";
 import { ToastContainer, toast } from "react-toastify";
 
 export const VerifyPassword = () => {
@@ -54,7 +54,7 @@ export const VerifyPassword = () => {
     console.log(otp);
 
     try {
-      const response = await axios.post("http://localhost:5000/verify-otp", {
+      const response = await Axios.post("/verify-otp", {
         email,
         otp,
       });

@@ -1,4 +1,4 @@
-import axios from "axios";
+import { Axios } from "../api/api";
 import React, { useRef, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -104,8 +104,7 @@ function BasicInfoTab(props) {
       base64: image,
     };
 
-    axios
-      .post("http://localhost:5000/update", user)
+    Axios.post("/update", user)
       .then(function (response) {
         // console.log("User information updated successfully:", response.data);
         window.localStorage.setItem("profileImgUrl", user.base64);
