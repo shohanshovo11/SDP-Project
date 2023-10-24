@@ -13,6 +13,8 @@ export const Job = () => {
   const apiUrl = "/jobs"; // Adjust the URL as needed
 
   const [jobs, setJobs] = useState([]);
+  const [records, setRecords] = useState([]);
+
   useEffect(() => {
     setLoading(true);
 
@@ -20,12 +22,18 @@ export const Job = () => {
       .then((response) => {
         const data = response.data;
         setJobs(data);
+        setRecords(data);
+
         setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching jobs:", error);
       });
   }, []);
+
+  const handleSearch = (searchEvent) => {
+    setRecords(jobs.filter(f => f.title.toLowerCase().includes(searchEvent.target.value)))
+  }
 
   return (
     <>
@@ -78,6 +86,7 @@ export const Job = () => {
                   <input
                     type="search"
                     id="default-search"
+                    onChange={handleSearch}
                     className="block w-72 p-3 mr-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white  focus:ring-blue-500 focus:border-blue-500  dark:border-gray-600 dark:placeholder-gray-400 dark:text-indigo-800 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Search for Jobs..."
                     required
@@ -154,7 +163,7 @@ export const Job = () => {
               <div className="btn grow bg-bt text-slate-50 mt-2">Search</div>
             </div>
             <div className="col-span-4 p-5 bg-white flex flex-wrap gap-6">
-              {jobs.map((job, index) => (
+              {records.map((job, index) => (
                 <Tutor
                   key={index}
                   tutor={{
