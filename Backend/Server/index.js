@@ -3,13 +3,14 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const db = require("./db");
 const cors = require("cors");
-const TuitionModel = require("./Schema/tuition");
 const OTPModel = require("./Schema/otp");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-const UserModel = require("./Schema/userDetails");
 const JWT_SECRET = "jwt-secret-key";
 const otpGenerator = require("otp-generator");
+
+const UserModel = require("./Schema/userDetails");
+const TuitionModel = require("./Schema/tuition");
 const EmployerModel = require("./Schema/employer")
 const FreelancerModel = require("./Schema/freelancerSchema");
 const InternshipModel = require("./Schema/internship");
@@ -479,3 +480,81 @@ app.get("/api/profileImage", (req, res) => {
       res.status(500).json({ error: "Internal server error" });
     });
 });
+
+app.get('/tutorjobcount', (req,res) => {
+  db.collection("tuitions").estimatedDocumentCount()
+  .then(vari =>{
+    res.json(vari)
+  })
+  .catch(()=> res.status(500).json("Could not insert data"));
+})
+
+
+app.post('/tutorjob', (req,res) => {
+  
+  const tutor=req.body
+  db.collection("tuitions").insertOne(tutor)
+  .then(vari =>{
+    res.json(vari)
+  })
+  .catch(()=> res.status(500).json("Could not insert data"));
+})
+
+app.get('/freelancejobcount', (req,res) => {
+  db.collection("freelancers").estimatedDocumentCount()
+  .then(vari =>{
+    res.json(vari)
+  })
+  .catch(()=> res.status(500).json("Could not insert data"));
+})
+
+
+app.post('/freelancejob', (req,res) => {
+  
+  const freelancer=req.body
+  db.collection("freelancers").insertOne(freelancer)
+  .then(vari =>{
+    res.json(vari)
+  })
+  .catch(()=> res.status(500).json("Could not insert data"));
+})
+
+
+app.get('/internjobcount', (req,res) => {
+  db.collection("internships").estimatedDocumentCount()
+  .then(vari =>{
+    res.json(vari)
+  })
+  .catch(()=> res.status(500).json("Could not insert data"));
+})
+
+
+app.post('/internjob', (req,res) => {
+  
+  const intern=req.body
+  db.collection("internships").insertOne(intern)
+  .then(vari =>{
+    res.json(vari)
+  })
+  .catch(()=> res.status(500).json("Could not insert data"));
+})
+
+
+app.get('/parttimejobcount', (req,res) => {
+  db.collection("parttimejobs").estimatedDocumentCount()
+  .then(vari =>{
+    res.json(vari)
+  })
+  .catch(()=> res.status(500).json("Could not insert data"));
+})
+
+
+app.post('/parttimejob', (req,res) => {
+  
+  const parttime=req.body
+  db.collection("parttimejobs").insertOne(parttime)
+  .then(vari =>{
+    res.json(vari)
+  })
+  .catch(()=> res.status(500).json("Could not insert data"));
+})
