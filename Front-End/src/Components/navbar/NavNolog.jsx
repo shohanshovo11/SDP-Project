@@ -5,12 +5,14 @@ export const NavNolog = () => {
     <>
       <div className="navbar flex justify-between bg-white text-neutral-900">
         <div className="">
-          <a className="btn btn-ghost normal-case text-xl font-poppins text-bt font-extrabold pl-8">Study WorkNet</a>
+          <a className="btn btn-ghost normal-case text-xl font-poppins text-bt font-extrabold pl-8">
+            Study WorkNet
+          </a>
         </div>
         <div className="navbar-center hidden lg:flex text-base font-bold font-poppins">
           <ul className="menu menu-horizontal px-1">
             <li>
-            <Link to="/">Home</Link>
+              <Link to="/">Home</Link>
             </li>
             <li>
               <a>About</a>
@@ -22,13 +24,13 @@ export const NavNolog = () => {
                   <li>
                     <Link to="/posted-jobs">Tuition</Link>
                   </li>
-                  <li >
+                  <li>
                     <a>Internship</a>
                   </li>
-                  <li >
+                  <li>
                     <a>Part-Time</a>
                   </li>
-                  <li >
+                  <li>
                     <a>Freelancing</a>
                   </li>
                 </ul>
@@ -42,10 +44,10 @@ export const NavNolog = () => {
         <div className="navbar-center hidden lg:flex text-base font-bold font-poppins">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <Link to="/sign-up">Sign up</Link>
+              <Link to="/signup-option">Sign up</Link>
             </li>
             <li>
-              <Link to="/login">Login</Link>
+              <Link to="/login-option">Login</Link>
             </li>
             <li>
               <a href="#">Help/Support</a>

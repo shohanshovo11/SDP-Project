@@ -8,8 +8,8 @@ function Footer() {
     <div className='flex bg-[#E0E0E0] font-poppins font-bold pl-12 py-8'>
       <div className='flex flex-col basis-3/5'>
         <p className='text-bt opacity-60 pr-40 pb-4'>help fresh graduates who need a job opportunity to develop themselves. so it will help the business owners to save a lot of effort, time and money to get there service at the best price.</p>
-        <span className='text-black pb-2'><FontAwesomeIcon icon={faEnvelope} beatFade size='lg'/> /Studyworknet@yahoo.com</span>
-        <span className='text-black pb-2'><FontAwesomeIcon icon={faFacebook} beatFade size='lg'/> /Studyworknet@facebook.com</span>
+        <span className='text-black pb-2'><FontAwesomeIcon icon={faEnvelope} beatFade size='lg'/> /studyworknet123@gmail.com</span>
+        <span className='text-black pb-2'><FontAwesomeIcon icon={faFacebook} beatFade size='lg'/> /studyworknet123@gmail.com</span>
         <span className='text-black pb-2'><FontAwesomeIcon icon={faWhatsapp} beatFade size='lg'/>/+8801860552999</span>
       </div>
       <div className='flex flex-col basis-1/2 mt-8 items-center'>
@@ -35,7 +35,7 @@ function Footer() {
     </div>
     <div className='bg-bt text-white font-poppins font-bold flex justify-between py-7 pl-12'>
       <div>
-        Copyright &#169; All rights reserved<span className='text-amber-200 text-xl'>(Shovo)</span>
+        Copyright &#169; All rights reserved
       </div>
       <div className='flex gap-6 pr-12'>
         <span>Terms of Service</span>

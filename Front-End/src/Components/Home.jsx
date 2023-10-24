@@ -1,4 +1,5 @@
-import React from "react";
+import { Axios } from "../Components/api/api";
+import React, { useEffect, useState } from "react";
 import AroundPpl from "./AroundPpl";
 import CourseProgram from "./CourseProgram";
 import Footer from "./Footer";
@@ -6,12 +7,27 @@ import Poster from "./Poster/Poster";
 import Card from "./card/Card";
 import { NavNolog } from "./navbar/NavNolog";
 import { Navbar } from "./navbar/Navbar";
-
 function Home(props) {
-  const noNav = props.obj2.email === "" ? true : false;
+  const [jwtToken, setJwtToken] = useState(localStorage.getItem("token") || "");
+  const [noNav, setNoNav] = useState(!jwtToken);
+  useEffect(() => {
+    if (jwtToken) {
+      console.log(`JWT Token: ${jwtToken}`);
+      Axios.post("/userData")
+        .then((res) => {
+          console.log(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log("JWT Token not found in localStorage");
+    }
+  }, [jwtToken]);
+
   return (
     <div className="bg-white font-poppins">
-      {noNav===true?<NavNolog />:<Navbar />}
+      {noNav ? <NavNolog /> : <Navbar />}
       <Poster />
       <div className="flex flex-col justify-center items-center bg-white font-poppins font-bold text-black">
         <h1 className="py-6 text-3xl">How It Works?</h1>
@@ -131,7 +147,7 @@ function Home(props) {
       <div className="flex flex-col justify-center items-center bg-white font-poppins font-bold text-black mt-28 mb-28">
         <h1 className="py-6 text-3xl">Our Present Service</h1>
         <div className="flex gap-12">
-        <Card
+          <Card
             obj={{
               text: "Registered Tutors",
               col: "#CEDADF",
@@ -171,8 +187,7 @@ function Home(props) {
       </div>
       <CourseProgram />
       <AroundPpl />
-      <Footer/>
-
+      <Footer />
     </div>
   );
 }
