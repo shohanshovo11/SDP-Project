@@ -23,10 +23,11 @@ const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 
 dotenv.config();
-const PORT = 5000|| process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 
 app.use(cors());
+
 
 
 const Education = require("./Schema/education");
@@ -87,7 +88,7 @@ app.post("/register", async (req, res) => {
 });
 
 const verifyUser = (req, res, next) => {
-  const token = req.cookies.token;
+  const token = req.headers?.authorization?.split(" ")[1] || req.cookies.token;
   // console.log(token);
   if (!token) return res.json("The token was not available");
   else {
