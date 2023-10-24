@@ -27,20 +27,8 @@ const PORT = 5000|| process.env.PORT;
 
 
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: ["https://study-worknet.netlify.app", "https://sdp-back.onrender.com"],
-    methods: ["GET", "POST"],
-    credentials: true,
-  })
-);
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://study-worknet.netlify.app");
-  res.header("Access-Control-Allow-Methods", "GET, POST");
-  res.header("Access-Control-Allow-Credentials", true);
-  next();
-});
-
+app.use(cors());
+app.use(express.json());
 
 
 const Education = require("./Schema/education");
