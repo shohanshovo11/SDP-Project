@@ -18,11 +18,13 @@ export const Profile = () => {
     setLoading(true);
     if (jwtToken) {
       console.log(`JWT Token: ${jwtToken}`);
-      Axios.post("/userData", {
-        headers: {
-          authorization: `Bearer ${jwtToken}`,
-        },
-      })
+
+      // Create a headers object with the authorization header
+      const headers = {
+        Authorization: `Bearer ${jwtToken}`,
+      };
+
+      Axios.post("/userData", {}, { headers }) // Pass headers as the third argument
         .then((res) => {
           setUser(res.data.data);
           setLoading(false);

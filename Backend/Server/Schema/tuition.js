@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const jobSchema = new mongoose.Schema(
+const tuition = new mongoose.Schema(
   {
     employerEmail: String,
     title: String,
@@ -10,10 +10,10 @@ const jobSchema = new mongoose.Schema(
     tags: []
   },
   {
-    collection: 'Jobs',
+    collection: 'tuitions',
   }
 );
 
-mongoose.model('Job', jobSchema); 
+mongoose.model('tuition', tuition); 
 
-module.exports = mongoose.model('Job'); 
+module.exports = mongoose.model('tuition'); 

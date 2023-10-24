@@ -13,7 +13,7 @@ function Home(props) {
   useEffect(() => {
     if (jwtToken) {
       console.log(`JWT Token: ${jwtToken}`);
-      Axios.post("/userData", { token: jwtToken }, { withCredentials: true })
+      Axios.post("/userData")
         .then((res) => {
           console.log(res.data.data);
         })

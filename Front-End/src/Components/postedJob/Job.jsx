@@ -42,6 +42,7 @@ export const Job = () => {
       ) : (
         <div className="bg-white h-screen text-black font-poppins">
           {tokenAvailable ? <Navbar /> : <NavNolog />}
+          {console.log(jobs)}
           <hr />
           <div className="flex justify-between px-20 py-4">
             <h2>All Categories</h2>
