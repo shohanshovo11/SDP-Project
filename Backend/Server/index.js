@@ -29,7 +29,7 @@ const PORT = 5000|| process.env.PORT;
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["https://sdp-project-frontend.vercel.app", "https://deploy-mern-1whq.vercel.app"],
+    origin: ["https://study-worknet.netlify.app/", "https://sdp-back.onrender.com"],
     methods: ["GET", "POST"],
     credentials: true,
   })
