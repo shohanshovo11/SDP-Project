@@ -2,12 +2,15 @@ const mongoose = require('mongoose');
 
 const tuition = new mongoose.Schema(
   {
-    employerEmail: String,
+    email: String,
     title: String,
     description: String,
     area: String,
     time: String,
-    tags: []
+    salary: String,
+    version: String,
+    studentClass: String,
+    tags: [],
   },
   {
     collection: 'tuitions',
