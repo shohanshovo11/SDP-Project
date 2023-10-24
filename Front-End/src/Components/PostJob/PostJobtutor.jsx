@@ -18,30 +18,30 @@ const PostJobtutor = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const loginType = localStorage.getItem("loginType");
-    if (loginType === "employer") {
-      const reqbody = {
-        email: localStorage.getItem("email"),
-        title: title,
-        description: description,
-        area: location,
-        workingHour: time,
-        salary: salary,
-        version: medium,
-        studentClass: classs,
-        subject: subject,
-        //tags
-      };
-      // console.log(reqbody);
-      const response = await Axios.post(`/tutorjob`, reqbody);
-      const data = response.data;
-      if (!data.acknowledged) {
-        toast.error("Data couldn't be inserted");
-        return;
-      }
-      toast.success("Data successfully inserted");
-    } else {
-      toast.error("You are not an employer");
+    // if (loginType === "employer") {
+    const reqbody = {
+      email: localStorage.getItem("email"),
+      title: title,
+      description: description,
+      area: location,
+      workingHour: time,
+      salary: salary,
+      version: medium,
+      studentClass: classs,
+      subject: subject,
+      //tags
+    };
+    // console.log(reqbody);
+    const response = await Axios.post(`/tutorjob`, reqbody);
+    const data = response.data;
+    if (!data.acknowledged) {
+      toast.error("Data couldn't be inserted");
+      return;
     }
+    toast.success("Data successfully inserted");
+    // } else {
+    //   toast.error("You are not an employer");
+    // }
     // setTimeOut(() =>{
     //   window.location.reload(true)
     // },1000)
