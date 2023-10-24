@@ -1,7 +1,7 @@
 //import Profile from "./components/Profile1";
-import { Navbar } from "../navbar/Navbar";
 import styles from "./RatingReview.module.css";
-import image1 from "./mobile-loginbro-1.svg";
+import image1 from "../../assets/ratingrev/mobile-loginbro-1.svg";
+import { Navbar } from "../navbar/Navbar";
 //import Profile1 from "./components/Profile1";
 
 const RatingReview = () => {
