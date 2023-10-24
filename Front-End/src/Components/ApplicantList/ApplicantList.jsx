@@ -2,7 +2,7 @@ import React from "react";
 import "./ApplicantList.css";
 import { Navbar } from "../navbar/Navbar.jsx";
 import Footer from "../Footer.jsx";
-import { Card } from "./card";
+import { ApplicantListCard } from "./ApplicantListCard";
 import qh from "../Images/questionhead.png";
 export const ApplicantList = () => {
   return (
@@ -13,62 +13,62 @@ export const ApplicantList = () => {
           <span className="header">Applicants for UX Design</span>
         </div>
         <div className="whole-card">
-          <Card
+          <ApplicantListCard
             name="Nishat Tabassum"
             description="UI designer"
             tags={["Figma", "HTML", "CSS"]}
           />
-          <Card
+          <ApplicantListCard
             name="Nishat Tabassum"
             description="UI designer"
             tags={["Figma", "HTML", "CSS"]}
           />
-          <Card
+          <ApplicantListCard
             name="Nishat Tabassum"
             description="UI designer"
             tags={["Figma", "HTML", "CSS"]}
           />
-          <Card
+          <ApplicantListCard
             name="Nishat Tabassum"
             description="UI designer"
             tags={["Figma", "HTML", "CSS"]}
           />
-          <Card
+          <ApplicantListCard
             name="Nishat Tabassum"
             description="UI designer"
             tags={["Figma", "HTML", "CSS"]}
           />
-          <Card
+          <ApplicantListCard
             name="Nishat Tabassum"
             description="UI designer"
             tags={["Figma", "HTML", "CSS"]}
           />
-          <Card
+          <ApplicantListCard
             name="Nishat Tabassum"
             description="UI designer"
             tags={["Figma", "HTML", "CSS"]}
           />
-          <Card
+          <ApplicantListCard
             name="Nishat Tabassum"
             description="UI designer"
             tags={["Figma", "HTML", "CSS"]}
           />
-          <Card
+          <ApplicantListCard
             name="Nishat Tabassum"
             description="UI designer"
             tags={["Figma", "HTML", "CSS"]}
           />
-          <Card
+          <ApplicantListCard
             name="Nishat Tabassum"
             description="UI designer"
             tags={["Figma", "HTML", "CSS"]}
           />
-          <Card
+          <ApplicantListCard
             name="Nishat Tabassum"
             description="UI designer"
             tags={["Figma", "HTML", "CSS"]}
           />
-          <Card
+          <ApplicantListCard
             name="Nishat Tabassum"
             description="UI designer"
             tags={["Figma", "HTML", "CSS"]}

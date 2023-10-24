@@ -2,7 +2,7 @@ import React from "react";
 import "./ApplicantList.css";
 import profile from "../Images/profile.png";
 
-export const Card = (props) => {
+export const ApplicantListCard = (props) => {
   return (
     <div>
       <div className="card">
@@ -23,4 +23,4 @@ export const Card = (props) => {
   );
 };
 
-export default Card;
+export default ApplicantListCard;
