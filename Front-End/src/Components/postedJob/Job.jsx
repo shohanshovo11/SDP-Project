@@ -31,9 +31,16 @@ export const Job = () => {
       });
   }, []);
 
-  const handleSearch = (searchEvent) => {
-    setRecords(jobs.filter(f => f.title.toLowerCase().includes(searchEvent.target.value)))
+  const handleSearchTitle = (searchEvent) => {
+    setRecords(jobs.filter(f => f.title.toLowerCase().includes(searchEvent.target.value.toLowerCase())))
   }
+
+  const handleSearchLocation = (searchEvent) => {
+    setRecords(jobs.filter(f => f.area.toLowerCase().includes(searchEvent.target.value.toLowerCase())))
+  }
+
+  
+
 
   return (
     <>
@@ -86,7 +93,7 @@ export const Job = () => {
                   <input
                     type="search"
                     id="default-search"
-                    onChange={handleSearch}
+                    onChange={handleSearchTitle}
                     className="block w-72 p-3 mr-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white  focus:ring-blue-500 focus:border-blue-500  dark:border-gray-600 dark:placeholder-gray-400 dark:text-indigo-800 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Search for Jobs..."
                     required
@@ -142,6 +149,7 @@ export const Job = () => {
                 <input
                   type="text"
                   placeholder="Type here"
+                  onChange={handleSearchLocation}
                   className="input h-10 border-2 border-slate-950 focus:border-blue-500 focus:border-2 input-bordered bg-white input-accent w-full max-w-xs focus:ring-2
               "
                 />
@@ -153,11 +161,12 @@ export const Job = () => {
                   data-te-select-init
                   data-te-select-clear-button="true"
                 >
-                  <option value="1">Design</option>
-                  <option value="2">Tution</option>
-                  <option value="3">UX Designer</option>
-                  <option value="4">UI Designer</option>
-                  <option value="5">Photoshop</option>
+                  <option value="1">Select Skills</option>
+                  <option value="2">Physics</option>
+                  <option value="3">Chemistry</option>
+                  <option value="4">Math</option>
+                  <option value="5">H.Math</option>
+                  <option value="6">Biology</option>
                 </select>
               </div>
               <div className="btn grow bg-bt text-slate-50 mt-2">Search</div>
@@ -172,6 +181,7 @@ export const Job = () => {
                     area: job.area,
                     time: job.time,
                     tags: job.tags,
+                    salary: job.salary
                   }}
                 />
               ))}

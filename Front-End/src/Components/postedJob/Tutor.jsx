@@ -29,6 +29,7 @@ export const Tutor = (props) => {
         <span className="text-sm text-gray-500 ">
           Time: {props.tutor.time}
         </span>
+
         <div className="mt-4">
           <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-slate-600 bg-slate-200 last:mr-0 mr-1">
             {props.tutor.tags[0]}
@@ -40,6 +41,11 @@ export const Tutor = (props) => {
             {props.tutor.tags[2]}
           </span>
         </div>
+        <br/>
+        <h5 style={titleStyle} className="mb-1 text-xl font-medium text-gray-900">
+          Salary: {props.tutor.salary}
+        </h5>
+
         <div className="flex mt-4 space-x-3 md:mt-6">
           <a
             href="#"
