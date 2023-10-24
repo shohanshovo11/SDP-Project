@@ -42,11 +42,12 @@ app.use(bodyParser.json({ limit: "50mb" }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["https://deploy-mern-1whq.vercel.app"],
     methods: ["GET", "POST"],
     credentials: true,
   })
 );
+
 app.use(bodyParser.json());
 // Define a middleware function to check the database connection status
 const checkDatabaseConnection = (req, res, next) => {
@@ -67,7 +68,9 @@ app.use(checkDatabaseConnection);
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
+app.get("/",(req, res) => {
+  res.json("Hello");
+})
 app.post("/post", async (req, res) => {
   console.log(req.body);
   return res.send({ status: 200, statusText: "OK" });
