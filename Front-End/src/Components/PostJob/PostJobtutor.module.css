@@ -20,8 +20,8 @@
   left: calc(50% - 194px);
   letter-spacing: -0.65px;
   font-weight: 500;
-  color:aliceblue;
-  font-size:64
+  color: aliceblue;
+  font-size: 64;
 }
 .title {
   top: calc(50% - 414px);
@@ -83,7 +83,7 @@
 .postJobtutorItem,
 .rectangleInput {
   border: 1px solid var(--color-darkgray);
-  background-color:#6695a0;
+  background-color: #6695a0;
   position: absolute;
   top: calc(50% - 350px);
   left: calc(50% - 194px);
@@ -91,7 +91,7 @@
   box-sizing: border-box;
   width: 825px;
   height: 32px;
-  color:aliceblue
+  color: aliceblue;
 }
 .postJobtutorChild1,
 .postJobtutorChild2,
@@ -147,7 +147,8 @@
   letter-spacing: -0.61px;
   line-height: 24.5px;
   font-weight: 400;
-  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
   text-align: center;
   display: inline-block;
   width: 265px;
@@ -186,7 +187,7 @@
   background-color: transparent;
   top: calc(50% + 390px);
   left: calc(50% + 116px);
-  color:white
+  color: white;
 }
 .postJobtutor {
   position: relative;

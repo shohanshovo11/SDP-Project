@@ -106,9 +106,9 @@ export const Login = () => {
                 </label>
                 <div className="relative">
                   <input
-                    type="text"
-                    name="email"
-                    value={formData.email}
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={formData.password}
                     placeholder="Type here"
                     className="input bg-white w-96 text-black border-2 border-bt"
                     onChange={handleInputChange}
