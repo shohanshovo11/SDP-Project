@@ -29,7 +29,7 @@ dotenv.config();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["https://sdp-project-frontend.vercel.app"],
+    origin: ["https://sdp-project-frontend.vercel.app/"],
     methods: ["GET", "POST"],
     credentials: true,
   })
