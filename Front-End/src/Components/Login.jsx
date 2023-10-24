@@ -38,12 +38,7 @@ export const Login = () => {
     }
 
     try {
-      const response = await Axios.post("/login", formData, {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await Axios.post("/login", formData);
 
       if (response.status === 200) {
         const data = response.data;
