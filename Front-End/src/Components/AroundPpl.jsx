@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function AroundPpl() {
   return (
@@ -7,9 +8,12 @@ function AroundPpl() {
         <p className="text-3xl font-extrabold text-bt w-[30rem] mb-14">
           So Many People are engaged all over the world
         </p>
-        <button className="btn btn-square bg-bt text-white w-36 rounded-md">
+        <Link
+          to="/tutorjob"
+          className="btn btn-square bg-bt text-white w-36 rounded-md"
+        >
           Post A Job
-        </button>
+        </Link>
       </div>
       <div className="w-80">
         <img src="landing/Group.png" />
