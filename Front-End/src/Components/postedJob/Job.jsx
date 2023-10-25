@@ -32,15 +32,20 @@ export const Job = () => {
   }, []);
 
   const handleSearchTitle = (searchEvent) => {
-    setRecords(jobs.filter(f => f.title.toLowerCase().includes(searchEvent.target.value.toLowerCase())))
-  }
+    setRecords(
+      jobs.filter((f) =>
+        f.title.toLowerCase().includes(searchEvent.target.value.toLowerCase())
+      )
+    );
+  };
 
   const handleSearchLocation = (searchEvent) => {
-    setRecords(jobs.filter(f => f.area.toLowerCase().includes(searchEvent.target.value.toLowerCase())))
-  }
-
-  
-
+    setRecords(
+      jobs.filter((f) =>
+        f.area.toLowerCase().includes(searchEvent.target.value.toLowerCase())
+      )
+    );
+  };
 
   return (
     <>
@@ -179,9 +184,9 @@ export const Job = () => {
                     title: job.title,
                     description: job.description,
                     area: job.area,
-                    time: job.time,
+                    time: job.workingHour,
                     tags: job.tags,
-                    salary: job.salary
+                    salary: job.salary,
                   }}
                 />
               ))}
