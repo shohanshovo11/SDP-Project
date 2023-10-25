@@ -37,7 +37,7 @@ export const NavNolog = () => {
               </details>
             </li>
             <li>
-              <a>Contact</a>
+              <Link to="/tutorjob">Post Job</Link>
             </li>
           </ul>
         </div>
