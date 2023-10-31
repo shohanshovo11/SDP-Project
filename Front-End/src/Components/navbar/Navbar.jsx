@@ -33,7 +33,7 @@ export const Navbar = () => {
     <>
       <div className="navbar flex justify-between bg-white text-neutral-900">
         <div className="">
-          <a className="btn btn-ghost normal-case text-xl">Study WorkNet</a>
+          <Link to="/"><a className="btn btn-ghost normal-case text-xl">Study WorkNet</a></Link>
         </div>
         <div className="navbar-center hidden lg:flex text-base font-bold font-poppins">
           <ul className="menu menu-horizontal px-1">

@@ -5,9 +5,11 @@ export const NavNolog = () => {
     <>
       <div className="navbar flex justify-between bg-white text-neutral-900">
         <div className="">
+          <Link to="/">
           <a className="btn btn-ghost normal-case text-xl font-poppins text-bt font-extrabold pl-8">
             Study WorkNet
           </a>
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex text-base font-bold font-poppins">
           <ul className="menu menu-horizontal px-1">

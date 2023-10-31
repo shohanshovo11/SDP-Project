@@ -20,6 +20,8 @@ import { SignUpEmployer } from "./Components/SignUpEmployer";
 import PostJobtutor from "./Components/PostJob/PostJobtutor";
 import Modal from "./Components/postedJob/Modal";
 import ApplicantList from "./Components/ApplicantList/ApplicantList";
+import { EmployersJoblist } from "./Components/EmployersJoblist/EmployersJoblist";
+
 function App() {
   return (
     <BrowserRouter>
@@ -54,6 +56,7 @@ function App() {
           <Route path="/ApplicantList" element={<ApplicantList />} />
           <Route path="/modal" element={<Modal />} />
           <Route path="/tutorjob" element={<PostJobtutor />} />
+          <Route path="/employers-joblist" element={<EmployersJoblist />} />
         </Routes>
         <ToastContainer />
       </main>

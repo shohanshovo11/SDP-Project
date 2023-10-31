@@ -1,0 +1,664 @@
+.posted-joblist {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.posted-joblist .div {
+  background-color: #ffffff;
+  height: 1500px;
+  overflow: hidden;
+  position: relative;
+  width: 1512px;
+}
+
+.posted-joblist .text-wrapper {
+  color: #1b2936;
+  font-family: "Poppins", Helvetica;
+  font-size: 20px;
+  font-weight: 500;
+  left: 590px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 471px;
+}
+
+.posted-joblist .text-wrapper-2 {
+  color: #1b2936;
+  font-family: "Poppins", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 1119px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 471px;
+}
+
+.posted-joblist .text-wrapper-3 {
+  color: #1b2936;
+  font-family: "Poppins", Helvetica;
+  font-size: 20px;
+  font-weight: 500;
+  left: 1241px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 471px;
+}
+
+.posted-joblist .frame {
+  height: 80px;
+  left: 1366px;
+  position: absolute;
+  top: 35px;
+  width: 80px;
+}
+
+.posted-joblist .line {
+  height: 1px;
+  left: 0;
+  object-fit: cover;
+  position: absolute;
+  top: 139px;
+  width: 1506px;
+}
+
+.posted-joblist .img {
+  height: 1px;
+  left: 22px;
+  object-fit: cover;
+  position: absolute;
+  top: 361px;
+  width: 1490px;
+}
+
+.posted-joblist .group {
+  height: 634px;
+  left: -16px;
+  position: absolute;
+  top: 1781px;
+  width: 1560px;
+}
+
+.posted-joblist .line-2 {
+  height: 1px;
+  left: 16px;
+  object-fit: cover;
+  position: absolute;
+  top: -1px;
+  width: 1496px;
+}
+
+.posted-joblist .p {
+  color: #000000;
+  font-family: "Poppins", Helvetica;
+  font-size: 24px;
+  font-weight: 400;
+  left: 95px;
+  letter-spacing: -0.48px;
+  line-height: 32px;
+  position: absolute;
+  top: 141px;
+  width: 573px;
+}
+
+.posted-joblist .text-wrapper-4 {
+  color: #000000;
+  font-family: "Poppins", Helvetica;
+  font-size: 24px;
+  font-weight: 400;
+  left: 840px;
+  letter-spacing: -0.48px;
+  line-height: 32px;
+  position: absolute;
+  top: 141px;
+  white-space: nowrap;
+}
+
+.posted-joblist .text-wrapper-5 {
+  color: #000000;
+  font-family: "Poppins", Helvetica;
+  font-size: 24px;
+  font-weight: 400;
+  left: 840px;
+  letter-spacing: -0.48px;
+  line-height: 32px;
+  position: absolute;
+  top: 185px;
+  white-space: nowrap;
+}
+
+.posted-joblist .text-wrapper-6 {
+  color: #000000;
+  font-family: "Poppins", Helvetica;
+  font-size: 24px;
+  font-weight: 400;
+  left: 840px;
+  letter-spacing: -0.48px;
+  line-height: 32px;
+  position: absolute;
+  top: 229px;
+  white-space: nowrap;
+}
+
+.posted-joblist .text-wrapper-7 {
+  color: #000000;
+  font-family: "Poppins", Helvetica;
+  font-size: 24px;
+  font-weight: 400;
+  left: 840px;
+  letter-spacing: -0.48px;
+  line-height: 32px;
+  position: absolute;
+  top: 273px;
+  white-space: nowrap;
+}
+
+.posted-joblist .text-wrapper-8 {
+  color: #000000;
+  font-family: "Poppins", Helvetica;
+  font-size: 24px;
+  font-weight: 400;
+  left: 840px;
+  letter-spacing: -0.48px;
+  line-height: 32px;
+  position: absolute;
+  top: 317px;
+  white-space: nowrap;
+}
+
+.posted-joblist .text-wrapper-9 {
+  color: #000000;
+  font-family: "Poppins", Helvetica;
+  font-size: 24px;
+  font-weight: 400;
+  left: 840px;
+  letter-spacing: -0.48px;
+  line-height: 32px;
+  position: absolute;
+  top: 361px;
+  white-space: nowrap;
+}
+
+.posted-joblist .text-wrapper-10 {
+  color: #000000;
+  font-family: "Poppins", Helvetica;
+  font-size: 24px;
+  font-weight: 400;
+  left: 840px;
+  letter-spacing: -0.48px;
+  line-height: 32px;
+  position: absolute;
+  top: 405px;
+  white-space: nowrap;
+}
+
+.posted-joblist .text-wrapper-11 {
+  color: #000000;
+  font-family: "Poppins", Helvetica;
+  font-size: 24px;
+  font-weight: 400;
+  left: 840px;
+  letter-spacing: -0.48px;
+  line-height: 32px;
+  position: absolute;
+  top: 449px;
+  white-space: nowrap;
+}
+
+.posted-joblist .facebook-app-symbol {
+  height: 30px;
+  left: 86px;
+  object-fit: cover;
+  position: absolute;
+  top: 326px;
+  width: 30px;
+}
+
+.posted-joblist .group-2 {
+  height: 32px;
+  left: 143px;
+  position: absolute;
+  top: 325px;
+  width: 237px;
+}
+
+.posted-joblist .text-wrapper-12 {
+  color: #000000;
+  font-family: "Poppins", Helvetica;
+  font-size: 24px;
+  font-weight: 400;
+  left: 0;
+  letter-spacing: -0.48px;
+  line-height: 32px;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}
+
+.posted-joblist .text-wrapper-13 {
+  color: #000000;
+  font-family: "Poppins", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 14px;
+  letter-spacing: -0.4px;
+  line-height: 32px;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}
+
+.posted-joblist .group-3 {
+  height: 32px;
+  left: 143px;
+  position: absolute;
+  top: 375px;
+  width: 137px;
+}
+
+.posted-joblist .group-4 {
+  height: 32px;
+  left: 142px;
+  position: absolute;
+  top: 428px;
+  width: 252px;
+}
+
+.posted-joblist .twitter {
+  height: 30px;
+  left: 86px;
+  object-fit: cover;
+  position: absolute;
+  top: 377px;
+  width: 30px;
+}
+
+.posted-joblist .linkedin {
+  height: 30px;
+  left: 86px;
+  object-fit: cover;
+  position: absolute;
+  top: 428px;
+  width: 30px;
+}
+
+.posted-joblist .text-wrapper-14 {
+  color: #165069;
+  font-family: "Poppins", Helvetica;
+  font-size: 26px;
+  font-weight: 500;
+  left: 840px;
+  letter-spacing: -0.52px;
+  line-height: 32px;
+  position: absolute;
+  top: 81px;
+  white-space: nowrap;
+}
+
+.posted-joblist .overlap {
+  background-image: url(../../../static/img/rectangle-373.svg);
+  background-size: 100% 100%;
+  height: 86px;
+  left: 17px;
+  position: absolute;
+  top: 548px;
+  width: 1511px;
+}
+
+.posted-joblist .text-wrapper-15 {
+  color: #000000;
+  font-family: "Poppins", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 74px;
+  letter-spacing: -0.4px;
+  line-height: 32px;
+  position: absolute;
+  top: 27px;
+  white-space: nowrap;
+}
+
+.posted-joblist .text-wrapper-16 {
+  color: #000000;
+  font-family: "Poppins", Helvetica;
+  font-size: 22px;
+  font-weight: 500;
+  left: 823px;
+  letter-spacing: -0.44px;
+  line-height: 32px;
+  position: absolute;
+  top: 27px;
+  white-space: nowrap;
+}
+
+.posted-joblist .text-wrapper-17 {
+  color: #000000;
+  font-family: "Poppins", Helvetica;
+  font-size: 22px;
+  font-weight: 500;
+  left: 1040px;
+  letter-spacing: -0.44px;
+  line-height: 32px;
+  position: absolute;
+  top: 27px;
+  white-space: nowrap;
+}
+
+.posted-joblist .text-wrapper-18 {
+  color: #000000;
+  font-family: "Poppins", Helvetica;
+  font-size: 22px;
+  font-weight: 500;
+  left: 1228px;
+  letter-spacing: -0.44px;
+  line-height: 32px;
+  position: absolute;
+  top: 27px;
+  white-space: nowrap;
+}
+
+.posted-joblist .text-wrapper-19 {
+  color: #000000;
+  font-family: "Poppins", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 211px;
+  letter-spacing: -0.4px;
+  line-height: 32px;
+  position: absolute;
+  top: 27px;
+  white-space: nowrap;
+}
+
+.posted-joblist .overlap-group-wrapper {
+  height: 32px;
+  left: 178px;
+  position: absolute;
+  top: 27px;
+  width: 27px;
+}
+
+.posted-joblist .overlap-group {
+  height: 32px;
+  position: relative;
+  width: 25px;
+}
+
+.posted-joblist .ellipse {
+  background-color: #165069;
+  border: 1px solid;
+  border-color: #000000;
+  border-radius: 12.5px;
+  height: 25px;
+  left: 0;
+  position: absolute;
+  top: 3px;
+  width: 25px;
+}
+
+.posted-joblist .text-wrapper-20 {
+  color: #000000;
+  font-family: "Poppins", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 2px;
+  letter-spacing: -0.4px;
+  line-height: 32px;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}
+
+.posted-joblist .text-wrapper-21 {
+  color: #165069;
+  font-family: "Red Rose", Helvetica;
+  font-size: 35px;
+  font-weight: 700;
+  left: 91px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-shadow: 3px 4px 3px #f5f5f526;
+  top: 48px;
+  width: 284px;
+}
+
+.posted-joblist .vector {
+  height: 8px;
+  left: 1431px;
+  position: absolute;
+  top: 490px;
+  width: 13px;
+}
+
+.posted-joblist .text-wrapper-22 {
+  color: #1b2936;
+  font-family: "Plus Jakarta Sans", Helvetica;
+  font-size: 50px;
+  font-weight: 400;
+  height: 50px;
+  left: 383px;
+  letter-spacing: -2px;
+  line-height: 45px;
+  position: absolute;
+  text-align: center;
+  top: 60px;
+  width: 746px;
+}
+
+.posted-joblist .element-error-with {
+  height: 2098px;
+  left: 0;
+  position: absolute;
+  top: 250px;
+  width: 507px;
+}
+
+.posted-joblist .text-wrapper-23 {
+  color: #165069;
+  font-family: "Red Rose", Helvetica;
+  font-size: 35px;
+  font-weight: 700;
+  left: 58px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-shadow: 3px 4px 3px #f5f5f526;
+  top: 41px;
+  width: 284px;
+}
+
+.posted-joblist .frame-2 {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px 28px;
+  left: 567px;
+  position: absolute;
+  top: 250px;
+  width: 920px;
+}
+
+.posted-joblist .card {
+  align-items: flex-start;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  position: relative;
+}
+
+.posted-joblist .rectangle {
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: var(--icon);
+  height: 366px;
+  position: relative;
+  width: 288px;
+}
+
+.posted-joblist .button {
+  all: unset;
+  box-sizing: border-box;
+  height: 40px;
+  left: 65px;
+  position: absolute;
+  top: 289px;
+  width: 160px;
+}
+
+.posted-joblist .div-wrapper {
+  background-color: #165069;
+  border-radius: 10px;
+  box-shadow: var(--primary);
+  height: 40px;
+  position: relative;
+  width: 158px;
+}
+
+.posted-joblist .text-wrapper-24 {
+  color: #ffffff;
+  font-family: "Poppins", Helvetica;
+  font-size: 16px;
+  font-weight: 400;
+  left: 12px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: center;
+  top: 8px;
+  width: 134px;
+}
+
+.posted-joblist .details {
+  height: 123px;
+  left: 40px;
+  position: absolute;
+  top: 143px;
+  width: 211px;
+}
+
+.posted-joblist .tags {
+  height: 25px;
+  left: 0;
+  position: absolute;
+  top: 59px;
+  width: 207px;
+}
+
+.posted-joblist .tag {
+  height: 25px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 61px;
+}
+
+.posted-joblist .overlap-group-2 {
+  background-color: #e2e8f0;
+  border-radius: 10px;
+  height: 25px;
+  position: relative;
+  width: 59px;
+}
+
+.posted-joblist .text-wrapper-25 {
+  color: #475569;
+  font-family: "Poppins", Helvetica;
+  font-size: 12px;
+  font-weight: 400;
+  left: 10px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 3px;
+  width: 39px;
+}
+
+.posted-joblist .overlap-wrapper {
+  height: 25px;
+  left: 74px;
+  position: absolute;
+  top: 0;
+  width: 61px;
+}
+
+.posted-joblist .text-wrapper-26 {
+  color: #475569;
+  font-family: "Poppins", Helvetica;
+  font-size: 12px;
+  font-weight: 400;
+  left: 15px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 3px;
+  width: 28px;
+}
+
+.posted-joblist .tag-2 {
+  height: 25px;
+  left: 148px;
+  position: absolute;
+  top: 0;
+  width: 61px;
+}
+
+.posted-joblist .text-wrapper-27 {
+  color: #475569;
+  font-family: "Poppins", Helvetica;
+  font-size: 12px;
+  font-weight: 400;
+  left: 18px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 3px;
+  width: 22px;
+}
+
+.posted-joblist .text-wrapper-28 {
+  color: #475569;
+  font-family: "Poppins", Helvetica;
+  font-size: 15px;
+  font-weight: 400;
+  left: 56px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 100px;
+}
+
+.posted-joblist .text-wrapper-29 {
+  color: #475569;
+  font-family: "Poppins", Helvetica;
+  font-size: 32px;
+  font-weight: 400;
+  left: 24px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 0;
+}
+
+.posted-joblist .image {
+  background-color: #f6f6f6;
+  border-radius: 40px;
+  height: 80px;
+  left: 104px;
+  position: absolute;
+  top: 40px;
+  width: 80px;
+}
+
+.posted-joblist .vector-2 {
+  height: 52px;
+  left: 11px;
+  position: absolute;
+  top: 14px;
+  width: 58px;
+}
