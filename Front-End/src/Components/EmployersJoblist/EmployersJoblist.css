@@ -210,15 +210,6 @@
   white-space: nowrap;
 }
 
-.posted-joblist .facebook-app-symbol {
-  height: 30px;
-  left: 86px;
-  object-fit: cover;
-  position: absolute;
-  top: 326px;
-  width: 30px;
-}
-
 .posted-joblist .group-2 {
   height: 32px;
   left: 143px;
@@ -487,9 +478,22 @@
 .posted-joblist .card {
   align-items: flex-start;
   display: inline-flex;
-  flex: 0 0 auto;
+  flex: 2 0 auto;
   gap: 10px;
   position: relative;
+}
+
+.card {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid;
+  border-color: white;
+  border-radius: 8px;
+  width: 230px;
+  height: 350px;
+  justify-content: space-between;
+  box-shadow: 3px 3px 18px #011118;
 }
 
 .posted-joblist .rectangle {
