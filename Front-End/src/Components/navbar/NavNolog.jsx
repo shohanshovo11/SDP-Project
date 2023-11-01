@@ -6,9 +6,9 @@ export const NavNolog = () => {
       <div className="navbar flex justify-between bg-white text-neutral-900">
         <div className="">
           <Link to="/">
-          <a className="btn btn-ghost normal-case text-xl font-poppins text-bt font-extrabold pl-8">
-            Study WorkNet
-          </a>
+            <a className="btn btn-ghost normal-case text-xl font-poppins text-bt font-extrabold pl-8">
+              Study WorkNet
+            </a>
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex text-base font-bold font-poppins">
@@ -38,9 +38,15 @@ export const NavNolog = () => {
                 </ul>
               </details>
             </li>
-            <li>
-              <Link to="/tutorjob">Post Job</Link>
-            </li>
+            {localStorage.getItem("loginType") === "employer" ? (
+              <li>
+                <Link to="/tutorjob">Post Job</Link>
+              </li>
+            ) : (
+              <li>
+                <Link to="">Contact Us</Link>
+              </li>
+            )}
           </ul>
         </div>
         <div className="navbar-center hidden lg:flex text-base font-bold font-poppins">

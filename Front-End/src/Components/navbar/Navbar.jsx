@@ -33,7 +33,9 @@ export const Navbar = () => {
     <>
       <div className="navbar flex justify-between bg-white text-neutral-900">
         <div className="">
-          <Link to="/"><a className="btn btn-ghost normal-case text-xl">Study WorkNet</a></Link>
+          <Link to="/">
+            <a className="btn btn-ghost normal-case text-xl">Study WorkNet</a>
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex text-base font-bold font-poppins">
           <ul className="menu menu-horizontal px-1">
@@ -62,9 +64,15 @@ export const Navbar = () => {
                 </ul>
               </details>
             </li>
-            <li>
-              <Link to="/tutorjob">Post Job</Link>
-            </li>
+            {localStorage.getItem("loginType") === "employer" ? (
+              <li>
+                <Link to="/tutorjob">Post Job</Link>
+              </li>
+            ) : (
+              <li>
+                <Link to="">Contact Us</Link>
+              </li>
+            )}
           </ul>
         </div>
         <div className="flex-none gap-2 text-base font-poppins bg-white">

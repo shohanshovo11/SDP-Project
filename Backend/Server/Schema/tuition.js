@@ -10,6 +10,7 @@ const tuition = new mongoose.Schema(
     salary: Number,
     version: String,
     studentclass: Number,
+    active: { type: Boolean, default: false },
     tags: [],
   },
   {

@@ -1,8 +1,8 @@
 import React from "react";
 
-export default function Element4() {
+export default function Complains() {
   return (
-    <div className="grow bg-white flex justify-center items-center">
+    <div className="w-full font-poppins">
       <div className=" text-black text-5xl">Hello from Page 4</div>
     </div>
   );
