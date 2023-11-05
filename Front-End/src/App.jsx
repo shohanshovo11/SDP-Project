@@ -25,6 +25,7 @@ import PartTime from "./Components/PostJob/PartTime";
 import Freelance from "./Components/PostJob/Freelance";
 import EmployerDashboard from "./Components/EmployerDashboard/EmployerDashboard";
 
+import ApplicantList from "./Components/ApplicantList/ApplicantList";
 function App() {
   return (
     <BrowserRouter>
@@ -56,6 +57,7 @@ function App() {
           <Route path="/ratings" element={<RatingReview />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/signup-option" element={<SignUpOption />} />
+          <Route path="/ApplicantList" element={<ApplicantList />} />
           <Route path="/modal" element={<Modal />} />
           <Route path="/tutorjob" element={<PostJobtutor />} />
           <Route path="internjob" element={<Internship />} />
