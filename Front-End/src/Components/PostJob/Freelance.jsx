@@ -14,17 +14,17 @@ const Freelance = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const jobcount=await axios.get(`http://localhost:3002/freelancejobcount`);
     const reqbody={
+         email: localStorage.getItem("email"),
+         category:"freelance",
          rate:rate, 
          deadline:deadline,
          task:task,
          description:description,
-         id: `t${jobcount+1}`,
          workingHour:workingHour,
          title:title
     }
-    const response=await axios.post(`http://localhost:3002/freelancejob`,reqbody);
+    const response=await axios.post(`http://localhost:5000/insertjob`,reqbody);
     const data=response.data
     if(!data.acknowledged)
     {

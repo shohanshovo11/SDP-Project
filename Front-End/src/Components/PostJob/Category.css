@@ -1,0 +1,27 @@
+.am{
+    width:50vw;
+    /* height:70vh; */
+    background-color: aliceblue;
+    padding: 10%;
+    display: flex;
+    gap:1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.jam{
+    width:40%;
+    height:30%;
+    background-color:cadetblue;
+    padding: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.jam:hover{
+    cursor: pointer;
+    background-color: rgb(42, 102, 104);
+    scale: 1.1;
+    color:aliceblue;
+
+}

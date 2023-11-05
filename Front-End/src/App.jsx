@@ -19,6 +19,12 @@ import LoginOption from "./Components/LoginOption";
 import { SignUpEmployer } from "./Components/SignUpEmployer";
 import PostJobtutor from "./Components/PostJob/PostJobtutor";
 import Modal from "./Components/postedJob/Modal";
+import Pendingjob from "./Components/PostJob/Pendingjob";
+import Internship from "./Components/PostJob/internship";
+import PartTime from "./Components/PostJob/PartTime";
+import Freelance from "./Components/PostJob/Freelance";
+import EmployerDashboard from "./Components/EmployerDashboard/EmployerDashboard";
+
 function App() {
   return (
     <BrowserRouter>
@@ -52,6 +58,11 @@ function App() {
           <Route path="/signup-option" element={<SignUpOption />} />
           <Route path="/modal" element={<Modal />} />
           <Route path="/tutorjob" element={<PostJobtutor />} />
+          <Route path="internjob" element={<Internship />} />
+          <Route path="/parttimejob" element={<PartTime />} />
+          <Route path="/freelancejob" element={<Freelance />} />
+          <Route path="/pendingjob" element={<Pendingjob />} />
+          <Route path="/employerdash" element={< EmployerDashboard />} />
         </Routes>
         <ToastContainer />
       </main>

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Navbar } from "../navbar/Navbar";
 import styles from "./Freelance.module.css";
-import { useState } from "react";
+import React,{ useState } from "react";
 import { toast } from "react-toastify";
 
 const Internship = () => {
@@ -14,17 +14,17 @@ const Internship = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const jobcount=await axios.get(`http://localhost:3002/internjobcount`);
     const reqbody={
+         email: localStorage.getItem("email"),
+         category:"internship",
          salary:salary, 
          startingTime:time,
          position:position,
          description:description,
-         id: `t${jobcount+1}`,
          workingHour:workingHour,
          title:title
     }
-    const response=await axios.post(`http://localhost:3002/internjob`,reqbody);
+    const response=await axios.post(`http://localhost:5000/insertjob`,reqbody);
     const data=response.data
     if(!data.acknowledged)
     {
@@ -32,7 +32,7 @@ const Internship = () => {
       return
     }
     toast.success("Data successfully inserted")
-    setTimeOut(() =>{
+    setTimeout(() =>{
       window.location.reload(true)
     },1000)
   };

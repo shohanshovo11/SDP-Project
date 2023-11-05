@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import Aside from "./Aside";
-import Profile from "./Profile";
-import Element3 from "./Element3";
-import Element4 from "./Element4";
+import Profile from "../AdminDashboard/Profile";
 import Pendingjob from "../PostJob/Pendingjob";
+// import Element2 from "./Element2";
+// import Element3 from "./Element3";
+// import Element4 from "./Element4";
 
-function AdminDashboard() {
+function EmployerDashboard() {
   const [activeComponent, setActiveComponent] = useState("showProfile");
   const handleShowComponent = (componentName) => {
     setActiveComponent(componentName);
@@ -16,12 +17,11 @@ function AdminDashboard() {
       <div className="flex w-screen h-screen">
         <Aside func={handleShowComponent} />
         {activeComponent === "showProfile" && <Profile />}
-        {activeComponent === "showpendingjob" && <Pendingjob />}
-        {activeComponent === "showElement3" && <Element3 />}
-        {activeComponent === "showElement4" && <Element4 />}
+        {/* {activeComponent === "approveapplicant" && <Element3 />} */}
+        {/* {activeComponent === "showElement4" && <Element4 />} */}
       </div>
     </>
   );
 }
 
-export default AdminDashboard;
+export default EmployerDashboard;

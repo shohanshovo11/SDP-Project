@@ -14,17 +14,17 @@ const PartTime = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const jobcount=await axios.get(`http://localhost:3002/parttimejobcount`);
     const reqbody={
+         email: localStorage.getItem("email"),
+         category:"parttime",
          salary:salary, 
          startingTime:time,
          position:position,
          description:description,
-         id: `t${jobcount+1}`,
          workingHour:workingHour,
          title:title
     }
-    const response=await axios.post(`http://localhost:3002/parttimejob`,reqbody);
+    const response=await axios.post(`http://localhost:5000/insertjob`,reqbody);
     const data=response.data
     if(!data.acknowledged)
     {

@@ -21,6 +21,7 @@ const PostJobtutor = () => {
     if (loginType === "employer") {
       const reqbody = {
         email: localStorage.getItem("email"),
+        category:"tuition",
         title: title,
         description: description,
         area: location,
@@ -32,7 +33,7 @@ const PostJobtutor = () => {
         //tags
       };
       // console.log(reqbody);
-      const response = await Axios.post(`/tutorjob`, reqbody);
+      const response = await Axios.post(`/insertjob`, reqbody);
       const data = response.data;
       if (!data.acknowledged) {
         toast.error("Data couldn't be inserted");
@@ -55,7 +56,7 @@ const PostJobtutor = () => {
             Post A Job
           </h1>
           <section
-            className={`${styles.postJobtutorChild} rounded-xl font-poppins`}
+            className= {`${styles.postJobtutorChild} rounded-xl font-poppins`}
           />
           <div className={styles.title}>Title</div>
           <div className={styles.class}>Class</div>
