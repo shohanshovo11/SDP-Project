@@ -1,0 +1,219 @@
+.container {
+  background-color: #ffffff;
+  height: 700px;
+  overflow: hidden;
+  position: relative;
+  width: 1518px;
+}
+
+.signin_ {
+  height: 416px;
+  left: 261px;
+  position: absolute;
+  top: 152px;
+  width: 360.98px;
+}
+
+.swnlogo_ {
+  height: 50px;
+  left: 56px;
+  position: absolute;
+  float: left;
+  top: 3px;
+  width: 284px;
+}
+
+.create {
+  color: #000000;
+  font-family: "Poppins", Helvetica;
+  font-size: 30px;
+  font-weight: 600;
+  left: 800px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: center;
+  top: 55px;
+}
+
+.firstName {
+  background-color: #ffffff;
+  border: 2px solid;
+  border-color: #07718c;
+  border-radius: 10px;
+  height: 55px;
+  left: 708px;
+  position: absolute;
+  top: 143px;
+  width: 257px;
+}
+
+.inputBox {
+  background-color: #ffffff;
+  color: #000000;
+  outline: none;
+  width: 257px;
+  height: 25px;
+  border-color: #000000;
+}
+
+.inputBox img {
+  width: 35px;
+  cursor: pointer;
+}
+
+.lastName {
+  background-color: #ffffff;
+  border: 2px solid;
+  border-color: #07718c;
+  border-radius: 10px;
+  height: 55px;
+  left: 1024px;
+  position: absolute;
+  top: 143px;
+  width: 257px;
+}
+
+.institution {
+  background-color: #ffffff;
+  border: 2px solid;
+  border-color: #07718c;
+  border-radius: 10px;
+  height: 55px;
+  left: 708px;
+  position: absolute;
+  top: 215px;
+  width: 560px;
+}
+
+.ins {
+  color: #000000;
+  font-family: "Poppins", Helvetica;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: normal;
+  text-align: left;
+  margin-left: 10px;
+}
+
+.l_inputBox {
+  background-color: #ffffff;
+  color: #000000;
+  outline: none;
+  width: 574px;
+  height: 25px;
+  border-color: #000000;
+}
+
+.e-mail {
+  background-color: #ffffff;
+  border: 2px solid;
+  border-color: #07718c;
+  border-radius: 10px;
+  height: 55px;
+  left: 708px;
+  position: absolute;
+  top: 287px;
+  width: 582px;
+}
+
+.pass {
+  background-color: #ffffff;
+  border: 2px solid;
+  border-color: #07718c;
+  border-radius: 10px;
+  height: 55px;
+  left: 708px;
+  position: absolute;
+  top: 360px;
+  width: 582px;
+}
+
+.cpass {
+  background-color: #ffffff;
+  border: 2px solid;
+  border-color: #07718c;
+  border-radius: 10px;
+  height: 55px;
+  left: 708px;
+  position: absolute;
+  top: 433px;
+  width: 582px;
+}
+
+.createButton {
+  background-color: #6695a0;
+  border-color: #6695a0;
+  border-radius: 10px;
+  height: 50px;
+  left: 710px;
+  position: absolute;
+  top: 517px;
+  width: 610px;
+  color: #ffffff;
+  font-family: "Poppins", Helvetica;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: normal;
+  text-align: center;
+}
+
+.alreadyhave {
+  color: transparent;
+  font-family: "Poppins", Helvetica;
+  font-size: 15px;
+  font-weight: 600;
+  left: 709px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 589px;
+  white-space: nowrap;
+  width: 610px;
+}
+
+.aha {
+  color: #6695a0;
+}
+
+.login {
+  color: #6695a0;
+}
+
+.logo_group {
+  position: absolute;
+  color: transparent;
+  left: 592px;
+  top: 603px;
+  height: 41px;
+  width: 513px;
+}
+
+.fb {
+  left: 119px;
+  position: absolute;
+}
+
+.lin {
+  left: 291px;
+  position: absolute;
+}
+
+.gh {
+  left: 462px;
+  position: absolute;
+}
+
+.twit {
+  left: 620px;
+  position: absolute;
+}
+
+.up {
+  color: transparent;
+  top: 5px;
+  left: 90px;
+  position: absolute;
+}
