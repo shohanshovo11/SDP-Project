@@ -198,6 +198,7 @@ app.post("/forgot-password", async (req, res) => {
     res.status(500).json({ status: "An error occurred." });
   }
 });
+// OTP
 app.post("/verify-otp", async (req, res) => {
   try {
     const { email, otp } = req.body;
@@ -557,4 +558,10 @@ app.post('/parttimejob', (req,res) => {
     res.json(vari)
   })
   .catch(()=> res.status(500).json("Could not insert data"));
+})
+
+
+// Employer-Joblist
+app.post('/employers-joblist', (req,res) => {
+  
 })

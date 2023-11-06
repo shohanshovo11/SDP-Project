@@ -1,318 +1,79 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Dna } from "react-loader-spinner";
+import { Axios } from "../api/api";
 import "./EmployersJoblist.css";
 import { Navbar } from "../navbar/Navbar";
-import joblist from "./img/joblist.png"
-import line1 from "./img/line-97.svg"
-import vector from "./img/vector.svg"
+import joblist from "./img/joblist.png";
+import line1 from "./img/line-97.svg";
+import vector from "./img/vector.svg";
 
-import  Footer  from "../Footer";
-
+import Footer from "../Footer";
+import { JobItem } from "./JobItem";
 
 export const EmployersJoblist = () => {
+  const tokenAvailable = !!localStorage.getItem("token");
+  const [loading, setLoading] = useState(false);
+
+  const apiUrl = "/employers-joblist"; // Adjust the URL as needed
+
+  const [records, setRecords] = useState([]);
+
+  useEffect(() => {
+    setLoading(true);
+
+    Axios.get(apiUrl)
+      .then((response) => {
+        const data = response.data;
+
+        setRecords(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching jobs:", error);
+      });
+  }, []);
+
   return (
     <>
-    <Navbar />
-    <div className="posted-joblist">
-      <div className="div">
-        <img className="line" alt="Line" src= {line1} />
-        
-        <div className="text-wrapper-22">Posted Job List</div>
-        <img className="element-error-with" alt="Element error with" src={joblist} />
+      <Navbar />
+      {loading ? (
+        <div className="flex items-center justify-center h-screen w-full bg-white">
+          <Dna
+            visible={true}
+            height={150}
+            width={150}
+            ariaLabel="dna-loading"
+            className="text-center"
+          />
+        </div>
+      ) : (
+        <div className="posted-joblist">
+          <div className="div">
+            <img className="line" alt="Line" src={line1} />
 
-        <div className="frame-2">
-          <div className="card">
-            <div className="rectangle" />
-            <button className="button">
-              <div className="div-wrapper">
-                <div className="text-wrapper-24">View Description</div>
-              </div>
-            </button>
-            <div className="details">
-              <div className="tags">
-                <div className="tag">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-25">Figma</div>
-                  </div>
-                </div>
-                <div className="overlap-wrapper">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-26">Html</div>
-                  </div>
-                </div>
-                <div className="tag-2">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-27">Css</div>
-                  </div>
-                </div>
-              </div>
-              <div className="text-wrapper-28">Salary 2000k</div>
-              <div className="text-wrapper-29">UX Design</div>
-            </div>
-            <div className="image">
-              <img className="vector-2" alt="Vector" src= {vector} />
-            </div>
-          </div>
-          <div className="card">
-            <div className="rectangle" />
-            <button className="button">
-              <div className="div-wrapper">
-                <div className="text-wrapper-24">View Description</div>
-              </div>
-            </button>
-            <div className="details">
-              <div className="tags">
-                <div className="tag">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-25">Figma</div>
-                  </div>
-                </div>
-                <div className="overlap-wrapper">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-26">Html</div>
-                  </div>
-                </div>
-                <div className="tag-2">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-27">Css</div>
-                  </div>
-                </div>
-              </div>
-              <div className="text-wrapper-28">Salary 2000k</div>
-              <div className="text-wrapper-29">UX Design</div>
-            </div>
-            <div className="image">
-              <img className="vector-2" alt="Vector" src= {vector}  />
-            </div>
-          </div>
-          <div className="card">
-            <div className="rectangle" />
-            <button className="button">
-              <div className="div-wrapper">
-                <div className="text-wrapper-24">View Description</div>
-              </div>
-            </button>
-            <div className="details">
-              <div className="tags">
-                <div className="tag">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-25">Figma</div>
-                  </div>
-                </div>
-                <div className="overlap-wrapper">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-26">Html</div>
-                  </div>
-                </div>
-                <div className="tag-2">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-27">Css</div>
-                  </div>
-                </div>
-              </div>
-              <div className="text-wrapper-28">Salary 2000k</div>
-              <div className="text-wrapper-29">UX Design</div>
-            </div>
-            <div className="image">
-              <img className="vector-2" alt="Vector" src= {vector}  />
-            </div>
-          </div>
-          <div className="card">
-            <div className="rectangle" />
-            <button className="button">
-              <div className="div-wrapper">
-                <div className="text-wrapper-24">View Description</div>
-              </div>
-            </button>
-            <div className="details">
-              <div className="tags">
-                <div className="tag">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-25">Figma</div>
-                  </div>
-                </div>
-                <div className="overlap-wrapper">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-26">Html</div>
-                  </div>
-                </div>
-                <div className="tag-2">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-27">Css</div>
-                  </div>
-                </div>
-              </div>
-              <div className="text-wrapper-28">Salary 2000k</div>
-              <div className="text-wrapper-29">UX Design</div>
-            </div>
-            <div className="image">
-              <img className="vector-2" alt="Vector" src= {vector}  />
-            </div>
-          </div>
-          <div className="card">
-            <div className="rectangle" />
-            <button className="button">
-              <div className="div-wrapper">
-                <div className="text-wrapper-24">View Description</div>
-              </div>
-            </button>
-            <div className="details">
-              <div className="tags">
-                <div className="tag">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-25">Figma</div>
-                  </div>
-                </div>
-                <div className="overlap-wrapper">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-26">Html</div>
-                  </div>
-                </div>
-                <div className="tag-2">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-27">Css</div>
-                  </div>
-                </div>
-              </div>
-              <div className="text-wrapper-28">Salary 2000k</div>
-              <div className="text-wrapper-29">UX Design</div>
-            </div>
-            <div className="image">
-              <img className="vector-2" alt="Vector" src= {vector}  />
-            </div>
-          </div>
-          <div className="card">
-            <div className="rectangle" />
-            <button className="button">
-              <div className="div-wrapper">
-                <div className="text-wrapper-24">View Description</div>
-              </div>
-            </button>
-            <div className="details">
-              <div className="tags">
-                <div className="tag">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-25">Figma</div>
-                  </div>
-                </div>
-                <div className="overlap-wrapper">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-26">Html</div>
-                  </div>
-                </div>
-                <div className="tag-2">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-27">Css</div>
-                  </div>
-                </div>
-              </div>
-              <div className="text-wrapper-28">Salary 2000k</div>
-              <div className="text-wrapper-29">UX Design</div>
-            </div>
-            <div className="image">
-              <img className="vector-2" alt="Vector" src= {vector}  />
-            </div>
-          </div>
-          <div className="card">
-            <div className="rectangle" />
-            <button className="button">
-              <div className="div-wrapper">
-                <div className="text-wrapper-24">View Description</div>
-              </div>
-            </button>
-            <div className="details">
-              <div className="tags">
-                <div className="tag">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-25">Figma</div>
-                  </div>
-                </div>
-                <div className="overlap-wrapper">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-26">Html</div>
-                  </div>
-                </div>
-                <div className="tag-2">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-27">Css</div>
-                  </div>
-                </div>
-              </div>
-              <div className="text-wrapper-28">Salary 2000k</div>
-              <div className="text-wrapper-29">UX Design</div>
-            </div>
-            <div className="image">
-              <img className="vector-2" alt="Vector" src= {vector}  />
-            </div>
-          </div>
-          <div className="card">
-            <div className="rectangle" />
-            <button className="button">
-              <div className="div-wrapper">
-                <div className="text-wrapper-24">View Description</div>
-              </div>
-            </button>
-            <div className="details">
-              <div className="tags">
-                <div className="tag">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-25">Figma</div>
-                  </div>
-                </div>
-                <div className="overlap-wrapper">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-26">Html</div>
-                  </div>
-                </div>
-                <div className="tag-2">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-27">Css</div>
-                  </div>
-                </div>
-              </div>
-              <div className="text-wrapper-28">Salary 2000k</div>
-              <div className="text-wrapper-29">UX Design</div>
-            </div>
-            <div className="image">
-              <img className="vector-2" alt="Vector" src= {vector}  />
-            </div>
-          </div>
-          <div className="card">
-            <div className="rectangle" />
-            <button className="button">
-              <div className="div-wrapper">
-                <div className="text-wrapper-24">View Description</div>
-              </div>
-            </button>
-            <div className="details">
-              <div className="tags">
-                <div className="tag">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-25">Figma</div>
-                  </div>
-                </div>
-                <div className="overlap-wrapper">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-26">Html</div>
-                  </div>
-                </div>
-                <div className="tag-2">
-                  <div className="overlap-group-2">
-                    <div className="text-wrapper-27">Css</div>
-                  </div>
-                </div>
-              </div>
-              <div className="text-wrapper-28">Salary 2000k</div>
-              <div className="text-wrapper-29">UX Design</div>
-            </div>
-            <div className="image">
-              <img className="vector-2" alt="Vector" src= {vector}  />
+            <div className="text-wrapper-22">Posted Job List</div>
+            <img
+              className="element-error-with"
+              alt="Element error with"
+              src={joblist}
+            />
+
+            <div className="frame-2">
+              {records.map((job, index) => (
+                <JobItem
+                  key={index}
+                  jobitem={{
+                    title: job.title,
+                    tags: job.tags,
+                    salary: job.salary,
+                  }}
+                />
+              ))}
             </div>
           </div>
         </div>
-      </div>
-      
-    </div>
-    <Footer />
+      )}
+      <Footer />
     </>
   );
 };
