@@ -2,14 +2,16 @@ import React from "react";
 import Footer from "./Footer";
 import { NavNolog } from "./navbar/NavNolog";
 import { Navbar } from "./navbar/Navbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function LoginOption() {
+  const navigate = useNavigate();
   const handleClick = (string) => {
     localStorage.clear();
-    localStorage.setItem("loginType", string);
-    console.log(localStorage.getItem("loginType"));
-    console.log(localStorage.getItem("signupType"));
+    navigate("/login",{replace:true, state:{loginType:string}});
+    // localStorage.setItem("loginType", string);
+    // console.log(localStorage.getItem("loginType"));
+    // console.log(localStorage.getItem("signupType"));
   };
 
   return (
@@ -27,8 +29,7 @@ function LoginOption() {
           <h1 className="text-xl pb-8">Select the type of your account</h1>
           <div className="flex gap-20 text-center">
             <div className="flex flex-col gap-4 w-40 h-40">
-              <Link
-                to="/login"
+              <button
                 onClick={() => {
                   handleClick("student");
                 }}
@@ -37,7 +38,7 @@ function LoginOption() {
                   src="/getajob.svg"
                   className="cursor-pointer w-full h-auto"
                 />
-              </Link>
+              </button>
               <p className="text-center">Student</p>
             </div>
             <div className="flex flex-col gap-4 w-40 pb-44">

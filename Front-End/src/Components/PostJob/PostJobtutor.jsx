@@ -33,6 +33,7 @@ const PostJobtutor = () => {
       version: medium,
       studentClass: classs,
       subject: subject,
+      active: false,
       tags: [subject, classs, medium],
     };
     // console.log(reqbody);

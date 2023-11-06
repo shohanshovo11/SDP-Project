@@ -264,6 +264,27 @@ app.post("/userData", verifyUser, async (req, res) => {
   }
 });
 
+app.get("/userData", async (req, res) => {
+  try {
+    const { userEmail } = req.body;
+
+    try {
+      const data = await UserModel.findOne({ email: userEmail }).select('-profileImgUrl').select('-password');
+
+      if (data) {
+        res.send({ data });
+      } else {
+        res.send({ data: "User not found" });
+      }
+    } catch (error) {
+      res.send({ status: "error", data: error.message });
+    }
+  } catch (err) {
+    res.send({ status: "error", message: "Token verification failed" });
+  }
+});
+
+
 app.post("/getEducation", async (req, res) => {
   const { token } = req.body;
   try {
@@ -565,3 +586,15 @@ app.post('/parttimejob', (req,res) => {
 app.post('/employers-joblist', (req,res) => {
   
 })
+//getInactiveJobs
+app.get('/getInactiveJobs', async (req, res) => {
+  try {
+    // Using await to wait for the query execution
+    let jobs = await TuitionModel.find({ active: false }); 
+    // console.log(jobs);
+    res.json(jobs); // Sending the inactive jobs as a response
+  } catch (e) {
+    console.log(e);
+    res.status(500).send("An error occurred");
+  }
+});

@@ -10,7 +10,7 @@ function Aside(props) {
 
   return (
     <>
-      <div className="w-80 sticky h-screen bg-slate-800 text-white flex flex-col justify-center items-center font-poppins">
+      <div className="w-96 sticky h-screen bg-slate-800 text-white flex flex-col justify-center items-center font-poppins">
         <div className="text-center text-4xl font-bold py-2">Study WorkNet</div>
         <h1 className="text-center text-2xl pb-6">Admin Dashboard</h1>
         <div class="relative w-24 h-24">
@@ -28,17 +28,17 @@ function Aside(props) {
             className={`py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white ${
               selectedButton === "showProfile" ? "bg-bt" : "text-slate-500"
             }`}
-            onClick={() => handleButtonClick("showProfile")}
+            onClick={() => handleButtonClick("postRequest")}
           >
-            Button
+            Post Requests
           </button>
           <button
             className={`py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white ${
               selectedButton === "showElement2" ? "bg-bt" : "text-slate-500"
             }`}
-            onClick={() => handleButtonClick("showElement2")}
+            onClick={() => handleButtonClick("applyRequest")}
           >
-            button
+            Apply Requests
           </button>
           <button
             className={`py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white ${
@@ -46,7 +46,7 @@ function Aside(props) {
             }`}
             onClick={() => handleButtonClick("showElement3")}
           >
-            button
+            Employer Verify
           </button>
           <button
             className={`py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white ${
@@ -54,7 +54,7 @@ function Aside(props) {
             }`}
             onClick={() => handleButtonClick("showElement4")}
           >
-            button
+            Complains
           </button>
         </div>
       </div>

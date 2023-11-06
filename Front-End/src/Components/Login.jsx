@@ -1,7 +1,7 @@
 import { Axios } from "../Components/api/api";
 import React, { useState } from "react";
 import { Dna } from "react-loader-spinner";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "./Footer";
@@ -11,6 +11,7 @@ import eye from "/eye.svg";
 import verify from "/login.svg"; // Import your verification image here
 
 export const Login = () => {
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -46,6 +47,7 @@ export const Login = () => {
           window.localStorage.setItem("token", data.token);
           window.localStorage.setItem("email", formData.email);
           window.localStorage.setItem("profileImgUrl", data.profileImgUrl);
+          window.localStorage.setItem("loginType", location.state.loginType);
           // console.log("Token stored ", data.token);
           window.location.href = "/profile";
         } else {
