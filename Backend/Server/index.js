@@ -81,9 +81,9 @@ app.post("/register", async (req, res) => {
       // If email exists, send an error response
       return res.status(400).send({ error: "Email Already Exists" });
     }
-    const fname = "";
+    const name = "";
     await User.create({
-      name: { fname, fname },
+      name: name,
       email,
       password,
     });
@@ -380,16 +380,16 @@ app.get("/jobs", async (req, res) => {
 
 app.post("/update", async (req, res) => {
   try {
-    const { fname = "", lname = "", email = "", gender = "", address = "", phone = "", base64 = "" } = req.body;
+    const { name = "", email = "", gender = "", address = "", phone = "", base64 = "" } = req.body;
+    console.log(name);
     if(req.body.birthDate == "NaN-NaN-NaN") req.body.birthDate = null;
     const birthDate = req.body.birthDate ? new Date(req.body.birthDate) : null;
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    if (user.name) {
-      user.name.fname = fname;
-      user.name.lname = lname;
+    if (name) {
+      user.name = name;
     }
     if (gender) user.gender = gender;
     if (birthDate) user.birthDate = birthDate;

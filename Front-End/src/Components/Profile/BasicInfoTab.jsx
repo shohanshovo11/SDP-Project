@@ -18,6 +18,7 @@ function BasicInfoTab(props) {
     phone,
     profileImgUrl,
   } = props.obj;
+  // console.log(props.obj);
   function calculate_age(birthDate) {
     var diff_ms = Date.now() - new Date(birthDate).getTime();
     var age_dt = new Date(diff_ms);
@@ -34,23 +35,6 @@ function BasicInfoTab(props) {
     setShowModal(false);
   };
 
-  //   name: {
-  //     fname: String,
-  //     lname: String,
-  //   },
-  //   institution: String,
-  //   email: {
-  //     type: String,
-  //     unique: true,
-  //   },
-  //   password: String,
-  //   gender: String,
-  //   age: Number,
-  //   birthDate: Date,
-  //   address: String,
-  //   phone: String,
-  //   profileImgUrl: String
-
   // Create individual states for each input field
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -62,8 +46,7 @@ function BasicInfoTab(props) {
 
   const [emailValue, setEmailValue] = useState(email);
   const [institutionValue, setInstitutionValue] = useState(institution);
-  const [firstNameValue, setFirstNameValue] = useState(name.fname);
-  const [lastNameValue, setLastNameValue] = useState(name.lname);
+  const [nameValue, setNameValue] = useState(name);
   const [phoneValue, setPhoneValue] = useState(phone); // Example default value
   const [genderValue, setGenderValue] = useState(gender); // Example default value
   const [addressValue, setAddressValue] = useState(address); // Example default value
@@ -94,8 +77,7 @@ function BasicInfoTab(props) {
 
   const submitInfo = (e) => {
     const user = {
-      fname: firstNameValue,
-      lname: lastNameValue,
+      name: nameValue,
       email: emailValue,
       gender: genderValue,
       birthDate: birthdateValue,
@@ -132,10 +114,8 @@ function BasicInfoTab(props) {
 
   const handleNameChange = (e) => {
     const fullName = e.target.value;
-    const [firstName] = fullName.split(" ");
-    setFirstNameValue(firstName);
-    const lastName = fullName.slice(firstName.length).trim();
-    setLastNameValue(lastName);
+    setNameValue(fullName);
+    // console.log(fullName);
   };
   return (
     <div>
@@ -151,7 +131,7 @@ function BasicInfoTab(props) {
           <input
             ref={nameRef}
             className="name-2"
-            value={`${firstNameValue} ${lastNameValue}`}
+            value={`${nameValue}`}
             onChange={handleNameChange}
           />
           <input
