@@ -1,22 +1,11 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import "./ApplicantList.css";
-import { Navbar } from "../navbar/Navbar.jsx";
-import Footer from "../Footer.jsx";
 import { ApplicantListCard } from "./ApplicantListCard";
-import qh from "../Images/questionhead.png";
-import { NavNolog } from "../navbar/NavNolog";
 export const ApplicantList = () => {
-    const [jwtToken, setJwtToken] = useState(localStorage.getItem("token") || "");
-  const [noNav, setNoNav] = useState(!jwtToken);
-
   return (
     <>
-      {noNav ? <NavNolog /> : <Navbar />}
-      <div className="back">
-        <div className="heading">
-          <span className="header">Applicants for UX Design</span>
-        </div>
-        <div className="whole-card">
+      <div className="h-full overflow-y-hidden grow">
+        <div className="whole-card grid grid-cols-4 gap-8 overflow-y-scroll h-full grow pt-12 pl-20 pb-20">
           <ApplicantListCard
             name="Nishat Tabassum"
             description="UI designer"
@@ -78,9 +67,7 @@ export const ApplicantList = () => {
             tags={["Figma", "HTML", "CSS"]}
           />
         </div>
-        <img src={qh} className="qhead" />
       </div>
-      <Footer />
     </>
   );
 };

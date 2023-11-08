@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import pic from "../EmployerDashboard/Picture.jpg";
 
 function Aside(props) {
   const [selectedButton, setSelectedButton] = useState(null);
@@ -16,29 +17,29 @@ function Aside(props) {
         <div class="relative w-24 h-24">
           <img
             class="rounded-full border border-gray-100 shadow-sm w-24 h-24 object-cover"
-            src="/navbar/profile.jpg"
+            src={pic}
             alt="user image"
           />
           <div class="absolute top-0 right-0 h-6 w-6 my-1 border-4 border-white rounded-full bg-green-400 z-2"></div>
         </div>
-        <h1 className="text-center text-xl pb-6 pt-4">Hello, Shovo</h1>
+        <h1 className="text-center text-xl pb-6 pt-4">Hello,User</h1>
         <hr className="bg-white"></hr>
         <div className="flex flex-col w-full">
           <button
             className={`py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white ${
               selectedButton === "showProfile" ? "bg-bt" : "text-slate-500"
             }`}
-            onClick={() => handleButtonClick("postRequest")}
+            onClick={() => handleButtonClick("showProfile")}
           >
-            Post Requests
+            Button
           </button>
           <button
             className={`py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white ${
-              selectedButton === "showElement2" ? "bg-bt" : "text-slate-500"
+              selectedButton === "showpendingjob" ? "bg-bt" : "text-slate-500"
             }`}
-            onClick={() => handleButtonClick("applyRequest")}
+            onClick={() => handleButtonClick("showpendingjob")}
           >
-            Apply Requests
+            Pending Jobs
           </button>
           <button
             className={`py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white ${
@@ -46,7 +47,7 @@ function Aside(props) {
             }`}
             onClick={() => handleButtonClick("showElement3")}
           >
-            Employer Verify
+            button
           </button>
           <button
             className={`py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white ${
@@ -54,7 +55,7 @@ function Aside(props) {
             }`}
             onClick={() => handleButtonClick("showElement4")}
           >
-            Complains
+            button
           </button>
         </div>
       </div>

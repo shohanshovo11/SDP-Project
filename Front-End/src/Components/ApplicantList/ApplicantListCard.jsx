@@ -14,7 +14,7 @@ export const ApplicantListCard = (props) => {
           <span className="tag">{props.tags[1]}</span>
           <span className="tag">{props.tags[2]}</span>
         </div>
-        <div className="buttons">
+        <div className="buttons mb-3">
           <button className="viewButton">View Profile</button>
           <button className="acceptButton">Accept</button>
         </div>

@@ -598,3 +598,92 @@ app.get('/getInactiveJobs', async (req, res) => {
     res.status(500).send("An error occurred");
   }
 });
+app.get('/tutorjobcount', (req,res) => {
+  db.collection("tuitions").estimatedDocumentCount()
+  .then(vari =>{
+    res.json(vari)
+  })
+  .catch(()=> res.status(500).json("Could not insert data"));
+})
+
+
+app.post('/insertjob', (req,res) => {
+  
+  const jobdesc=req.body
+  // console.log(jobdesc)
+  db.collection("pendingjob").insertOne(jobdesc)
+  .then(vari =>{
+    res.json(vari)
+  })
+  .catch(()=> res.status(500).json("Could not insert data"));
+})
+
+app.get('/freelancejobcount', (req,res) => {
+  db.collection("freelancers").estimatedDocumentCount()
+  .then(vari =>{
+    res.json(vari)
+  })
+  .catch(()=> res.status(500).json("Could not insert data"));
+})
+
+
+
+app.get('/internjobcount', (req,res) => {
+  db.collection("internships").estimatedDocumentCount()
+  .then(vari =>{
+    res.json(vari)
+  })
+  .catch(()=> res.status(500).json("Could not insert data"));
+})
+
+app.get('/parttimejobcount', (req,res) => {
+  db.collection("parttimejobs").estimatedDocumentCount()
+  .then(vari =>{
+    res.json(vari)
+  })
+  .catch(()=> res.status(500).json("Could not insert data"));
+})
+
+
+app.post('/approve', async (req,res) => {
+  let value=req.body
+  delete value._id
+  await db.collection("pendingjob").deleteOne(value)
+  // value.id=req.params.id
+  let data
+  if(value.category==="tuition")
+  {
+    delete value.category
+    data= await db.collection("tuitions").insertOne(value)
+    .catch(()=> res.status(500).json("Could not insert data"))
+  }
+  else if(value.category==="internship")
+  {
+    delete value.category
+    data= await db.collection("internships").insertOne(value)
+    .catch(()=> res.status(500).json("Could not insert data"))
+  }
+  else if(value.category==="parttime")
+  {
+    delete value.category
+    data= await db.collection("parttimejobs").insertOne(value)
+    .catch(()=> res.status(500).json("Could not insert data"))
+  }
+  else if(value.category==="freelance")
+  {
+    delete value.category
+    data= await db.collection("freelancers").insertOne(value)
+    .catch(()=> res.status(500).json("Could not insert data"))
+  }
+  res.json(data)
+})
+
+app.get('/pendingjobshow/:filter', async (req,res) => {
+  const filter=req.params.filter
+  let find={}
+  if(filter!=="all")
+    find["category"]=filter
+  const data= await db.collection("pendingjob").find(find).sort().toArray()
+  .catch(()=> res.status(500).json("Could not show data"));
+  res.json(data)
+})

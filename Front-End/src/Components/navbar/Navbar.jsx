@@ -1,6 +1,7 @@
 // import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+
 export const Navbar = () => {
   // const history = useHistory();
   const [profileImg, setProfileImg] = useState(
@@ -33,9 +34,7 @@ export const Navbar = () => {
     <>
       <div className="navbar flex justify-between bg-white text-neutral-900">
         <div className="">
-          <Link to="/">
-            <a className="btn btn-ghost normal-case text-xl">Study WorkNet</a>
-          </Link>
+          <a className="btn btn-ghost normal-case text-xl">Study WorkNet</a>
         </div>
         <div className="navbar-center hidden lg:flex text-base font-bold font-poppins">
           <ul className="menu menu-horizontal px-1">
@@ -64,15 +63,9 @@ export const Navbar = () => {
                 </ul>
               </details>
             </li>
-            {localStorage.getItem("loginType") === "employer" ? (
-              <li>
-                <Link to="/tutorjob">Post Job</Link>
-              </li>
-            ) : (
-              <li>
-                <Link to="">Contact Us</Link>
-              </li>
-            )}
+            <li>
+              <Link to="/tutorjob">Post Job</Link>
+            </li>
           </ul>
         </div>
         <div className="flex-none gap-2 text-base font-poppins bg-white">
@@ -94,7 +87,7 @@ export const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <a>Settings</a>
+                <Link to="/employerdash">Dashboard</Link>
               </li>
               <li>
                 <Link to="/" onClick={removeToken}>

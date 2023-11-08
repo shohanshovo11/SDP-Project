@@ -3,6 +3,7 @@ import { Navbar } from "../navbar/Navbar";
 import styles from "./Freelance.module.css";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { Axios } from "../api/api";
 
 const PartTime = () => {
   const [title, setTitle] = useState("");
@@ -14,17 +15,17 @@ const PartTime = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const jobcount=await axios.get(`http://localhost:3002/parttimejobcount`);
     const reqbody={
+         email: localStorage.getItem("email"),
+         category:"parttime",
          salary:salary, 
          startingTime:time,
          position:position,
          description:description,
-         id: `t${jobcount+1}`,
          workingHour:workingHour,
          title:title
     }
-    const response=await axios.post(`http://localhost:3002/parttimejob`,reqbody);
+    const response=await Axios.post(`/insertjob`,reqbody);
     const data=response.data
     if(!data.acknowledged)
     {

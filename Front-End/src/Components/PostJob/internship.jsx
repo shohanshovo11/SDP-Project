@@ -1,7 +1,7 @@
-import axios from "axios";
+import { Axios } from "../api/api";
 import { Navbar } from "../navbar/Navbar";
 import styles from "./Freelance.module.css";
-import { useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 
 const Internship = () => {
@@ -13,31 +13,31 @@ const Internship = () => {
   const [description, setdescription] = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const jobcount=await axios.get(`http://localhost:3002/internjobcount`);
-    const reqbody={
-         salary:salary, 
-         startingTime:time,
-         position:position,
-         description:description,
-         id: `t${jobcount+1}`,
-         workingHour:workingHour,
-         title:title
+    e.preventDefault();
+    const reqbody = {
+      email: localStorage.getItem("email"),
+      category: "internship",
+      salary: salary,
+      startingTime: time,
+      position: position,
+      description: description,
+      workingHour: workingHour,
+      title: title,
+    };
+    const response = await Axios.post(`/insertjob`, reqbody);
+    console.log(response);
+    const data = response.data;
+    if (!data.acknowledged) {
+      toast.error("Data couldn't be inserted");
+      return;
     }
-    const response=await axios.post(`http://localhost:3002/internjob`,reqbody);
-    const data=response.data
-    if(!data.acknowledged)
-    {
-      toast.error("Data couldn't be inserted")
-      return
-    }
-    toast.success("Data successfully inserted")
-    setTimeOut(() =>{
-      window.location.reload(true)
-    },1000)
+    // toast.success("Data successfully inserted");
+    // setTimeout(() => {
+    //   window.location.reload(true);
+    // }, 1000);
   };
   return (
-    <div className={styles.postJobtutor} >
+    <div className={styles.postJobtutor}>
       <Navbar />
       <section className={styles.postJobtutorChild} />
       <h1 className={styles.post}>Post</h1>

@@ -19,8 +19,12 @@ import LoginOption from "./Components/LoginOption";
 import { SignUpEmployer } from "./Components/SignUpEmployer";
 import PostJobtutor from "./Components/PostJob/PostJobtutor";
 import Modal from "./Components/postedJob/Modal";
+import Pendingjob from "./Components/PostJob/Pendingjob";
+import PartTime from "./Components/PostJob/PartTime";
+import Freelance from "./Components/PostJob/Freelance";
+import EmployerDashboard from "./Components/EmployerDashboard/EmployerDashboard";
 import ApplicantList from "./Components/ApplicantList/ApplicantList";
-import { EmployersJoblist } from "./Components/EmployersJoblist/EmployersJoblist";
+import Internship from "./Components/PostJob/Internship";
 
 function App() {
   return (
@@ -56,7 +60,11 @@ function App() {
           <Route path="/ApplicantList" element={<ApplicantList />} />
           <Route path="/modal" element={<Modal />} />
           <Route path="/tutorjob" element={<PostJobtutor />} />
-          <Route path="/employers-joblist" element={<EmployersJoblist />} />
+          <Route path="/internjob" element={<Internship />} />
+          <Route path="/parttimejob" element={<PartTime />} />
+          <Route path="/freelancejob" element={<Freelance />} />
+          <Route path="/pendingjob" element={<Pendingjob />} />
+          <Route path="/employerdash" element={< EmployerDashboard />} />
         </Routes>
         <ToastContainer />
       </main>
