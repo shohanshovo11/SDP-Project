@@ -64,7 +64,7 @@ export const Navbar = () => {
               </details>
             </li>
             <li>
-              <Link to="/tutorjob">Post Job</Link>
+              <a to="">Contact Us</a>
             </li>
           </ul>
         </div>
