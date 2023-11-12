@@ -22,7 +22,7 @@ function Aside(props) {
           />
           <div class="absolute top-0 right-0 h-6 w-6 my-1 border-4 border-white rounded-full bg-green-400 z-2"></div>
         </div>
-        <h1 className="text-center text-xl pb-6 pt-4">Hello,User</h1>
+        <h1 className="text-center text-xl pb-6 pt-4">Hello,Admin</h1>
         <hr className="bg-white"></hr>
         <div className="flex flex-col w-full">
           <button

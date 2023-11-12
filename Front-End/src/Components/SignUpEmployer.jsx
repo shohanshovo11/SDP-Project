@@ -81,7 +81,7 @@ export const SignUpEmployer = () => {
     <>
       <NavNolog />
       <ToastContainer />
-      <div className="bg-white w-screen h-screen">
+      <div className="bg-white w-screen h-screen mb-10">
         <div className="font-poppins flex justify-center items-center bg-white gap-6 py-8">
           {loading ? (
             <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-100 bg-white z-50">
@@ -330,7 +330,7 @@ export const SignUpEmployer = () => {
                 >
                   Create Account
                 </button>
-                <p className="">
+                <div className="">
                   <span className="">Already have an account? </span>
                   <Link
                     to="/login"
@@ -338,7 +338,7 @@ export const SignUpEmployer = () => {
                   >
                     Log in
                   </Link>
-                </p>
+                </div>
               </form>
             </>
           )}

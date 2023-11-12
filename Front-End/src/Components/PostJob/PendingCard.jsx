@@ -18,7 +18,7 @@ function PendingCard({ pendingjob }) {
       <div className="kola">{pendingjob.title}</div>
 
       <div className="komola">Working Hour: {pendingjob.workingHour}</div>
-      <div className="ranoutofname">Skills: {pendingjob.description}</div>
+      <div className="ranoutofname">Desc: {pendingjob.description}</div>
       <button className="peyara" onClick={insertpendingjob}>
         Approve
       </button>

@@ -14,7 +14,7 @@ function EmployerDashboard() {
 
   return (
     <>
-      <div className="flex w-screen h-screen">
+      <div className="flex w-screen h-screen bg-white">
         <Aside func={handleShowComponent} />
         {activeComponent === "showProfile" && <EmployerProfile />}
         {/* {activeComponent === "approveapplicant" && <Element3 />} */}

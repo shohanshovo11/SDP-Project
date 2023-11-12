@@ -10,7 +10,7 @@ export default function PostJob() {
   }
   return (
     <div>
-      {console.log(postjob, "child")}
+      {/* {console.log(postjob, "child")} */}
       {postjob && (
         <div className="grow flex">
           <AnimatePresence

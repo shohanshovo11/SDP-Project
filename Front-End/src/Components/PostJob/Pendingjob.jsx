@@ -97,12 +97,14 @@ export const Pendingjob = () => {
           </div>
           <hr />
 
-          <div className="grid grid-cols-5 gap-2 bg-white">
-            <div className="col-span-4 p-5 bg-white flex flex-wrap gap-6 justify-center">
+          {/* <div className="grid grid-cols-5 gap-2 bg-white"> */}
+          <div className="h-[90%] w-full overflow-y-scroll">
+            <div className="p-5 bg-white flex flex-wrap gap-6 justify-center overflow-hidden">
               {pendingjob.map((am, index) => (
                 <PendingCard pendingjob={am} key={index} />
               ))}
             </div>
+            {/* </div> */}
           </div>
         </div>
       )}
