@@ -42,14 +42,13 @@ function LoginOption() {
               <p className="text-center">Student</p>
             </div>
             <div className="flex flex-col gap-4 w-40 pb-44">
-              <Link
-                to=""
+              <button
                 onClick={() => {
                   handleClick("employer");
                 }}
               >
                 <img src="/postajob.svg" className="cursor-pointer " />
-              </Link>
+              </button>
               <p className="text-center">Employer</p>
             </div>
           </div>

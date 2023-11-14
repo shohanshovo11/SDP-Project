@@ -69,6 +69,7 @@ app.post("/post", async (req, res) => {
 });
 
 const User = require("./Schema/userDetails");
+const Employer = require("./Schema/employer");
 //sign-up user
 app.post("/register", async (req, res) => {
   try {
@@ -118,8 +119,13 @@ app.get("/profile", verifyUser, (req, res) => {
 //login
 app.post("/login", async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const { email, password, loginType } = req.body;
+    var user;
+
+    if( loginType === "student")
+      user = await User.findOne({ email });
+    else if(loginType === "employer")
+      user = await Employer.findOne({ email });
 
     if (!user) {
       return res.status(401).json({ error: "Invalid credentials" });
@@ -127,7 +133,7 @@ app.post("/login", async (req, res) => {
 
     if (user.password == password) {
       const token = jwt.sign({ email: user.email }, "jwt-secret-key");
-
+      console.log("Password matched");
       // Send the token and user's profile image URL in the response
       return res.json({
         status: "ok",
@@ -583,9 +589,28 @@ app.post('/parttimejob', (req,res) => {
 
 
 // Employer-Joblist
-app.post('/employers-joblist', (req,res) => {
-  
+app.get('/employers-joblist/:email', async (req,res) => {
+  try {
+
+    const email = req.params.email;
+    //console.log(email);
+    // Use the "Job" model to find all documents in the "Jobs" collection
+    const jobID = await CandidateEmployerModel.find({employerEmail : email}, {jobId : 1, _id: 0});
+    var jobs = [];
+    for(let i=0 ; i<jobID.length ; i++)
+    {
+      const j = await TuitionModel.findById(jobID[i].jobId);
+      jobs.push(j);
+    }
+    // Send the job documents as a JSON response
+    res.status(200).json(jobs);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 })
+
+
 //getInactiveJobs
 app.get('/getInactiveJobs', async (req, res) => {
   try {
