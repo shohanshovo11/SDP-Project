@@ -8,6 +8,6 @@ const candidateEmployerSchema = new mongoose.Schema({
   candidateList: [String],
 });
 
-const CandidateEmployer = mongoose.model('CandidateEmployer', candidateEmployerSchema);
+const CandidateEmployer = mongoose.model('candidateemployers', candidateEmployerSchema);
 
 module.exports = CandidateEmployer;

@@ -18,6 +18,18 @@ const tuition = new mongoose.Schema(
   }
 );
 
-mongoose.model('tuition', tuition); 
+const TuitionModel = mongoose.model('tuition', tuition); 
 
-module.exports = mongoose.model('tuition'); 
+module.exports = TuitionModel; 
+
+/*
+const jobID = CandidateEmployerModel.find({employerEmail : email}, {jobId : 1, _id: 0});
+    console.log(jobID.jobId);
+    const jobs = [];
+
+    /*jobID.map(function(item) {        
+      jobs.push(TuitionModel.findById(item.jobId));
+    });*/
+    //await TuitionModel.findById(jobID.jobId);
+    //console.log(JSON.stringify(jobID.length));
+    

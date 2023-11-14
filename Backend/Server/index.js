@@ -583,8 +583,25 @@ app.post('/parttimejob', (req,res) => {
 
 
 // Employer-Joblist
-app.post('/employers-joblist', (req,res) => {
-  
+app.get('/employers-joblist/:email', async (req,res) => {
+  try {
+
+    const email = req.params.email;
+    //console.log(email);
+    // Use the "Job" model to find all documents in the "Jobs" collection
+    const jobID = await CandidateEmployerModel.find({employerEmail : email}, {jobId : 1, _id: 0});
+    var jobs = [];
+    for(let i=0 ; i<jobID.length ; i++)
+    {
+      const j = await TuitionModel.findById(jobID[i].jobId);
+      jobs.push(j);
+    }
+    // Send the job documents as a JSON response
+    res.status(200).json(jobs);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 })
 //getInactiveJobs
 app.get('/getInactiveJobs', async (req, res) => {
