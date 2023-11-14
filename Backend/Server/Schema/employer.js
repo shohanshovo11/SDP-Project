@@ -10,6 +10,7 @@ const employerSchema = new mongoose.Schema({
   occupation: { type: String },
   position: { type: String },
   experience: { type: Number },
+  gender: { type: String }
 });
 
 // Create a User model
