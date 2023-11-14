@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const employerSchema = new mongoose.Schema({
   email: { type: String, required: true },
   name: { type: String, required: true },
+  password: { type: String, required: true },
   phone: { type: String },
   birth: { type: Date },
   address: { type: String },
@@ -12,6 +13,5 @@ const employerSchema = new mongoose.Schema({
 });
 
 // Create a User model
-const Employer = mongoose.model('Employer', employerSchema);
-
+const Employer = mongoose.model('employers', employerSchema);
 module.exports = Employer;
