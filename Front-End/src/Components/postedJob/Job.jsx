@@ -8,32 +8,46 @@ import { Axios } from "../api/api";
 
 export const Job = () => {
   const tokenAvailable = !!localStorage.getItem("token");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [selectedOption, setSelectedOption] = useState("tuition");
+  const [minSalary, setMinSalary] = useState("");
+  const [maxSalary, setMaxSalary] = useState("");
+  const jobMappings = {
+    tuition: "tuitionJobs",
+    intern: "internJobs",
+    partTime: "partTimeJobs",
+    freelance: "freelanceJobs",
+  };
+  const apiUrl = "/jobs";
 
-  const apiUrl = "/jobs"; // Adjust the URL as needed
-
-  const [jobs, setJobs] = useState([]);
+  const [jobs, setJobs] = useState({});
   const [records, setRecords] = useState([]);
+  const fetchData = async () => {
+    try {
+      const response = await Axios.get(apiUrl);
+      const data = response.data;
+      setJobs(data);
+      setRecords(data[jobMappings[selectedOption]] || []);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    setLoading(true);
-
-    Axios.get(apiUrl)
-      .then((response) => {
-        const data = response.data;
-        setJobs(data);
-        setRecords(data);
-
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching jobs:", error);
-      });
+    fetchData();
   }, []);
+
+  useEffect(() => {
+    // console.log(jobs, jobMappings, selectedOption, "shovo");
+    setRecords(jobs[jobMappings[selectedOption]] || []);
+    // console.log(selectedOption);
+  }, [selectedOption]);
 
   const handleSearchTitle = (searchEvent) => {
     setRecords(
-      jobs.filter((f) =>
+      jobs[jobMappings[selectedOption]].filter((f) =>
         f.title.toLowerCase().includes(searchEvent.target.value.toLowerCase())
       )
     );
@@ -41,9 +55,35 @@ export const Job = () => {
 
   const handleSearchLocation = (searchEvent) => {
     setRecords(
-      jobs.filter((f) =>
+      jobs[jobMappings[selectedOption]].filter((f) =>
         f.area.toLowerCase().includes(searchEvent.target.value.toLowerCase())
       )
+    );
+  };
+  const handleMinSalaryChange = (event) => {
+    setMinSalary(event.target.value);
+    setRecords(
+      jobs[jobMappings[selectedOption]].filter((job) => {
+        const jobSalary = parseFloat(job.salary); // Assuming salary is stored as a string, convert it to a number if necessary
+        const minSalaryValue =
+          event.target.value === "" ? 0 : parseFloat(event.target.value);
+        return jobSalary >= minSalaryValue;
+      })
+    );
+    // console.log(event.target.value);
+  };
+
+  const handleMaxSalaryChange = (event) => {
+    setMaxSalary(event.target.value);
+    setRecords(
+      jobs[jobMappings[selectedOption]].filter((job) => {
+        const jobSalary = parseFloat(job.salary);
+        const maxSalaryValue =
+          event.target.value === ""
+            ? Number.MAX_VALUE
+            : parseFloat(event.target.value);
+        return jobSalary <= maxSalaryValue;
+      })
     );
   };
 
@@ -62,22 +102,43 @@ export const Job = () => {
       ) : (
         <div className="bg-white h-screen text-black font-poppins">
           {tokenAvailable ? <Navbar /> : <NavNolog />}
-          {console.log(jobs)}
           <hr />
           <div className="flex justify-between px-20 py-4">
             <h2>All Categories</h2>
             <div>
+              {/* {console.log(jobs)} */}
+
               <ul className="flex">
-                <li className="pr-4">
+                <li
+                  className={`pr-4 ${
+                    selectedOption === "tuition" ? "underline" : ""
+                  }`}
+                  onClick={() => setSelectedOption("tuition")}
+                >
+                  <a href="#">Tuition</a>
+                </li>
+                <li
+                  className={`pr-4 ${
+                    selectedOption === "intern" ? "underline" : ""
+                  }`}
+                  onClick={() => setSelectedOption("intern")}
+                >
                   <a href="#">Internship</a>
                 </li>
-                <li className="pr-4">
-                  <a href="#">Tution</a>
-                </li>
-                <li className="pr-4">
+                <li
+                  className={`pr-4 ${
+                    selectedOption === "partTime" ? "underline" : ""
+                  }`}
+                  onClick={() => setSelectedOption("partTime")}
+                >
                   <a href="#">Part-time</a>
                 </li>
-                <li className="">
+                <li
+                  className={`pr-4 ${
+                    selectedOption === "freelance" ? "underline" : ""
+                  }`}
+                  onClick={() => setSelectedOption("freelance")}
+                >
                   <a href="#">Freelancing</a>
                 </li>
               </ul>
@@ -134,6 +195,8 @@ export const Job = () => {
                   <div>
                     <h3>Minimum</h3>
                     <input
+                      value={minSalary}
+                      onChange={handleMinSalaryChange}
                       type="text"
                       placeholder="Type here"
                       className="input h-10 input-bordered border-2 border-slate-950 focus:border-blue-500 focus:border-2 bg-white input-accent w-full max-w-xs focus:ring-2"
@@ -142,6 +205,8 @@ export const Job = () => {
                   <div>
                     <h3>Maximum</h3>
                     <input
+                      value={maxSalary}
+                      onChange={handleMaxSalaryChange}
                       type="text"
                       placeholder="Type here"
                       className="input h-10 input-bordered border-2 border-slate-950 focus:border-blue-500 focus:border-2 bg-white input-accent w-full max-w-xs focus:ring-2"
@@ -177,19 +242,28 @@ export const Job = () => {
               <div className="btn grow bg-bt text-slate-50 mt-2">Search</div>
             </div>
             <div className="col-span-4 p-5 bg-white flex flex-wrap gap-6">
-              {records.map((job, index) => (
-                <Tutor
-                  key={index}
-                  tutor={{
-                    title: job.title,
-                    description: job.description,
-                    area: job.area,
-                    time: job.workingHour,
-                    tags: job.tags,
-                    salary: job.salary,
-                  }}
-                />
-              ))}
+              {Array.isArray(records) &&
+                records.map((job, index) => (
+                  <React.Fragment key={index}>
+                    {selectedOption === "tuition" && (
+                      <Tutor
+                        tutor={{
+                          _id: job._id,
+                          postedBy: job.email,
+                          title: job.title,
+                          description: job.description,
+                          area: job.area,
+                          time: job.workingHour,
+                          tags: job.tags,
+                          salary: job.salary,
+                        }}
+                      />
+                    )}
+                    {selectedOption === "intern" && <div>{job.title}</div>}
+                    {selectedOption === "freelance" && <div>{job.title}</div>}
+                    {selectedOption === "partTime" && <div>{job.title}</div>}
+                  </React.Fragment>
+                ))}
             </div>
           </div>
           <Footer />

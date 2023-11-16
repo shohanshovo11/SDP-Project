@@ -14,7 +14,7 @@ const TuitionModel = require("./Schema/tuition");
 const EmployerModel = require("./Schema/employer")
 const FreelancerModel = require("./Schema/freelancerSchema");
 const InternshipModel = require("./Schema/internship");
-const CandidateEmployerModel = require("./Schema/candidateEmployer");
+const CandidateEmployer = require("./Schema/candidateEmployer");
 const PartTimeJobModel = require("./Schema/partTime");
 
 const app = express();
@@ -368,8 +368,18 @@ app.post("/updateCvResume", async (req, res) => {
 app.get("/jobs", async (req, res) => {
   try {
     // Use the "Job" model to find all documents in the "Jobs" collection
-    const jobs = await TuitionModel.find();
-    console.log(jobs);
+    const jobs = {};
+    const tuitionJobs = await TuitionModel.find();
+    const internJobs = await InternshipModel.find();
+    const partTimeJobs = await PartTimeJobModel.find();
+    const freelanceJobs = await FreelancerModel.find();
+    jobs.tuitionJobs = tuitionJobs;
+    jobs.internJobs = internJobs;
+    jobs.partTimeJobs = partTimeJobs;
+    jobs.freelanceJobs = freelanceJobs;
+    // console.log("me");
+    console.log("jobs ",jobs);
+    // console.log(jobs);
     // Send the job documents as a JSON response
     res.status(200).json(jobs);
   } catch (error) {
@@ -687,3 +697,53 @@ app.get('/pendingjobshow/:filter', async (req,res) => {
   .catch(()=> res.status(500).json("Could not show data"));
   res.json(data)
 })
+
+app.post('/apply/tuition/:_id', async (req, res) => {
+  try {
+    const jobId = req.params._id;
+    const { employerEmail, applicantEmail } = req.body;
+    let candidateEmployer = await CandidateEmployer.findOne({ jobId });
+    const employer = await EmployerModel.findOne({ email: employerEmail });
+
+    if (!candidateEmployer) {
+      candidateEmployer = new CandidateEmployer({
+        employerEmail,
+        jobId,
+        candidateList: [applicantEmail],
+      });
+      await candidateEmployer.save();
+      return res.status(201).json({ message: 'Application submitted successfully' });
+    }
+    if (!candidateEmployer.candidateList.includes(applicantEmail)) {
+      candidateEmployer.candidateList.push(applicantEmail);
+      await candidateEmployer.save();
+      return res.status(200).json({ message: 'Application submitted successfully' });
+    }
+    return res.status(409).json({ message: 'You have already applied for this job' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.get('/getEmployerInfo', async (req, res) => {
+  try {
+    // console.log(req.query,"shovo");
+    const { employerEmail } = req.query; // Use req.query instead of req.body
+    const employer = await EmployerModel.findOne({ email: employerEmail });
+
+    if (employer) {
+      return res.status(200).json({
+        message: 'Employer information retrieved successfully',
+        employer: employer.toObject(),
+      });
+    } else {
+      return res.status(404).json({ message: 'Employer not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
