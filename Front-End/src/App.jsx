@@ -18,7 +18,6 @@ import AdminDashboard from "./Components/AdminDashboard/AdminDashboard";
 import LoginOption from "./Components/LoginOption";
 import { SignUpEmployer } from "./Components/SignUpEmployer";
 import PostJobtutor from "./Components/PostJob/PostJobtutor";
-import Modal from "./Components/postedJob/Modal";
 import Pendingjob from "./Components/PostJob/Pendingjob";
 import PartTime from "./Components/PostJob/PartTime";
 import Freelance from "./Components/PostJob/Freelance";
@@ -59,13 +58,12 @@ function App() {
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/signup-option" element={<SignUpOption />} />
           <Route path="/ApplicantList" element={<ApplicantList />} />
-          <Route path="/modal" element={<Modal />} />
           <Route path="/tutorjob" element={<PostJobtutor />} />
           <Route path="/internjob" element={<Internship />} />
           <Route path="/parttimejob" element={<PartTime />} />
           <Route path="/freelancejob" element={<Freelance />} />
           <Route path="/pendingjob" element={<Pendingjob />} />
-          <Route path="/employerdash" element={< EmployerDashboard />} />
+          <Route path="/employerdash" element={<EmployerDashboard />} />
           <Route path="/employers-joblist" element={<EmployersJoblist />} />
         </Routes>
         <ToastContainer />

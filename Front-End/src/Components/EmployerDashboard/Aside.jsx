@@ -4,14 +4,14 @@ import ApplicantList from "../ApplicantList/ApplicantList";
 
 function Aside(props) {
   const [postjob, setpostJob] = useState(false);
-  const [approveApplicant, setApproveApplicant] = useState(false);
+  const [approveApplicant, setApproveApplicant] = useState(true);
   function togglePostJob() {
     setpostJob(!postjob);
   }
   const [profileImg, setProfileImg] = useState(
     window.localStorage.getItem("profileImgUrl")
   );
-  const [selectedButton, setSelectedButton] = useState("showProfile");
+  const [selectedButton, setSelectedButton] = useState("approveapplicant");
 
   const handleButtonClick = (buttonName) => {
     setSelectedButton(buttonName);
@@ -26,6 +26,16 @@ function Aside(props) {
       setApproveApplicant(false);
     }
     props.func(buttonName);
+  };
+  const logoutHandler = () => {
+    const shouldLogout = window.confirm("Are you sure you want to log out?");
+    if (shouldLogout) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("email");
+      localStorage.removeItem("profileImgUrl");
+      localStorage.removeItem("userType");
+      window.location.href = "/";
+    }
   };
 
   return (
@@ -48,11 +58,11 @@ function Aside(props) {
         <div className="flex flex-col w-full">
           <button
             className={`py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white ${
-              selectedButton === "showProfile" ? "bg-bt" : "text-slate-500"
+              selectedButton === "approveapplicant" ? "bg-bt" : "text-slate-500"
             }`}
-            onClick={() => handleButtonClick("showProfile")}
+            onClick={() => handleButtonClick("approveapplicant")}
           >
-            Profile
+            Live Jobs
           </button>
           <button
             className={`py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white ${
@@ -60,15 +70,21 @@ function Aside(props) {
             }`}
             onClick={() => handleButtonClick("postajob")}
           >
-            Post A Job
+            Post Job
           </button>
           <button
             className={`py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white ${
-              selectedButton === "approveapplicant" ? "bg-bt" : "text-slate-500"
+              selectedButton === "showProfile" ? "bg-bt" : "text-slate-500"
             }`}
-            onClick={() => handleButtonClick("approveapplicant")}
+            onClick={() => handleButtonClick("Home")}
           >
-            Approve Applicant
+            Go Home
+          </button>
+          <button
+            onClick={logoutHandler}
+            className="py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white"
+          >
+            Logout
           </button>
           {/* <button
             className={`py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white ${
