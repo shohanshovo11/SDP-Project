@@ -5,11 +5,9 @@ import { ApplicantProfile } from "../EmployerDashboard/ApplicantProfile";
 
 export const ApplicantListCard = (props) => {
   const [isModalOpen, setModalOpen] = useState(false);
-
   const openModal = () => {
     setModalOpen(true);
   };
-
   const closeModal = () => {
     setModalOpen(false);
   };
