@@ -25,6 +25,7 @@ import EmployerDashboard from "./Components/EmployerDashboard/EmployerDashboard"
 import ApplicantList from "./Components/ApplicantList/ApplicantList";
 import Internship from "./Components/PostJob/Internship";
 import { EmployersJoblist } from "./Components/EmployersJoblist/EmployersJoblist";
+import EmployerProfile from "./Components/EmployerProfile/EmployerProfile";
 
 function App() {
   return (
@@ -65,6 +66,7 @@ function App() {
           <Route path="/pendingjob" element={<Pendingjob />} />
           <Route path="/employerdash" element={<EmployerDashboard />} />
           <Route path="/employers-joblist" element={<EmployersJoblist />} />
+          <Route path="/employer-profile" element={<EmployerProfile />} />
         </Routes>
         <ToastContainer />
       </main>
