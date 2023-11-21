@@ -605,7 +605,7 @@ app.get('/employers-joblist/:email', async (req,res) => {
     const email = req.params.email;
     //console.log(email);
     // Use the "Job" model to find all documents in the "Jobs" collection
-    const jobID = await CandidateEmployerModel.find({employerEmail : email}, {jobId : 1, _id: 0});
+    const jobID = await CandidateEmployer.find({employerEmail : email}, {jobId : 1, _id: 0});
     var jobs = [];
     for(let i=0 ; i<jobID.length ; i++)
     {
