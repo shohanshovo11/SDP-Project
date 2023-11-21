@@ -8,10 +8,16 @@ function LoginOption() {
   const navigate = useNavigate();
   const handleClick = (string) => {
     localStorage.clear();
-    navigate("/login",{replace:true, state:{loginType:string}});
+    navigate("/login", { replace: true, state: { loginType: string } });
     // localStorage.setItem("loginType", string);
     // console.log(localStorage.getItem("loginType"));
     // console.log(localStorage.getItem("signupType"));
+  };
+  const handleClick2 = (string) => {
+    localStorage.clear();
+    localStorage.setItem("loginType", string);
+    console.log(localStorage.getItem("loginType"));
+    console.log(localStorage.getItem("signupType"));
   };
 
   return (
@@ -50,6 +56,20 @@ function LoginOption() {
                 <img src="/postajob.svg" className="cursor-pointer " />
               </button>
               <p className="text-center">Employer</p>
+            </div>
+            <div className="flex flex-col gap-5 w-40 h-40 pb-60">
+              <Link
+                to="/adminlogin"
+                onClick={() => {
+                  handleClick2("admin");
+                }}
+              >
+                <img
+                  src="/admin.png"
+                  className="cursor-pointer w-full h-auto"
+                />
+              </Link>
+              <p className="text-center">Admin</p>
             </div>
           </div>
         </div>

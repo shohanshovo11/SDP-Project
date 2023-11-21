@@ -26,26 +26,18 @@ import ApplicantList from "./Components/ApplicantList/ApplicantList";
 import Internship from "./Components/PostJob/Internship";
 import { EmployersJoblist } from "./Components/EmployersJoblist/EmployersJoblist";
 import EmployerProfile from "./Components/EmployerProfile/EmployerProfile";
+import { AdminLogin } from "./Components/AdminLogin";
+import ApplicantListShovo from "./Components/ApplicantList/ApplicantListShovo";
 
 function App() {
   return (
     <BrowserRouter>
       <main>
         <Routes>
-          {/* <Route path="/" element={<Home obj2={{email:""}}/>} />
-          <Route path="/login" element={<Login/>} />
-          <Route path="/forgot-password" element={<ForgotPassword/>} />
-          <Route path="/profile" element={<Profile/>} />
-          <Route path="/posted-jobs" element={<Job/>} />
-          <Route path="/sign-up" element={<Signup />} />
-          <Route path="/otp" element={<VerifyPassword />} />
-          <Route path="/reset" element={<ResetPass />} />
-          <Route path="/courses" element={<CareerGrooming />} />
-          <Route path="/ratings" element={<RatingReview />} /> */}
-
           <Route path="/" element={<Home obj2={{ email: "" }} />} />
           <Route path="/login-option" element={<LoginOption />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/adminlogin" element={<AdminLogin />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signup-employer" element={<SignUpEmployer />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -59,6 +51,7 @@ function App() {
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/signup-option" element={<SignUpOption />} />
           <Route path="/ApplicantList" element={<ApplicantList />} />
+          <Route path="/ApplicantListShovo" element={<ApplicantListShovo />} />
           <Route path="/tutorjob" element={<PostJobtutor />} />
           <Route path="/internjob" element={<Internship />} />
           <Route path="/parttimejob" element={<PartTime />} />

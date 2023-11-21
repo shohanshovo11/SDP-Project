@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PostJob from "./PostJob";
 import ApplicantList from "../ApplicantList/ApplicantList";
+import ApplicantListShovo from "../ApplicantList/ApplicantListShovo";
 
 function Aside(props) {
   const [postjob, setpostJob] = useState(false);
@@ -98,6 +99,7 @@ function Aside(props) {
       </div>
       {postjob && <PostJob />}
       {approveApplicant && <ApplicantList />}
+      {/* {approveApplicant && <ApplicantListShovo />} */}
       {/* {console.log(postjob, "parent")} */}
     </>
   );
