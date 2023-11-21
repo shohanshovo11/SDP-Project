@@ -7,8 +7,10 @@ import Footer from "./Footer";
 import { NavNolog } from "./navbar/NavNolog";
 import eyeOff from "/eye-off.svg"; // Correct path
 import eye from "/eye.svg"; // Correct path
-import { Axios } from "../Components/api/api";
+// import { Axios } from "../Components/api/api";
 import signup from "/signup.png"; // Correct path
+import axios from 'axios';
+
 
 export const SignUpEmployer = () => {
   const [loading, setLoading] = useState(false);
@@ -53,10 +55,7 @@ export const SignUpEmployer = () => {
     }
 
     // If passwords match, continue with form submission logic
-    Axios.post("/register", {
-      email: formData.email,
-      password: formData.password,
-    })
+    axios.post("http://localhost:5000/registeremployer", formData)
       .then((response) => {
         if (response.status === 400) {
           // If status is 400, email already exists, show a toast
@@ -66,9 +65,7 @@ export const SignUpEmployer = () => {
         return response.data;
       })
       .then((data) => {
-        console.log(data, "userRegister");
         toast.success("Account Created");
-        console.log("Form submitted");
         // navigate("/"); // You can navigate to the profile page here
       })
       .catch((error) => {
@@ -174,7 +171,7 @@ export const SignUpEmployer = () => {
                           {showPassword ? (
                             <img
                               src={eye}
-                              className="w-6"
+                              className="w-6" 
                               alt="Show Password"
                             />
                           ) : (
@@ -234,7 +231,6 @@ export const SignUpEmployer = () => {
                       <input
                         type="date"
                         name="dob"
-                        value={formData.dob}
                         autoComplete="off"
                         placeholder="Type here"
                         className="input bg-white w-full text-black border-2 border-bt"
@@ -344,7 +340,7 @@ export const SignUpEmployer = () => {
           )}
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

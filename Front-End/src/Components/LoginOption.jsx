@@ -14,7 +14,7 @@ function LoginOption() {
 
   return (
     <>
-      {localStorage.getItem("email") ? <Navbar /> : <NavNolog />}
+      { localStorage.getItem("email") ? <Navbar /> : <NavNolog />}
       <div className="w-full h-auto bg-white flex justify-center gap-20 text-black font-poppins pt-20">
         <div>
           <img src="/signup.png" className="w-96" />
@@ -40,7 +40,7 @@ function LoginOption() {
               </Link>
               <p className="text-center">Student</p>
             </div>
-            <div className="flex flex-col gap-4 w-40 pb-44">
+            <div className="flex flex-col gap-4 w-40 ">
               <Link
                 to=""
                 onClick={() => {
@@ -51,6 +51,21 @@ function LoginOption() {
               </Link>
               <p className="text-center">Employer</p>
             </div>
+               <div className="flex flex-col gap-5 w-40 h-40 pb-60">
+              <Link
+                to="/adminlogin"
+                onClick={() => {
+                  handleClick("admin");
+                }}
+              >
+                <img
+                  src="/admin.png"
+                  className="cursor-pointer w-full h-auto"
+                />
+              </Link>
+              <p className="text-center">Admin</p>
+            </div> 
+                
           </div>
         </div>
       </div>

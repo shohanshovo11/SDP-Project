@@ -1,4 +1,4 @@
-import { Axios } from "../Components/api/api";
+//import { Axios } from "../Components/api/api";
 import React, { useState } from "react";
 import { Dna } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,6 +9,7 @@ import { NavNolog } from "./navbar/NavNolog";
 import eyeOff from "/eye-off.svg";
 import eye from "/eye.svg";
 import verify from "/login.svg"; // Import your verification image here
+import axios from 'axios';
 
 export const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -38,8 +39,16 @@ export const Login = () => {
     }
 
     try {
-      const response = await Axios.post("/login", formData);
-
+      let am=localStorage.getItem("loginType")
+      let response
+      if(am==="student")
+      {
+      response = await axios.post("http://localhost:5000/login", formData)
+      }
+      else if(am==="admin")
+      {
+      response = await axios.post("http://localhost:5000/adminlogin", formData)
+      }
       if (response.status === 200) {
         const data = response.data;
         if (data.status === "ok") {
@@ -47,7 +56,14 @@ export const Login = () => {
           window.localStorage.setItem("email", formData.email);
           window.localStorage.setItem("profileImgUrl", data.profileImgUrl);
           // console.log("Token stored ", data.token);
+          if(am==="student")
+          {
           window.location.href = "/profile";
+          }
+          else if(am==="admin")
+          {
+            window.location.href = "/admin-dashboard";
+            }
         } else {
           toast.error("Invalid Email or Password");
         }

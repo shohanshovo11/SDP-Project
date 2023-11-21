@@ -45,6 +45,7 @@ function App() {
           <Route path="/" element={<Home obj2={{ email: "" }} />} />
           <Route path="/login-option" element={<LoginOption />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/adminlogin" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signup-employer" element={<SignUpEmployer />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />

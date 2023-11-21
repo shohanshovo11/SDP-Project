@@ -10,6 +10,7 @@ const JWT_SECRET = "jwt-secret-key";
 const otpGenerator = require("otp-generator");
 
 const UserModel = require("./Schema/userDetails");
+const AdminModel = require("./Schema/adminDetails");
 const TuitionModel = require("./Schema/tuition");
 const EmployerModel = require("./Schema/employer")
 const FreelancerModel = require("./Schema/freelancerSchema");
@@ -38,7 +39,7 @@ app.use(cors());
 
 const Education = require("./Schema/education");
 
-app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.json ({ limit: "50mb" }));
 
 
 // Define a middleware function to check the database connection status
@@ -87,6 +88,24 @@ app.post("/register", async (req, res) => {
       email,
       password,
     });
+    res.send({ status: "ok" });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.post("/registeremployer", async (req, res) => {
+  try {
+    // Check if the email already exists in the database
+    const info = req.body;
+    const email=req.body.email;
+    const existingUser = await  db.collection("employers").findOne({email:email});
+    if (existingUser) {
+      // If email exists, send an error response
+      return res.status(400).send({ error: "Email Already Exists" });
+    }
+    const data= await db.collection("employers").insertOne(info)
+    .catch(()=> res.status(500).json("Could not insert data"))
     res.send({ status: "ok" });
   } catch (error) {
     console.log(error);
@@ -142,7 +161,32 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+app.post("/adminlogin", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await AdminModel.findOne({ email });
 
+    if (!user) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    if (user.password == password) {
+      const token = jwt.sign({ email: user.email }, "jwt-secret-key");
+
+      // Send the token and user's profile image URL in the response
+      return res.json({
+        status: "ok",
+        token,
+        profileImgUrl: user.profileImgUrl,
+      });
+    }
+
+    res.json({ status: "error", error: "Invalid Password" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 // Forgot Password
 app.post("/forgot-password", async (req, res) => {
   try {
