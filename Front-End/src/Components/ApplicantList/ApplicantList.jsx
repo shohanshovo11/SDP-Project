@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Dna } from "react-loader-spinner";
 import { Axios } from "../api/api";
-import axios from "axios";
 import { JobItem } from "./JobItem";
 import "./ApplicantList.css";
-
 
 export const ApplicantList = () => {
   const tokenAvailable = !!localStorage.getItem("token");
@@ -17,8 +15,7 @@ export const ApplicantList = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(`http://localhost:5000/employers-joblist/${email}`)
+    Axios.get(`/employers-joblist/${email}`)
       .then((response) => {
         const data = response.data;
         setRecords(data);
@@ -31,16 +28,16 @@ export const ApplicantList = () => {
   return (
     <>
       <div className="h-full w-full flex flex-row gap-x-8 px-4 py-4 font-poppins overflow-x-hidden">
-          {records.map((job, index) => (
-            <JobItem
-              key={index}
-              jobitem={{
-                title: job.title,
-                tags: job.tags,
-                salary: job.salary,
-              }}
-            />
-          ))}
+        {records.map((job, index) => (
+          <JobItem
+            key={index}
+            jobitem={{
+              title: job.title,
+              tags: job.tags,
+              salary: job.salary,
+            }}
+          />
+        ))}
       </div>
     </>
   );
