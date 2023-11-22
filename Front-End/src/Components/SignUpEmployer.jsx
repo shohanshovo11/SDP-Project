@@ -11,7 +11,6 @@ import { Axios } from "../Components/api/api";
 import signup from "/signup.png"; // Correct path
 // import axios from 'axios';
 
-
 export const SignUpEmployer = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -78,7 +77,7 @@ export const SignUpEmployer = () => {
     <>
       <NavNolog />
       <ToastContainer />
-      <div className="bg-white w-screen h-screen">
+      <div className="bg-white w-screen h-screen mb-10">
         <div className="font-poppins flex justify-center items-center bg-white gap-6 py-8">
           {loading ? (
             <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-100 bg-white z-50">
@@ -171,7 +170,7 @@ export const SignUpEmployer = () => {
                           {showPassword ? (
                             <img
                               src={eye}
-                              className="w-6" 
+                              className="w-6"
                               alt="Show Password"
                             />
                           ) : (
@@ -301,23 +300,23 @@ export const SignUpEmployer = () => {
                         onChange={handleInputChange}
                       />
                     </div>
-                    <div className="form-control w-72">
-                      <label className="label">
-                        <span className="label-text text-base text-black font-semibold">
-                          Experience
-                        </span>
-                      </label>
-                      <input
-                        type="text"
-                        name="experience"
-                        value={formData.experience}
-                        autoComplete="off"
-                        placeholder="Type here"
-                        className="input bg-white w-full text-black border-2 border-bt"
-                        onChange={handleInputChange}
-                      />
-                    </div>
                   </div>
+                </div>
+                <div className="form-control w-full">
+                  <label className="label text-center">
+                    <span className="label-text text-base text-center text-black font-semibold">
+                      Experience
+                    </span>
+                  </label>
+                  <input
+                    type="text"
+                    name="experience"
+                    value={formData.experience}
+                    autoComplete="off"
+                    placeholder="Type here"
+                    className="input bg-white text-black border-2 border-bt"
+                    onChange={handleInputChange}
+                  />
                 </div>
 
                 <button
@@ -326,7 +325,7 @@ export const SignUpEmployer = () => {
                 >
                   Create Account
                 </button>
-                <p className="">
+                {/* <p className="">
                   <span className="">Already have an account? </span>
                   <Link
                     to="/login"
@@ -334,7 +333,7 @@ export const SignUpEmployer = () => {
                   >
                     Log in
                   </Link>
-                </p>
+                </p> */}
               </form>
             </>
           )}
