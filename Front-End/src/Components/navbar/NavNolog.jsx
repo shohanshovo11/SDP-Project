@@ -22,18 +22,46 @@ export const NavNolog = () => {
             <li tabIndex={0}>
               <details>
                 <summary>Job Category</summary>
-                <ul className="p-2 bg-white z-50">
+                <ul className="p-2 bg-white z-40">
                   <li>
-                    <Link to="/posted-jobs">Tuition</Link>
+                    <Link
+                      to="/posted-jobs"
+                      onClick={() => {
+                        localStorage.setItem("category", "tuition");
+                      }}
+                    >
+                      Tuition
+                    </Link>
                   </li>
                   <li>
-                    <a>Internship</a>
+                    <Link
+                      to="/posted-jobs"
+                      onClick={() => {
+                        localStorage.setItem("category", "intern");
+                      }}
+                    >
+                      Internship
+                    </Link>
                   </li>
                   <li>
-                    <a>Part-Time</a>
+                    <Link
+                      to="/posted-jobs"
+                      onClick={() => {
+                        localStorage.setItem("category", "partTime");
+                      }}
+                    >
+                      Part-Time
+                    </Link>
                   </li>
                   <li>
-                    <a>Freelancing</a>
+                    <Link
+                      to="/posted-jobs"
+                      onClick={() => {
+                        localStorage.setItem("category", "freelance");
+                      }}
+                    >
+                      Freelancing
+                    </Link>
                   </li>
                 </ul>
               </details>

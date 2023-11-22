@@ -10,20 +10,20 @@ import { Navbar } from "./navbar/Navbar";
 function Home(props) {
   const [jwtToken, setJwtToken] = useState(localStorage.getItem("token") || "");
   const [noNav, setNoNav] = useState(!jwtToken);
-  useEffect(() => {
-    if (jwtToken) {
-      console.log(`JWT Token: ${jwtToken}`);
-      Axios.post("/userData")
-        .then((res) => {
-          console.log(res.data.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      console.log("JWT Token not found in localStorage");
-    }
-  }, [jwtToken]);
+  // useEffect(() => {
+  //   if (jwtToken) {
+  //     console.log(`JWT Token: ${jwtToken}`);
+  //     Axios.post("/userData")
+  //       .then((res) => {
+  //         console.log(res.data.data);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   } else {
+  //     console.log("JWT Token not found in localStorage");
+  //   }
+  // }, [jwtToken]);
 
   return (
     <div className="bg-white font-poppins">

@@ -5,11 +5,16 @@ import { NavNolog } from "../navbar/NavNolog";
 import { Navbar } from "../navbar/Navbar";
 import { Tutor } from "./Tutor";
 import { Axios } from "../api/api";
+import { Internship } from "./Internship";
+import { PartTime } from "./PartTime";
+import { Freelance } from "./Freelance";
 
 export const Job = () => {
+  const [selectedOption, setSelectedOption] = useState(
+    localStorage.getItem("category")
+  );
   const tokenAvailable = !!localStorage.getItem("token");
   const [loading, setLoading] = useState(true);
-  const [selectedOption, setSelectedOption] = useState("tuition");
   const [minSalary, setMinSalary] = useState("");
   const [maxSalary, setMaxSalary] = useState("");
   const jobMappings = {
@@ -40,9 +45,7 @@ export const Job = () => {
   }, []);
 
   useEffect(() => {
-    // console.log(jobs, jobMappings, selectedOption, "shovo");
     setRecords(jobs[jobMappings[selectedOption]] || []);
-    // console.log(selectedOption);
   }, [selectedOption]);
 
   const handleSearchTitle = (searchEvent) => {
@@ -259,9 +262,47 @@ export const Job = () => {
                         }}
                       />
                     )}
-                    {selectedOption === "intern" && <div>{job.title}</div>}
-                    {selectedOption === "freelance" && <div>{job.title}</div>}
-                    {selectedOption === "partTime" && <div>{job.title}</div>}
+                    {selectedOption === "intern" && (
+                      <Internship
+                        internship={{
+                          _id: job._id,
+                          postedBy: job.email,
+                          title: job.title,
+                          description: job.description,
+                          area: job.area,
+                          time: job.workingHour,
+                          salary: job.salary,
+                          position: job.position,
+                        }}
+                      />
+                    )}
+                    {selectedOption === "partTime" && (
+                      <PartTime
+                        partTime={{
+                          _id: job._id,
+                          // postedBy: job.email,
+                          title: job.title,
+                          description: job.description,
+                          time: job.time,
+                          workingHour: job.workingHour,
+                          salary: job.salary,
+                        }}
+                      />
+                    )}
+                    {selectedOption === "freelance" && (
+                      <Freelance
+                        freelance={{
+                          _id: job._id,
+                          // postedBy: job.email,
+                          title: job.title,
+                          description: job.description,
+                          task: job.task,
+                          workingHour: job.workingHour,
+                          deadline: job.deadline,
+                          rate: job.rate,
+                        }}
+                      />
+                    )}
                   </React.Fragment>
                 ))}
             </div>
