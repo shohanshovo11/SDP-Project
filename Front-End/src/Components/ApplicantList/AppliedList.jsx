@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./ApplicantList.css";
+import "./AppliedList.css";
 import { Navbar } from "../navbar/Navbar.jsx";
 import Footer from "../Footer.jsx";
 import { AppliedCard } from "./AppliedCard.jsx";
@@ -34,7 +34,12 @@ export const AppliedList = () => {
         <img src={qh} className="qhead" />
         <div className="whole-card">
           {AppList.map((details, index) => (
-            <AppliedCard applicant={details} key={index} />
+            <AppliedCard
+              applicant={details}
+              key={index}
+              sid={details.email}
+              jId={JobId}
+            />
           ))}
         </div>
       </div>

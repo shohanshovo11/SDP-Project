@@ -849,9 +849,20 @@ app.get("/candidatelist/:jobId", async (req, res) => {
     .collection("StudentDetails")
     .find(
       { email: { $in: candidates } },
-      { projection: { name: 1, profileImgUrl: 1, _id: 0 } }
+      { projection: { name: 1, profileImgUrl: 1, email: 1, _id: 0 } }
     )
     .toArray()
     .catch(() => res.status(500).json("Could not get data"));
   res.json(list);
+});
+
+app.put("/accept/:JID/:SID", async (req, res) => {
+  const jid = req.params.JID;
+  const sid = req.params.SID;
+
+  const data = await db
+    .collection("candidateemployers")
+    .updateOne({ jobId: jid }, { $set: { assigned: sid } })
+    .catch(() => res.status(500).json("Could not get data"));
+  res.json(data);
 });

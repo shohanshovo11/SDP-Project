@@ -1,7 +1,20 @@
 import React from "react";
-import "./ApplicantList.css";
+import "./AppliedList.css";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-export const AppliedCard = ({ applicant }) => {
+export const AppliedCard = ({ applicant, sid, jId }) => {
+  async function handleClick() {
+    const response = await axios.put(
+      `http://localhost:5000/accept/${jId}/${sid}`
+    );
+    const data = response.data;
+    if (!data.acknowledged) {
+      toast.error("Data couldn't be updated");
+      return;
+    }
+    toast.success("Data successfully updated");
+  }
   return (
     <div>
       <div className="card">
@@ -13,7 +26,9 @@ export const AppliedCard = ({ applicant }) => {
         <h5 className="name">{applicant.name}</h5>
         <div className="buttons">
           <button className="viewButton">Details</button>
-          <button className="acceptButton">Accept</button>
+          <button className="acceptButton" onClick={handleClick}>
+            Accept
+          </button>
         </div>
       </div>
     </div>
