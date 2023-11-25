@@ -6,6 +6,7 @@ const candidateEmployerSchema = new mongoose.Schema({
   employerEmail: String,
   jobId: String,
   candidateList: [String],
+  accepted: String
 });
 
 const CandidateEmployer = mongoose.model('CandidateEmployer', candidateEmployerSchema);
