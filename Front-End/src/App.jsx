@@ -28,6 +28,7 @@ import { EmployersJoblist } from "./Components/EmployersJoblist/EmployersJoblist
 import EmployerProfile from "./Components/EmployerProfile/EmployerProfile";
 import { AdminLogin } from "./Components/AdminLogin";
 import ApplicantListShovo from "./Components/ApplicantList/ApplicantListShovo";
+import AppliedList from "./Components/ApplicantList/appliedList";
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
           <Route path="/employerdash" element={<EmployerDashboard />} />
           <Route path="/employers-joblist" element={<EmployersJoblist />} />
           <Route path="/employer-profile" element={<EmployerProfile />} />
+          <Route path="/AppliedList/:jobId" element={<AppliedList />} />
         </Routes>
         <ToastContainer />
       </main>

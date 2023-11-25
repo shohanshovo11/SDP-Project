@@ -11,7 +11,7 @@ const otpGenerator = require("otp-generator");
 
 const UserModel = require("./Schema/userDetails");
 const TuitionModel = require("./Schema/tuition");
-const EmployerModel = require("./Schema/employer")
+const EmployerModel = require("./Schema/employer");
 const FreelancerModel = require("./Schema/freelancerSchema");
 const InternshipModel = require("./Schema/internship");
 const CandidateEmployer = require("./Schema/candidateEmployer");
@@ -27,7 +27,6 @@ const dotenv = require("dotenv");
 dotenv.config();
 const PORT = process.env.PORT || 5000;
 
-
 app.use(cors());
 // app.use(cors({
 //   origin: "*", // Replace with your frontend's URL
@@ -35,12 +34,9 @@ app.use(cors());
 //   credentials: true, // Enable credentials (cookies, authorization headers)
 // }));
 
-
-
 const Education = require("./Schema/education");
 
 app.use(bodyParser.json({ limit: "50mb" }));
-
 
 // Define a middleware function to check the database connection status
 // const checkDatabaseConnection = (req, res, next) => {
@@ -61,9 +57,9 @@ app.use(bodyParser.json({ limit: "50mb" }));
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-app.get("/",(req, res) => {
+app.get("/", (req, res) => {
   res.json("Hello");
-})
+});
 app.post("/post", async (req, res) => {
   console.log(req.body);
   return res.send({ status: 200, statusText: "OK" });
@@ -99,20 +95,23 @@ app.post("/registeremployer", async (req, res) => {
   try {
     // Check if the email already exists in the database
     const info = req.body;
-    const email=req.body.email;
-    const existingUser = await  db.collection("employers").findOne({email:email});
+    const email = req.body.email;
+    const existingUser = await db
+      .collection("employers")
+      .findOne({ email: email });
     if (existingUser) {
       // If email exists, send an error response
       return res.status(400).send({ error: "Email Already Exists" });
     }
-    const data= await db.collection("employers").insertOne(info)
-    .catch(()=> res.status(500).json("Could not insert data"))
+    const data = await db
+      .collection("employers")
+      .insertOne(info)
+      .catch(() => res.status(500).json("Could not insert data"));
     res.send({ status: "ok" });
   } catch (error) {
     console.log(error);
   }
 });
-
 
 app.post("/adminlogin", async (req, res) => {
   try {
@@ -158,7 +157,6 @@ const verifyUser = (req, res, next) => {
   }
 };
 
-
 app.get("/profile", verifyUser, (req, res) => {
   return res.json("Success");
 });
@@ -169,10 +167,8 @@ app.post("/login", async (req, res) => {
     const { email, password, loginType } = req.body;
     var user;
 
-    if( loginType === "student")
-      user = await User.findOne({ email });
-    else if(loginType === "employer")
-      user = await Employer.findOne({ email });
+    if (loginType === "student") user = await User.findOne({ email });
+    else if (loginType === "employer") user = await Employer.findOne({ email });
 
     if (!user) {
       return res.status(401).json({ error: "Invalid credentials" });
@@ -322,7 +318,9 @@ app.get("/userData", async (req, res) => {
     const { userEmail } = req.body;
 
     try {
-      const data = await UserModel.findOne({ email: userEmail }).select('-profileImgUrl').select('-password');
+      const data = await UserModel.findOne({ email: userEmail })
+        .select("-profileImgUrl")
+        .select("-password");
 
       if (data) {
         res.send({ data });
@@ -336,7 +334,6 @@ app.get("/userData", async (req, res) => {
     res.send({ status: "error", message: "Token verification failed" });
   }
 });
-
 
 app.post("/getEducation", async (req, res) => {
   const { token } = req.body;
@@ -431,7 +428,7 @@ app.get("/jobs", async (req, res) => {
     jobs.partTimeJobs = partTimeJobs;
     jobs.freelanceJobs = freelanceJobs;
     // console.log("me");
-    console.log("jobs ",jobs);
+    console.log("jobs ", jobs);
     // console.log(jobs);
     // Send the job documents as a JSON response
     res.status(200).json(jobs);
@@ -443,9 +440,16 @@ app.get("/jobs", async (req, res) => {
 
 app.post("/update", async (req, res) => {
   try {
-    const { name = "", email = "", gender = "", address = "", phone = "", base64 = "" } = req.body;
+    const {
+      name = "",
+      email = "",
+      gender = "",
+      address = "",
+      phone = "",
+      base64 = "",
+    } = req.body;
     console.log(name);
-    if(req.body.birthDate == "NaN-NaN-NaN") req.body.birthDate = null;
+    if (req.body.birthDate == "NaN-NaN-NaN") req.body.birthDate = null;
     const birthDate = req.body.birthDate ? new Date(req.body.birthDate) : null;
     const user = await User.findOne({ email });
     if (!user) {
@@ -460,13 +464,16 @@ app.post("/update", async (req, res) => {
     if (phone) user.phone = phone;
     if (base64) user.profileImgUrl = base64;
     await user.save();
-    res.status(200).json({ message: "User information updated successfully", user });
+    res
+      .status(200)
+      .json({ message: "User information updated successfully", user });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal server error", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
   }
 });
-
 
 //update education
 app.post("/education", async (req, res) => {
@@ -566,96 +573,94 @@ app.get("/api/profileImage", (req, res) => {
     });
 });
 
-app.get('/tutorjobcount', (req,res) => {
-  db.collection("tuitions").estimatedDocumentCount()
-  .then(vari =>{
-    res.json(vari)
-  })
-  .catch(()=> res.status(500).json("Could not insert data"));
-})
+app.get("/tutorjobcount", (req, res) => {
+  db.collection("tuitions")
+    .estimatedDocumentCount()
+    .then((vari) => {
+      res.json(vari);
+    })
+    .catch(() => res.status(500).json("Could not insert data"));
+});
 
+app.post("/tutorjob", (req, res) => {
+  const tutor = req.body;
+  db.collection("tuitions")
+    .insertOne(tutor)
+    .then((vari) => {
+      res.json(vari);
+    })
+    .catch(() => res.status(500).json("Could not insert data"));
+});
 
-app.post('/tutorjob', (req,res) => {
-  
-  const tutor=req.body
-  db.collection("tuitions").insertOne(tutor)
-  .then(vari =>{
-    res.json(vari)
-  })
-  .catch(()=> res.status(500).json("Could not insert data"));
-})
+app.get("/freelancejobcount", (req, res) => {
+  db.collection("freelancers")
+    .estimatedDocumentCount()
+    .then((vari) => {
+      res.json(vari);
+    })
+    .catch(() => res.status(500).json("Could not insert data"));
+});
 
-app.get('/freelancejobcount', (req,res) => {
-  db.collection("freelancers").estimatedDocumentCount()
-  .then(vari =>{
-    res.json(vari)
-  })
-  .catch(()=> res.status(500).json("Could not insert data"));
-})
+app.post("/freelancejob", (req, res) => {
+  const freelancer = req.body;
+  db.collection("freelancers")
+    .insertOne(freelancer)
+    .then((vari) => {
+      res.json(vari);
+    })
+    .catch(() => res.status(500).json("Could not insert data"));
+});
 
+app.get("/internjobcount", (req, res) => {
+  db.collection("internships")
+    .estimatedDocumentCount()
+    .then((vari) => {
+      res.json(vari);
+    })
+    .catch(() => res.status(500).json("Could not insert data"));
+});
 
-app.post('/freelancejob', (req,res) => {
-  
-  const freelancer=req.body
-  db.collection("freelancers").insertOne(freelancer)
-  .then(vari =>{
-    res.json(vari)
-  })
-  .catch(()=> res.status(500).json("Could not insert data"));
-})
+app.post("/internjob", (req, res) => {
+  const intern = req.body;
+  db.collection("internships")
+    .insertOne(intern)
+    .then((vari) => {
+      res.json(vari);
+    })
+    .catch(() => res.status(500).json("Could not insert data"));
+});
 
+app.get("/parttimejobcount", (req, res) => {
+  db.collection("parttimejobs")
+    .estimatedDocumentCount()
+    .then((vari) => {
+      res.json(vari);
+    })
+    .catch(() => res.status(500).json("Could not insert data"));
+});
 
-app.get('/internjobcount', (req,res) => {
-  db.collection("internships").estimatedDocumentCount()
-  .then(vari =>{
-    res.json(vari)
-  })
-  .catch(()=> res.status(500).json("Could not insert data"));
-})
-
-
-app.post('/internjob', (req,res) => {
-  
-  const intern=req.body
-  db.collection("internships").insertOne(intern)
-  .then(vari =>{
-    res.json(vari)
-  })
-  .catch(()=> res.status(500).json("Could not insert data"));
-})
-
-
-app.get('/parttimejobcount', (req,res) => {
-  db.collection("parttimejobs").estimatedDocumentCount()
-  .then(vari =>{
-    res.json(vari)
-  })
-  .catch(()=> res.status(500).json("Could not insert data"));
-})
-
-
-app.post('/parttimejob', (req,res) => {
-  
-  const parttime=req.body
-  db.collection("parttimejobs").insertOne(parttime)
-  .then(vari =>{
-    res.json(vari)
-  })
-  .catch(()=> res.status(500).json("Could not insert data"));
-})
-
+app.post("/parttimejob", (req, res) => {
+  const parttime = req.body;
+  db.collection("parttimejobs")
+    .insertOne(parttime)
+    .then((vari) => {
+      res.json(vari);
+    })
+    .catch(() => res.status(500).json("Could not insert data"));
+});
 
 // Employer-Joblist
-app.get('/employers-joblist/:email', async (req,res) => {
+app.get("/employers-joblist/:email", async (req, res) => {
   try {
-
     const email = req.params.email;
     //console.log(email);
     // Use the "Job" model to find all documents in the "Jobs" collection
-    const jobID = await CandidateEmployer.find({employerEmail : email}, {jobId : 1, _id: 0});
+    const jobID = await CandidateEmployer.find(
+      { employerEmail: email },
+      { jobId: 1, _id: 0 }
+    );
     var jobs = [];
-    for(let i=0 ; i<jobID.length ; i++)
-    {
+    for (let i = 0; i < jobID.length; i++) {
       const j = await TuitionModel.findById(jobID[i].jobId);
       jobs.push(j);
     }
@@ -665,14 +670,13 @@ app.get('/employers-joblist/:email', async (req,res) => {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
-})
-
+});
 
 //getInactiveJobs
-app.get('/getInactiveJobs', async (req, res) => {
+app.get("/getInactiveJobs", async (req, res) => {
   try {
     // Using await to wait for the query execution
-    let jobs = await TuitionModel.find({ active: false }); 
+    let jobs = await TuitionModel.find({ active: false });
     // console.log(jobs);
     res.json(jobs); // Sending the inactive jobs as a response
   } catch (e) {
@@ -680,97 +684,101 @@ app.get('/getInactiveJobs', async (req, res) => {
     res.status(500).send("An error occurred");
   }
 });
-app.get('/tutorjobcount', (req,res) => {
-  db.collection("tuitions").estimatedDocumentCount()
-  .then(vari =>{
-    res.json(vari)
-  })
-  .catch(()=> res.status(500).json("Could not insert data"));
-})
+app.get("/tutorjobcount", (req, res) => {
+  db.collection("tuitions")
+    .estimatedDocumentCount()
+    .then((vari) => {
+      res.json(vari);
+    })
+    .catch(() => res.status(500).json("Could not insert data"));
+});
 
-
-app.post('/insertjob', (req,res) => {
-  
-  const jobdesc=req.body
+app.post("/insertjob", (req, res) => {
+  const jobdesc = req.body;
   // console.log(jobdesc)
-  db.collection("pendingjob").insertOne(jobdesc)
-  .then(vari =>{
-    res.json(vari)
-  })
-  .catch(()=> res.status(500).json("Could not insert data"));
-})
+  db.collection("pendingjob")
+    .insertOne(jobdesc)
+    .then((vari) => {
+      res.json(vari);
+    })
+    .catch(() => res.status(500).json("Could not insert data"));
+});
 
-app.get('/freelancejobcount', (req,res) => {
-  db.collection("freelancers").estimatedDocumentCount()
-  .then(vari =>{
-    res.json(vari)
-  })
-  .catch(()=> res.status(500).json("Could not insert data"));
-})
+app.get("/freelancejobcount", (req, res) => {
+  db.collection("freelancers")
+    .estimatedDocumentCount()
+    .then((vari) => {
+      res.json(vari);
+    })
+    .catch(() => res.status(500).json("Could not insert data"));
+});
 
+app.get("/internjobcount", (req, res) => {
+  db.collection("internships")
+    .estimatedDocumentCount()
+    .then((vari) => {
+      res.json(vari);
+    })
+    .catch(() => res.status(500).json("Could not insert data"));
+});
 
+app.get("/parttimejobcount", (req, res) => {
+  db.collection("parttimejobs")
+    .estimatedDocumentCount()
+    .then((vari) => {
+      res.json(vari);
+    })
+    .catch(() => res.status(500).json("Could not insert data"));
+});
 
-app.get('/internjobcount', (req,res) => {
-  db.collection("internships").estimatedDocumentCount()
-  .then(vari =>{
-    res.json(vari)
-  })
-  .catch(()=> res.status(500).json("Could not insert data"));
-})
-
-app.get('/parttimejobcount', (req,res) => {
-  db.collection("parttimejobs").estimatedDocumentCount()
-  .then(vari =>{
-    res.json(vari)
-  })
-  .catch(()=> res.status(500).json("Could not insert data"));
-})
-
-
-app.post('/approve', async (req,res) => {
-  let value=req.body
-  delete value._id
-  await db.collection("pendingjob").deleteOne(value)
+app.post("/approve", async (req, res) => {
+  let value = req.body;
+  delete value._id;
+  await db.collection("pendingjob").deleteOne(value);
   // value.id=req.params.id
-  let data
-  if(value.category==="tuition")
-  {
-    delete value.category
-    data= await db.collection("tuitions").insertOne(value)
-    .catch(()=> res.status(500).json("Could not insert data"))
+  let data;
+  if (value.category === "tuition") {
+    delete value.category;
+    data = await db
+      .collection("tuitions")
+      .insertOne(value)
+      .catch(() => res.status(500).json("Could not insert data"));
+  } else if (value.category === "internship") {
+    delete value.category;
+    data = await db
+      .collection("internships")
+      .insertOne(value)
+      .catch(() => res.status(500).json("Could not insert data"));
+  } else if (value.category === "parttime") {
+    delete value.category;
+    data = await db
+      .collection("parttimejobs")
+      .insertOne(value)
+      .catch(() => res.status(500).json("Could not insert data"));
+  } else if (value.category === "freelance") {
+    delete value.category;
+    data = await db
+      .collection("freelancers")
+      .insertOne(value)
+      .catch(() => res.status(500).json("Could not insert data"));
   }
-  else if(value.category==="internship")
-  {
-    delete value.category
-    data= await db.collection("internships").insertOne(value)
-    .catch(()=> res.status(500).json("Could not insert data"))
-  }
-  else if(value.category==="parttime")
-  {
-    delete value.category
-    data= await db.collection("parttimejobs").insertOne(value)
-    .catch(()=> res.status(500).json("Could not insert data"))
-  }
-  else if(value.category==="freelance")
-  {
-    delete value.category
-    data= await db.collection("freelancers").insertOne(value)
-    .catch(()=> res.status(500).json("Could not insert data"))
-  }
-  res.json(data)
-})
+  res.json(data);
+});
 
-app.get('/pendingjobshow/:filter', async (req,res) => {
-  const filter=req.params.filter
-  let find={}
-  if(filter!=="all")
-    find["category"]=filter
-  const data= await db.collection("pendingjob").find(find).sort().toArray()
-  .catch(()=> res.status(500).json("Could not show data"));
-  res.json(data)
-})
+app.get("/pendingjobshow/:filter", async (req, res) => {
+  const filter = req.params.filter;
+  let find = {};
+  if (filter !== "all") find["category"] = filter;
+  const data = await db
+    .collection("pendingjob")
+    .find(find)
+    .sort()
+    .toArray()
+    .catch(() => res.status(500).json("Could not show data"));
+  res.json(data);
+});
 
-app.post('/apply/tuition/:_id', async (req, res) => {
+app.post("/apply/tuition/:_id", async (req, res) => {
   try {
     const jobId = req.params._id;
     const { employerEmail, applicantEmail } = req.body;
@@ -784,21 +792,27 @@ app.post('/apply/tuition/:_id', async (req, res) => {
         candidateList: [applicantEmail],
       });
       await candidateEmployer.save();
-      return res.status(201).json({ message: 'Application submitted successfully' });
+      return res
+        .status(201)
+        .json({ message: "Application submitted successfully" });
     }
     if (!candidateEmployer.candidateList.includes(applicantEmail)) {
       candidateEmployer.candidateList.push(applicantEmail);
       await candidateEmployer.save();
-      return res.status(200).json({ message: 'Application submitted successfully' });
+      return res
+        .status(200)
+        .json({ message: "Application submitted successfully" });
     }
-    return res.status(409).json({ message: 'You have already applied for this job' });
+    return res
+      .status(409)
+      .json({ message: "You have already applied for this job" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
-app.get('/getEmployerInfo', async (req, res) => {
+app.get("/getEmployerInfo", async (req, res) => {
   try {
     // console.log(req.query,"shovo");
     const { employerEmail } = req.query; // Use req.query instead of req.body
@@ -806,16 +820,38 @@ app.get('/getEmployerInfo', async (req, res) => {
 
     if (employer) {
       return res.status(200).json({
-        message: 'Employer information retrieved successfully',
+        message: "Employer information retrieved successfully",
         employer: employer.toObject(),
       });
     } else {
-      return res.status(404).json({ message: 'Employer not found' });
+      return res.status(404).json({ message: "Employer not found" });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
+app.get("/candidatelist/:jobId", async (req, res) => {
+  let candidates = [];
+  const JobId = req.params.jobId;
 
+  const data = await db
+    .collection("candidateemployers")
+    .findOne({ jobId: JobId }, { projection: { candidateList: 1, _id: 0 } })
+    .catch(() => res.status(500).json("Could not get data"));
+
+  candidates = data.candidateList;
+
+  console.log(candidates);
+
+  const list = await db
+    .collection("StudentDetails")
+    .find(
+      { email: { $in: candidates } },
+      { projection: { name: 1, profileImgUrl: 1, _id: 0 } }
+    )
+    .toArray()
+    .catch(() => res.status(500).json("Could not get data"));
+  res.json(list);
+});
