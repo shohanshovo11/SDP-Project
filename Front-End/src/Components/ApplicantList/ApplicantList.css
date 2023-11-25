@@ -6,10 +6,12 @@
 
 .profile-image {
   align-self: center;
-  height: 65px;
-  width: 50px;
+  height: 80px;
+  width: 80px;
   justify-content: center;
   padding-top: 20px;
+  object-fit: contain;
+  border-radius: 120px;
 }
 
 .qhead {

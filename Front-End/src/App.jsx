@@ -51,7 +51,7 @@ function App() {
           <Route path="/ratings" element={<RatingReview />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/signup-option" element={<SignUpOption />} />
-          <Route path="/ApplicantList" element={<ApplicantList />} />
+          <Route path="/ApplicantList/:jobId" element={<ApplicantList />} />
           <Route path="/modal" element={<Modal />} />
           <Route path="/tutorjob" element={<PostJobtutor />} />
         </Routes>
