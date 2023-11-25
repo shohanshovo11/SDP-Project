@@ -652,13 +652,29 @@ app.get('/employers-joblist/:email', async (req,res) => {
     const email = req.params.email;
     //console.log(email);
     // Use the "Job" model to find all documents in the "Jobs" collection
-    const jobID = await CandidateEmployer.find({ $and : [{employerEmail : email}, {accepted : null }]}, {jobId : 1, _id: 0});
+    const jobID = await CandidateEmployer.find({ $and : [{employerEmail : email}, {assigned : null }]}, {jobId : 1, _id: 0});
     var jobs = [];
     for(let i=0 ; i<jobID.length ; i++)
     {
       const j = await TuitionModel.findById(jobID[i].jobId);
-      jobs.push(j);
+      if(j) jobs.push(j);
     }
+    for(let i=0 ; i<jobID.length ; i++)
+    {
+      const j = await InternshipModel.findById(jobID[i].jobId);
+      if(j) jobs.push(j);
+    }
+    for(let i=0 ; i<jobID.length ; i++)
+    {
+      const j = await PartTimeJobModel.findById(jobID[i].jobId);
+      if(j) jobs.push(j);
+    }
+    for(let i=0 ; i<jobID.length ; i++)
+    {
+      const j = await FreelancerModel.findById(jobID[i].jobId);
+      if(j) jobs.push(j);
+    }
+    
     // Send the job documents as a JSON response
     res.status(200).json(jobs);
   } catch (error) {

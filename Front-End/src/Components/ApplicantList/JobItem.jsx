@@ -23,7 +23,7 @@ export const JobItem = (props) => {
         >
           {props.jobitem.title}
         </h5>
-        <div className="my-2">
+        {/* <div className="my-2">
           <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-slate-600 bg-slate-200 last:mr-0 mr-1">
             {props.jobitem.tags[0]}
           </span>
@@ -33,7 +33,7 @@ export const JobItem = (props) => {
           <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-slate-600 bg-slate-200 last:mr-0 mr-1">
             {props.jobitem.tags[2]}
           </span>
-        </div>
+        </div> */}
         <h5
           style={titleStyle}
           className=" text-xl pt-1 font-medium text-gray-900"

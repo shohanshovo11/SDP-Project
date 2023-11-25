@@ -2,7 +2,8 @@
 
 const mongoose = require('mongoose');
 
-const internshipSchema = new mongoose.Schema({
+const internshipSchema = new mongoose.Schema(
+  {
   email: String,
   title: String,
   position: String,
@@ -12,8 +13,10 @@ const internshipSchema = new mongoose.Schema({
   salary: Number,
   description: String,
   assigned: String, // You can use ObjectId if you're referencing another document
-});
+  },
+  {
+    collection: 'internships',
+  }
+);
 
-const Internship = mongoose.model('Internship', internshipSchema);
-
-module.exports = Internship;
+module.exports = mongoose.model('Internship', internshipSchema);

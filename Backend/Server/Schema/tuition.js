@@ -11,6 +11,7 @@ const tuition = new mongoose.Schema(
     version: String,
     studentclass: Number,
     tags: [],
+    assigned: String
   },
   {
     collection: 'tuitions',
