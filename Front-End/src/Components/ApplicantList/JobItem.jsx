@@ -10,7 +10,7 @@ export const JobItem = (props) => {
   };
 
   return (
-    <div className="w-64 mb-4 h-fit max-w-sm bg-white border border-gray-200 rounded-lg shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
+    <div className="w-64 mb-4 h-fit max-w-sm bg-white border border-gray-200 rounded-lg shadow-[0_3px_10px_rgb(0,0,0,0.2)] cursor-pointer hover:shadow-[0_3px_10px_rgb(0,0,0,0.9)] transition duration-300 ease-in-out">
       <div className="flex flex-col items-center pb-5 pt-5">
         <img
           className="w-24 h-24 mb-3 object-cover rounded-full shadow-lg"
