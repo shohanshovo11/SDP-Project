@@ -29,6 +29,7 @@ import EmployerProfile from "./Components/EmployerProfile/EmployerProfile";
 import { AdminLogin } from "./Components/AdminLogin";
 import ApplicantListShovo from "./Components/ApplicantList/ApplicantListShovo";
 import AppliedList from "./Components/ApplicantList/appliedList";
+import CGrooming from "./Components/CGrooming/CGrooming";
 
 function App() {
   return (
@@ -62,6 +63,7 @@ function App() {
           <Route path="/employers-joblist" element={<EmployersJoblist />} />
           <Route path="/employer-profile" element={<EmployerProfile />} />
           <Route path="/AppliedList/:jobId" element={<AppliedList />} />
+          <Route path="/CareerGrooming" element={<CGrooming />} />
         </Routes>
         <ToastContainer />
       </main>
