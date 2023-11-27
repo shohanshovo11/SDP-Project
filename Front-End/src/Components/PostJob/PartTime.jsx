@@ -16,14 +16,14 @@ const PartTime = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     const reqbody={
-         email: localStorage.getItem("email"),
-         category:"parttime",
-         salary:salary, 
-         startingTime:time,
-         position:position,
-         description:description,
-         workingHour:workingHour,
-         title:title
+        email: localStorage.getItem("email"),
+        category:"parttime",
+        salary:salary, 
+        startingTime:time,
+        position:position,
+        description:description,
+        workingHour:workingHour,
+        title:title
     }
     const response=await Axios.post(`/insertjob`,reqbody);
     const data=response.data
