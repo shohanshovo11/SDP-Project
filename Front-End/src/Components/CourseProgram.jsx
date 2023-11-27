@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function CourseProgram() {
   return (
@@ -36,17 +37,16 @@ function CourseProgram() {
           Join Our Career Course Program
         </h1>
         <p className="text-right mb-8">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure eius
-          porro ad repellendus deleniti. Nemo vel, facere praesentium, dolorum
-          doloremque obcaecati impedit laborum fugit pariatur provident officia
-          non, tenetur excepturi distinctio commodi fugiat qui consequuntur.
-          Iure totam, mollitia beatae voluptates natus tempore necessitatibus
-          deleniti quos a incidunt repellendus ad aperiam aspernatur illum
-          tenetur? Saepe itaque numquam quaerat totam fugiat aperiam!
+        Join our trending courses and become an expert of your chosen professions. 
+        Make your learning experience as complete, dynamic, and interesting as possible. 
+        Here you can find a wide range of categories and groups to help you enhance your skills and knowledge so that you can stand out from the crowd. 
+        You can achieve your goals with the help of our diverse educators. 
+        Attend our exciting live session, which includes recorded supplemental collaborative tools, on a regular basis. 
+        Don't put it off any longer, grab it right now and start learning from the best learning portal.
         </p>
-        <button className="btn btn-square h-16 w-72 bg-bt text-white">
+        <Link className="btn btn-square h-16 w-72 bg-bt text-white" to="/courses" >
           Enroll in Career Courses
-        </button>
+        </Link>
       </div>
     </div>
   );
