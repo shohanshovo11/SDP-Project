@@ -31,7 +31,6 @@ import ApplicantListShovo from "./Components/ApplicantList/ApplicantListShovo";
 import AppliedList from "./Components/ApplicantList/AppliedList";
 import CGrooming from "./Components/CGrooming/CGrooming";
 import NotificationTable from "./Components/NotificationTable";
-// import ModalProfile from "./Components/PostJob/ModalProfile";
 
 function App() {
   return (
