@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import pic from "../EmployerDashboard/Picture.jpg";
 
 function Aside(props) {
-  const [selectedButton, setSelectedButton] = useState(null);
+  const [selectedButton, setSelectedButton] = useState("showpendingjob");
 
   const handleButtonClick = (buttonName) => {
     setSelectedButton(buttonName);
@@ -27,14 +27,6 @@ function Aside(props) {
         <div className="flex flex-col w-full">
           <button
             className={`py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white ${
-              selectedButton === "showProfile" ? "bg-bt" : "text-slate-500"
-            }`}
-            onClick={() => handleButtonClick("showProfile")}
-          >
-            Button
-          </button>
-          <button
-            className={`py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white ${
               selectedButton === "showpendingjob" ? "bg-bt" : "text-slate-500"
             }`}
             onClick={() => handleButtonClick("showpendingjob")}
@@ -43,20 +35,28 @@ function Aside(props) {
           </button>
           <button
             className={`py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white ${
+              selectedButton === "showProfile" ? "bg-bt" : "text-slate-500"
+            }`}
+            onClick={() => handleButtonClick("showProfile")}
+          >
+            Go Home
+          </button>
+          <button
+            className={`py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white ${
               selectedButton === "showElement3" ? "bg-bt" : "text-slate-500"
             }`}
             onClick={() => handleButtonClick("showElement3")}
           >
-            button
+            Logout
           </button>
-          <button
+          {/* <button
             className={`py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white ${
               selectedButton === "showElement4" ? "bg-bt" : "text-slate-500"
             }`}
             onClick={() => handleButtonClick("showElement4")}
           >
             button
-          </button>
+          </button> */}
         </div>
       </div>
     </>

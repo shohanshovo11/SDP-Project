@@ -128,17 +128,20 @@ export const Navbar = () => {
                   </Link>
                 </li>
               )}
-              <li>
-                <Link
-                  to={
-                    localStorage.getItem("loginType") === "employer"
-                      ? "/employerdash"
-                      : "/admin-dashboard"
-                  }
-                >
-                  Dashboard
-                </Link>
-              </li>
+              {localStorage.getItem("loginType") == "employer" ||
+              localStorage.getItem("loginType") == "admin" ? (
+                <li>
+                  <Link
+                    to={
+                      localStorage.getItem("loginType") === "employer"
+                        ? "/employerdash"
+                        : "/admin-dashboard"
+                    }
+                  >
+                    Dashboard
+                  </Link>
+                </li>
+              ) : null}
               <li>
                 <Link to="/" onClick={removeToken}>
                   Logout

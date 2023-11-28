@@ -882,15 +882,14 @@ app.get("/candidatelist/:jobId", async (req, res) => {
     .findOne({ jobId: JobId }, { projection: { candidateList: 1, _id: 0 } })
     .catch(() => res.status(500).json("Could not get data"));
 
-  candidates = data.candidateList;
-
+  data ? (candidates = data.candidateList) : (candidates = []);
   console.log(candidates);
 
   const list = await db
     .collection("StudentDetails")
     .find(
       { email: { $in: candidates } },
-      { projection: { name: 1, profileImgUrl: 1, email: 1, _id: 0 } }
+            // { projection: { name: 1, profileImgUrl: 1, email: 1, _id: 0 } }
     )
     .toArray()
     .catch(() => res.status(500).json("Could not get data"));
@@ -908,3 +907,30 @@ app.put("/accept/:JID/:SID", async (req, res) => {
   res.json(data);
 });
 
+///job employer
+app.get('/jobs/:employerEmail', async (req, res) => {
+  try {
+    const employerEmail = req.params.employerEmail;
+
+    // Search in PartTimeJob collection
+    const partTimeJobs = await PartTimeJobModel.find({ email: employerEmail }).select('_id title');
+
+    // Search in Internship collection
+    const internships = await InternshipModel.find({ email: employerEmail }).select('_id title');
+
+    // Search in Freelancer collection
+    const freelancerJobs = await FreelancerModel.find({ email: employerEmail }).select('_id title');
+
+    // Search in Tuition collection
+    const tuitionJobs = await TuitionModel.find({ email: employerEmail }).select('_id title');
+
+    // Combine results into a single array
+    const jobsPostedByEmployer = [...partTimeJobs, ...internships, ...freelancerJobs, ...tuitionJobs];
+
+    // Respond with the array of job titles and _id
+    res.json({ jobs: jobsPostedByEmployer.map(job => ({ _id: job._id, title: job.title })) });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});

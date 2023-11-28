@@ -11,9 +11,24 @@ function EmployerProfile() {
   const [experience, setExperience] = useState();
   const [phone, setPhone] = useState("");
   const [location, setLocation] = useState("");
+  const [profileImage, setProfileImage] = useState("");
 
   // State variable to track whether the profile is in edit mode
   const [isEditMode, setIsEditMode] = useState(false);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+
+    // Check if a file is selected
+    if (file) {
+      // Read the file and convert it to base64
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   useEffect(() => {
     const fetchEmployerInfo = async () => {
@@ -35,6 +50,7 @@ function EmployerProfile() {
         setExperience(employer.experience);
         setPhone(employer.number);
         setLocation(employer.address);
+        setProfileImage(employer.profileImgUrl);
       } catch (error) {
         console.error(error);
         // Handle error as needed
@@ -62,6 +78,7 @@ function EmployerProfile() {
         experience,
         phone,
         address: location,
+        profileImgUrl: profileImage,
       };
 
       // Make the API call to update the employer information
@@ -216,6 +233,15 @@ function EmployerProfile() {
                 location
               )}
             </p>
+            <p className="pt-4 text-base font-bold flex items-center justify-center lg:justify-start">
+              {isEditMode ? (
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                />
+              ) : null}
+            </p>
 
             <div className="pt-12 pb-8 gap-4 flex">
               {isEditMode ? (
@@ -241,10 +267,7 @@ function EmployerProfile() {
           </div>
         </div>
         <div className="w-2/5">
-          <img
-            src="/navbar/profile.jpg"
-            className="rounded-lg shadow-2xl block"
-          />
+          <img src={profileImage} className="rounded-lg shadow-2xl block" />
         </div>
       </div>
       <Footer />
