@@ -934,3 +934,58 @@ app.get('/jobs/:employerEmail', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+
+app.get('/getAssignedCandidate/:candidateEmail', async (req, res) => {
+  try {
+    // Extract candidate email from the URL params
+    const { candidateEmail } = req.params;
+
+    // Find all documents where the candidate email matches the assigned field
+    const candidateEmployers = await CandidateEmployer.find({
+      assigned: candidateEmail
+    });
+
+    if (candidateEmployers.length === 0) {
+      // If no matching documents are found, respond with an appropriate message
+      return res.status(404).json({ message: 'Candidate not found in any job assignments' });
+    }
+
+    // Extract job IDs and employer emails from the found documents
+    const assignments = candidateEmployers.map(({ jobId, employerEmail }) => ({ jobId, employerEmail }));
+
+    // Respond with an array of job IDs and employer emails
+    res.json(assignments);
+  } catch (error) {
+    // Handle any errors that occur during the process
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+app.get('/appliedJobs/:candidateEmail', async (req, res) => {
+  try {
+    // Extract candidate email from the URL params
+    const { candidateEmail } = req.params;
+
+    // Find all documents where the candidate email is present in the candidateList array
+    const candidateEmployers = await CandidateEmployer.find({
+      candidateList: candidateEmail
+    });
+
+    if (candidateEmployers.length === 0) {
+      // If no matching documents are found, respond with an appropriate message
+      return res.status(404).json({ message: 'Candidate not found in any job lists' });
+    }
+
+    // Extract job IDs and employer emails from the found documents
+    const assignments = candidateEmployers.map(({ jobId, employerEmail }) => ({ jobId, employerEmail }));
+
+    // Respond with an array of job IDs and employer emails
+    res.json(assignments);
+  } catch (error) {
+    // Handle any errors that occur during the process
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
