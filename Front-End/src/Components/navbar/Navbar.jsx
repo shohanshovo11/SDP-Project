@@ -128,6 +128,22 @@ export const Navbar = () => {
                   </Link>
                 </li>
               )}
+              {localStorage.getItem("loginType") == "student" ? (
+                <li>
+                  <Link
+                    to={
+                      // localStorage.getItem("loginType") === "employer"
+                      //   ? "/employer-profile"
+                      //   : "/profile"
+                      "/notification"
+                    }
+                    className="justify-between"
+                  >
+                    Notifications
+                    {/* <span className="badge">New</span> */}
+                  </Link>
+                </li>
+              ) : null}
               {localStorage.getItem("loginType") == "employer" ||
               localStorage.getItem("loginType") == "admin" ? (
                 <li>
