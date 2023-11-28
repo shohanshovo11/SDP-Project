@@ -834,6 +834,20 @@ app.get('/getEmployerInfo', async (req, res) => {
   }
 });
 
+app.get('/getJobInfo/:id', async (req, res) => {
+  const  jobID  = req.params.id; // Use req.query instead of req.body
+  let job = await TuitionModel.findById(jobID);
+  if(!job) job = await InternshipModel.findById(jobID);
+  if(!job) job = await PartTimeJobModel.findById(jobID);
+  if(!job) job = await FreelancerModel.findById(jobID);
+  console.log(job);
+  if (job) {
+    return res.status(200).json({job});
+  } else {
+    return res.status(404).json({ message: 'Employer not found' });
+  }
+});
+
 app.put('/updateEmployerInfo', async (req, res) => {
   try {
     const { employerEmail, updatedInfo } = req.body;

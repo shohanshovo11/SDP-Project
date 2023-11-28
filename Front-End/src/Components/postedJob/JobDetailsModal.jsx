@@ -5,7 +5,7 @@ import { Axios } from "../api/api";
 
 export const JobDetailsModal = ({ closeModal, isModalOpen, _id, postedBy }) => {
   const [employerInfo, setEmployerInfo] = useState(null); // State to store employer information
-  const [jobInfo, setJobInfo] = useState(null);
+  const [jobInfo, setJobInfo] = useState("");
 
   const handleApplyJob = async () => {
     const employerEmail = postedBy;
@@ -24,24 +24,42 @@ export const JobDetailsModal = ({ closeModal, isModalOpen, _id, postedBy }) => {
     }
   };
 
+  const handleTime = () =>{
+    return (jobInfo.workingHour<12) ? (jobInfo.workingHour + " am") : (jobInfo.workingHour - 12 + " pm");
+  }
+
   useEffect(() => {
     const getEmployerInfo = async () => {
       try {
-        const response = await Axios.get("/getEmployerInfo", {
+        const response = await Axios.get(`/getEmployerInfo`, {
           params: {
             employerEmail: postedBy,
           },
         });
-
-        console.log(response.data.employer);
+        //console.log(response.data.employer);
         setEmployerInfo(response.data.employer);
       } catch (error) {
         console.error(error);
       }
     };
+
+    const getJobInfo = async () => {
+      try {
+        const response = await Axios.get(`/getJobInfo/${_id}`);
+        console.log(response.data.job);
+        setJobInfo(response.data.job);
+      }catch (error) {
+        console.error(error);
+      }
+    };
+
+    
     if (isModalOpen) {
       getEmployerInfo();
+      getJobInfo();
     }
+
+    
   }, [isModalOpen, postedBy]);
 
   return (
@@ -71,13 +89,20 @@ export const JobDetailsModal = ({ closeModal, isModalOpen, _id, postedBy }) => {
               </svg>
             </button>
             {employerInfo && (
-              <div className="flex flex-col">
+              <div className="flex flex-col text-slate-600">
                 <div className="flex">
                   <div className="flex-1 pr-4">
                     <Dialog.Title className="text-2xl font-bold mb-4">
                       Apply Now!!!
                     </Dialog.Title>
-                    <p>{employerInfo.description}</p>
+                    <p className="text-lg font-bold">{jobInfo.title}</p>
+                    <p>Description: {jobInfo.description}</p>
+                    {/* <p>Class: {jobInfo.studentClass}</p>
+                    <p>Version: {jobInfo.version}</p>
+                    <p>Subject: {jobInfo.subject}</p>
+                    <p>Area: {jobInfo.area}</p> */}
+                    <p>Time: {handleTime()}</p>
+                    <p className="font-bold">Salary: {jobInfo.salary}</p>
                   </div>
 
                   <div className="flex-1 pl-4">

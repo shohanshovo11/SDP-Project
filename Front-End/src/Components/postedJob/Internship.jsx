@@ -77,12 +77,12 @@ export const Internship = (props) => {
           </div>
         </div>
       </div>
-      {/* <JobDetailsModal
+      <JobDetailsModal
         closeModal={closeModal}
         isModalOpen={isModalOpen}
-        _id={props.tutor._id}
-        postedBy={props.tutor.postedBy}
-      /> */}
+        _id={props.internship._id}
+        postedBy={props.internship.postedBy}
+      />
       {/* Modal */}
     </div>
   );
