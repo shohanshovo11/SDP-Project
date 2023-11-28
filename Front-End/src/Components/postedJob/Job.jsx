@@ -176,7 +176,7 @@ export const Job = () => {
                 </div>
               </form>
             </div>
-            <div className="flex">
+            {/* <div className="flex">
               <div className="pl-4">
                 <h1>
                   <a href="#">Sort By</a>
@@ -187,7 +187,7 @@ export const Job = () => {
                   <a href="#">Newest</a>
                 </h1>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="grid grid-cols-5 gap-2 bg-white">
@@ -227,7 +227,7 @@ export const Job = () => {
               "
                 />
               </div>
-              <div>
+              {/* <div>
                 <h3>Skills</h3>
                 <select
                   className="w-full h-10 border-2 border-slate-950 focus:border-blue-500 focus:border-2 bg-white rounded-md max-w-xs focus:ring-2"
@@ -242,7 +242,7 @@ export const Job = () => {
                   <option value="6">Biology</option>
                 </select>
               </div>
-              <div className="btn grow bg-bt text-slate-50 mt-2">Search</div>
+              <div className="btn grow bg-bt text-slate-50 mt-2">Search</div> */}
             </div>
             <div className="col-span-4 p-5 bg-white flex flex-wrap gap-6">
               {Array.isArray(records) &&
