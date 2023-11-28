@@ -29,8 +29,8 @@ import EmployerProfile from "./Components/EmployerProfile/EmployerProfile";
 import { AdminLogin } from "./Components/AdminLogin";
 import ApplicantListShovo from "./Components/ApplicantList/ApplicantListShovo";
 import AppliedList from "./Components/ApplicantList/AppliedList";
-import CGrooming from "./Components/CGrooming/CGrooming"
-
+import CGrooming from "./Components/CGrooming/CGrooming";
+import NotificationTable from "./Components/NotificationTable";
 
 function App() {
   return (
@@ -63,7 +63,11 @@ function App() {
           <Route path="/employerdash" element={<EmployerDashboard />} />
           <Route path="/employers-joblist" element={<EmployersJoblist />} />
           <Route path="/employer-profile" element={<EmployerProfile />} />
-          <Route path="/ApplicantList/AppliedList/:jobId" element={<AppliedList />} />
+          <Route path="/notification" element={<NotificationTable />} />
+          <Route
+            path="/ApplicantList/AppliedList/:jobId"
+            element={<AppliedList />}
+          />
           <Route path="/courses" element={<CGrooming />} />
         </Routes>
         <ToastContainer />

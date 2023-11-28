@@ -16,7 +16,7 @@ export const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    loginType: location.state.loginType
+    loginType: location.state.loginType,
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -50,10 +50,10 @@ export const Login = () => {
           window.localStorage.setItem("profileImgUrl", data.profileImgUrl);
           window.localStorage.setItem("loginType", location.state.loginType);
           // console.log("Token stored ", data.token);
-          if(location.state.loginType === "employer")
-            window.location.href = "/";
-          else
-            window.location.href = "/profile";
+          // if(location.state.loginType === "employer")
+          window.location.href = "/";
+          // else
+          // window.location.href = "/profile";
         } else {
           toast.error("Invalid Email or Password");
         }
