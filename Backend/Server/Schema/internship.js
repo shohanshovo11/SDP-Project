@@ -8,8 +8,8 @@ const internshipSchema = new mongoose.Schema(
   title: String,
   position: String,
   skillset: [String],
-  startingTime: Number,
-  workingHour: Number,
+  startingTime: String,
+  workingHour: String,
   salary: Number,
   description: String,
   assigned: String, // You can use ObjectId if you're referencing another document

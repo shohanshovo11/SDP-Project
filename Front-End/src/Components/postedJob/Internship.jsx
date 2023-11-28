@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { JobDetailsModal } from "./JobDetailsModal";
+import { InternJobModal } from "./InternJobModal";
 
 export const Internship = (props) => {
   const titleStyle = {
@@ -77,7 +77,7 @@ export const Internship = (props) => {
           </div>
         </div>
       </div>
-      <JobDetailsModal
+      <InternJobModal
         closeModal={closeModal}
         isModalOpen={isModalOpen}
         _id={props.internship._id}
