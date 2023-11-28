@@ -32,19 +32,6 @@ export const ApplicantListCard = (props) => {
   const handleAccept = () => {
     openConfirmationModal();
   };
-  const handleReject = async () => {
-    try {
-      console.log(props.applicant, props.jobId, props);
-      const res = await Axios.delete(
-        `/removeCandidate/${props.jobId}/${props.applicant.email}`
-      );
-      window.location.reload();
-      console.log(res);
-      alert("Applicant Rejected");
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const handleAcceptConfirmation = () => {
     // Perform actions when the "Accept" button in the confirmation modal is clicked
@@ -75,7 +62,7 @@ export const ApplicantListCard = (props) => {
       />
       <h5 className="">{props.applicant.name}</h5>
       <span className="">{props.applicant.phone}</span>
-      <div className="mb-4 flex gap-2">
+      <div className="mb-4 flex gap-7">
         <button
           className="bg-bt text-white text-sm rounded-3xl px-2 py-1"
           onClick={handleViewProfile}
@@ -97,11 +84,7 @@ export const ApplicantListCard = (props) => {
       </div>
 
       {/* View Profile Modal */}
-      <ApplicantProfile
-        closeModal={closeModal}
-        isModalOpen={isModalOpen}
-        email={props.applicant.email}
-      />
+      <ApplicantProfile closeModal={closeModal} isModalOpen={isModalOpen} />
 
       {/* Accept Confirmation Modal */}
       <Dialog
