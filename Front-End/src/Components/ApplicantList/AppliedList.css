@@ -1,0 +1,158 @@
+.back {
+  background-color: white;
+  height: 1200px;
+  width: 100%;
+}
+
+.profile-image {
+  align-self: center;
+  height: 80px;
+  width: 80px;
+  justify-content: center;
+  padding-top: 0px;
+  object-fit: contain;
+  border-radius: 120px;
+}
+
+.qhead {
+  position: relative;
+  top: 165px;
+  left: 90px;
+  width: 380px;
+  height: 380px;
+}
+
+.heading {
+  top: 100px;
+  left: 600px;
+  display: flex;
+  justify-content: center;
+  height: 30px;
+  width: 820px;
+  position: absolute;
+}
+
+.header {
+  font-family: "Poppins", Helvetica;
+  color: #19526b;
+  display: flex;
+  justify-content: center;
+  font-size: 35px;
+  height: 30px;
+  font-weight: 600;
+  position: absolute;
+}
+
+.whole-card {
+  display: grid;
+  gap: 20px 60px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  background-color: transparent;
+  top: 200px;
+  left: 600px;
+  position: absolute;
+}
+
+.card {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid;
+  border-color: white;
+  border-radius: 8px;
+  width: 235px;
+  height: 260px;
+  justify-content: space-between;
+  /*box-shadow: 3px 3px 18px #011118;*/
+  cursor: pointer;
+}
+
+.boarder {
+  transition: box-shadow .3s;
+  border: 1px solid #ccc;
+  background: #fff;
+  float: left;
+  
+}
+.boarder:hover {
+  box-shadow: 0 0 11px rgba(33,33,33,.2); 
+}
+
+/* .boarder :hover{
+  
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms; 
+  transition-duration: 300ms; 
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); 
+  
+} */
+
+
+.name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #165069;
+  font-family: "Poppins", Helvetica;
+  font-weight: 400;
+  max-width: 100%;
+}
+
+.p-description {
+  height: 15px;
+  color: #165069;
+  font-weight: 400;
+  font-family: "Poppins", Helvetica;
+  text-align: center;
+}
+
+.qualification {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  color: #165069;
+  align-items: center;
+}
+
+.tag {
+  font-size: small;
+  color: #165069;
+  font-weight: 1000;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  height: 40px;
+}
+
+.viewButton {
+  background-color: #165069;
+  bottom: 5px;
+  border-radius: 8px;
+  height: 30px;
+  width: 70px;
+  color: #ffffff;
+  font-family: "Poppins", Helvetica;
+  font-size: 14px;
+  font-weight: 300;
+  text-align: center;
+  box-shadow: 1px 1px 5px #011118;
+}
+
+.acceptButton {
+  background-color: #165069;
+  border-radius: 8px;
+  height: 25px;
+  color: #ffffff;
+  font-family: "Poppins", Helvetica;
+  font-size: 14px;
+  font-weight: 300;
+  padding-top: 5px;
+  padding-left: 5 px;
+  padding-right: 5px;
+  align-items: center;
+  box-shadow: 1px 1px 5px #011118;
+}

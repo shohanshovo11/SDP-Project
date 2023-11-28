@@ -834,4 +834,38 @@ app.get('/getEmployerInfo', async (req, res) => {
   }
 });
 
+app.get("/candidatelist/:jobId", async (req, res) => {
+  let candidates = [];
+  const JobId = req.params.jobId;
+
+  const data = await db
+    .collection("candidateemployers")
+    .findOne({ jobId: JobId }, { projection: { candidateList: 1, _id: 0 } })
+    .catch(() => res.status(500).json("Could not get data"));
+
+  candidates = data.candidateList;
+
+  console.log(candidates);
+
+  const list = await db
+    .collection("StudentDetails")
+    .find(
+      { email: { $in: candidates } },
+      { projection: { name: 1, profileImgUrl: 1, email: 1, _id: 0 } }
+    )
+    .toArray()
+    .catch(() => res.status(500).json("Could not get data"));
+  res.json(list);
+});
+
+app.put("/accept/:JID/:SID", async (req, res) => {
+  const jid = req.params.JID;
+  const sid = req.params.SID;
+
+  const data = await db
+    .collection("candidateemployers")
+    .updateOne({ jobId: jid }, { $set: { assigned: sid } })
+    .catch(() => res.status(500).json("Could not get data"));
+  res.json(data);
+});
 

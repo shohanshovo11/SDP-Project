@@ -28,6 +28,9 @@ import { EmployersJoblist } from "./Components/EmployersJoblist/EmployersJoblist
 import EmployerProfile from "./Components/EmployerProfile/EmployerProfile";
 import { AdminLogin } from "./Components/AdminLogin";
 import ApplicantListShovo from "./Components/ApplicantList/ApplicantListShovo";
+import AppliedList from "./Components/ApplicantList/AppliedList";
+import CGrooming from "./Components/CGrooming/CGrooming"
+
 
 function App() {
   return (
@@ -46,7 +49,7 @@ function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/otp" element={<VerifyPassword />} />
           <Route path="/reset-password" element={<ResetPass />} />
-          <Route path="/courses" element={<CareerGrooming />} />
+          {/* o<Route path="/courses" element={<CareerGrooming />} /> */}
           <Route path="/ratings" element={<RatingReview />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/signup-option" element={<SignUpOption />} />
@@ -60,6 +63,8 @@ function App() {
           <Route path="/employerdash" element={<EmployerDashboard />} />
           <Route path="/employers-joblist" element={<EmployersJoblist />} />
           <Route path="/employer-profile" element={<EmployerProfile />} />
+          <Route path="/ApplicantList/AppliedList/:jobId" element={<AppliedList />} />
+          <Route path="/courses" element={<CGrooming />} />
         </Routes>
         <ToastContainer />
       </main>

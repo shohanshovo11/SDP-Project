@@ -1,4 +1,5 @@
 ﻿import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export const JobItem = (props) => {
   const titleStyle = {
@@ -8,6 +9,10 @@ export const JobItem = (props) => {
     display: "-webkit-box",
     WebkitBoxOrient: "vertical",
   };
+  const navigate = useNavigate();
+  const handleLink = () =>{
+    navigate(`/ApplicantList/AppliedList/${props.jobitem.id}`);
+  }
 
   return (
     <div className="w-64 mb-4 h-fit max-w-sm bg-white border border-gray-200 rounded-lg shadow-[0_3px_10px_rgb(0,0,0,0.2)] cursor-pointer hover:shadow-[0_3px_10px_rgb(0,0,0,0.9)] transition duration-300 ease-in-out">
@@ -41,14 +46,11 @@ export const JobItem = (props) => {
           Salary: {props.jobitem.salary}
         </h5>
 
-        <div className="flex mt-1 space-x-3 md:mt-1">
-          <a
-            href="#"
-            className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-bt rounded-lg hover:bg-slate-600"
-          >
-            View Description
-          </a>
-        </div>
+        <button className="flex mt-1 space-x-3 md:mt-1 inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-bt rounded-lg hover:bg-slate-600"
+            onClick={handleLink}
+        >
+            View Applicant List
+        </button>
       </div>
     </div>
   );

@@ -20,6 +20,7 @@ export const ApplicantList = () => {
         const data = response.data;
         setRecords(data);
         setLoading(false);
+        //console.log(data);
       })
       .catch((error) => {
         console.error("Error fetching jobs:", error);
@@ -32,6 +33,7 @@ export const ApplicantList = () => {
           <JobItem
             key={index}
             jobitem={{
+              id: job._id,
               title: job.title,
               tags: job.tags,
               salary: job.salary,
