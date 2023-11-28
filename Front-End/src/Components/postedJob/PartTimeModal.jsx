@@ -3,7 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { Dialog, Transition } from "@headlessui/react";
 import { Axios } from "../api/api";
 
-export const JobDetailsModal = ({ closeModal, isModalOpen, _id, postedBy }) => {
+export const PartTimeModal = ({ closeModal, isModalOpen, _id, postedBy }) => {
   const [employerInfo, setEmployerInfo] = useState(null); // State to store employer information
   const [jobInfo, setJobInfo] = useState("");
 
@@ -25,21 +25,21 @@ export const JobDetailsModal = ({ closeModal, isModalOpen, _id, postedBy }) => {
   };
 
   const handleTime = (timeString) =>{
-    const hours = parseInt(timeString.substring(0, 2), 10);
-    const minutes = parseInt(timeString.substring(2, 4), 10);
-  
-    const amPm = hours >= 12 ? 'PM' : 'AM';
-    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
-    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-    const formattedTime = `${formattedHours}:${formattedMinutes} ${amPm}`;
-  
-    return formattedTime;
-  }
+  const hours = parseInt(timeString.substring(0, 2), 10);
+  const minutes = parseInt(timeString.substring(2, 4), 10);
+
+  const amPm = hours >= 12 ? 'PM' : 'AM';
+  const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+  const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+  const formattedTime = `${formattedHours}:${formattedMinutes} ${amPm}`;
+
+  return formattedTime;
+}
 
   useEffect(() => {
     const getEmployerInfo = async () => {
       try {
-        const response = await Axios.get(`/getEmployerInfo`, {
+        const response = await Axios.get('/getEmployerInfo', {
           params: {
             employerEmail: postedBy,
           },
@@ -56,6 +56,7 @@ export const JobDetailsModal = ({ closeModal, isModalOpen, _id, postedBy }) => {
         const response = await Axios.get(`/getJobInfo/${_id}`);
         console.log(response.data.job);
         setJobInfo(response.data.job);
+        //console.log(String(jobInfo.startingTime));
       }catch (error) {
         console.error(error);
       }
@@ -105,11 +106,9 @@ export const JobDetailsModal = ({ closeModal, isModalOpen, _id, postedBy }) => {
                     </Dialog.Title>
                     <p className="text-lg font-bold">{jobInfo.title}</p>
                     <p>Description: {jobInfo.description}</p>
-                    <p>Class: {jobInfo.studentClass}</p>
-                    <p>Version: {jobInfo.version}</p>
-                    <p>Subject: {jobInfo.subject}</p>
+                    <p>Position: {jobInfo.position}</p>
                     <p>Area: {jobInfo.area}</p>
-                    <p>Time: {handleTime(String(jobInfo.workingHour))}</p>
+                    <p>Working Hour: {jobInfo.workingHour}</p>
                     <p className="font-bold">Salary: {jobInfo.salary}</p>
                   </div>
 

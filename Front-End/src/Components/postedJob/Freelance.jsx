@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { JobDetailsModal } from "./JobDetailsModal";
+import { FreeLancerModal } from "./FreeLancerModal";
 
 export const Freelance = (props) => {
   const titleStyle = {
@@ -18,6 +18,22 @@ export const Freelance = (props) => {
   const closeModal = () => {
     setModalOpen(false);
   };
+
+  const handleDate = (mongoDate) => {
+    const dateObject = new Date(mongoDate);
+
+    const day = dateObject.getDate();
+    const monthIndex = dateObject.getMonth();
+    const year = dateObject.getFullYear();
+
+    const monthNames = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    const formattedDate = `${day} ${monthNames[monthIndex]} ${year}`;
+  
+    return formattedDate;
+  }
 
   return (
     <div>
@@ -45,7 +61,7 @@ export const Freelance = (props) => {
             Working Hour: {props.freelance.workingHour}
           </span>
           <span className="text-sm text-gray-500 ">
-            Deadline: {props.freelance.deadline}
+            Deadline: {handleDate(props.freelance.deadline)}
             {/* {console.log(typeof props.freelance.deadline)} */}
           </span>
 
@@ -81,12 +97,12 @@ export const Freelance = (props) => {
           </div>
         </div>
       </div>
-      {/* <JobDetailsModal
+      <FreeLancerModal
         closeModal={closeModal}
         isModalOpen={isModalOpen}
-        _id={props.tutor._id}
-        postedBy={props.tutor.postedBy}
-      /> */}
+        _id={props.freelance._id}
+        postedBy={props.freelance.postedBy}
+      />
       {/* Modal */}
     </div>
   );

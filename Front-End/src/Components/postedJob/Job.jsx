@@ -280,7 +280,7 @@ export const Job = () => {
                       <PartTime
                         partTime={{
                           _id: job._id,
-                          // postedBy: job.email,
+                          postedBy: job.email,
                           title: job.title,
                           description: job.description,
                           time: job.time,
@@ -293,7 +293,7 @@ export const Job = () => {
                       <Freelance
                         freelance={{
                           _id: job._id,
-                          // postedBy: job.email,
+                          postedBy: job.email,
                           title: job.title,
                           description: job.description,
                           task: job.task,

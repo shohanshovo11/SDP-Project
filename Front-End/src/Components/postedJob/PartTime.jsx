@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { JobDetailsModal } from "./JobDetailsModal";
+import { PartTimeModal } from "./PartTimeModal";
 
 export const PartTime = (props) => {
-  console.log("hello hello");
+  //console.log("hello hello");
   const titleStyle = {
     fontSize: "1rem",
     textAlign: "center",
@@ -81,12 +81,12 @@ export const PartTime = (props) => {
           </div>
         </div>
       </div>
-      {/* <JobDetailsModal
+      <PartTimeModal
         closeModal={closeModal}
         isModalOpen={isModalOpen}
-        _id={props.tutor._id}
-        postedBy={props.tutor.postedBy}
-      /> */}
+        _id={props.partTime._id}
+        postedBy={props.partTime.postedBy}
+      />
       {/* Modal */}
     </div>
   );
