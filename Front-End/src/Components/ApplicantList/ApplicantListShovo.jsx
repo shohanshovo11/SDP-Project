@@ -2,11 +2,71 @@ import React, { useEffect, useState } from "react";
 import "./ApplicantList.css";
 import { ApplicantListCard } from "./ApplicantListCard";
 import { Axios } from "../api/api";
-import { Dna } from "react-loader-spinner";
+// const applicantsData = [
+//   {
+//     name: "Sadiqul Alom",
+//     description: "Description 1",
+//     tags: ["Tag 1", "Tag 2", "Tag 3"],
+//   },
+//   {
+//     name: "Sabbir",
+//     description: "Description 1",
+//     tags: ["Tag 1", "Tag 2", "Tag 3"],
+//   },
+//   {
+//     name: "Nasif",
+//     description: "Description 1",
+//     tags: ["Tag 1", "Tag 2", "Tag 3"],
+//   },
+//   {
+//     name: "Rafsan",
+//     description: "Description 1",
+//     tags: ["Tag 1", "Tag 2", "Tag 3"],
+//   },
+//   {
+//     name: "Waliza",
+//     description: "Description 1",
+//     tags: ["Tag 1", "Tag 2", "Tag 3"],
+//   },
+//   {
+//     name: "Nishat",
+//     description: "Description 1",
+//     tags: ["Tag 1", "Tag 2", "Tag 3"],
+//   },
+//   {
+//     name: "Shohan",
+//     description: "Description 1",
+//     tags: ["Tag 1", "Tag 2", "Tag 3"],
+//   },
+//   {
+//     name: "Applicant 1",
+//     description: "Description 1",
+//     tags: ["Tag 1", "Tag 2", "Tag 3"],
+//   },
+//   {
+//     name: "Abdullah",
+//     description: "Description 1",
+//     tags: ["Tag 1", "Tag 2", "Tag 3"],
+//   },
+//   {
+//     name: "Nahid",
+//     description: "Description 1",
+//     tags: ["Tag 1", "Tag 2", "Tag 3"],
+//   },
+//   {
+//     name: "Rifat",
+//     description: "Description 1",
+//     tags: ["Tag 1", "Tag 2", "Tag 3"],
+//   },
+//   {
+//     name: "Shovo",
+//     description: "Description 1",
+//     tags: ["Tag 1", "Tag 2", "Tag 3"],
+//   },
+// ];
 export const ApplicantListShovo = () => {
   const [jobs, setJobs] = useState([]);
   const [applicantsData, setApplicantsData] = useState([]); // Array of applicants for the active job
-  const [loading, setLoading] = useState(false); // Loading state
   const itemsPerPage = 6; // Number of applicants to display per page
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastApplicant = currentPage * itemsPerPage;
@@ -30,10 +90,8 @@ export const ApplicantListShovo = () => {
         console.error("Error fetching jobs:", error);
       });
   }, []);
-
   const handleJobClick = async (job) => {
     try {
-      setLoading(true); // Set loading to true while fetching data
       setActiveJob((prevActiveJob) =>
         prevActiveJob === job._id ? null : job._id
       );
@@ -47,11 +105,8 @@ export const ApplicantListShovo = () => {
       setApplicantsData(applicants);
     } catch (error) {
       console.error(`Error fetching applicants for job "${job.title}":`, error);
-    } finally {
-      setLoading(false); // Set loading back to false after fetching data
     }
   };
-
   return (
     <>
       <div className="h-full grow font-poppins overflow-x-hidden">
@@ -73,11 +128,8 @@ export const ApplicantListShovo = () => {
             ))}
           </div>
           <div className="pr-10 pl-12 flex-grow">
-            {loading ? (
-              <div className="w-full h-full flex justify-center items-center text-xl ">
-                <Dna color="#6366F1" height={160} width={160} />
-              </div>
-            ) : applicantsData.length === 0 ? (
+            {" "}
+            {applicantsData.length === 0 ? (
               <div className="w-full h-full flex justify-center items-center text-xl ">
                 No Applicant Found
               </div>
@@ -88,11 +140,17 @@ export const ApplicantListShovo = () => {
                 </h1>
                 <div className="grid grid-cols-3 gap-4">
                   {currentApplicants.map((applicant, index) => (
-                    <ApplicantListCard
-                      key={index}
-                      applicant={applicant}
-                      jobId={activeJob}
-                    />
+                    <>
+                      {console.log(applicant, "shovo")}
+                      <ApplicantListCard
+                        key={index}
+                        applicant={applicant}
+                        jobId={activeJob}
+                        // name={applicant.name}
+                        // description={applicant.description}
+                        // tags={applicant.tags}
+                      />
+                    </>
                   ))}
                 </div>
                 <div className="pagination flex gap-2 mt-6">
