@@ -834,6 +834,31 @@ app.get('/getEmployerInfo', async (req, res) => {
   }
 });
 
+app.put('/updateEmployerInfo', async (req, res) => {
+  try {
+    const { employerEmail, updatedInfo } = req.body;
+
+    // Find the employer by email
+    const employer = await EmployerModel.findOne({ email: employerEmail });
+
+    if (!employer) {
+      return res.status(404).json({ message: 'Employer not found' });
+    }
+    // console.log(employer,"shovo");
+    // Update the employer information
+    employer.set(updatedInfo);
+    await employer.save();
+
+    return res.status(200).json({
+      message: 'Employer information updated successfully',
+      updatedInfo: employer.toObject(),
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.get("/candidatelist/:jobId", async (req, res) => {
   let candidates = [];
   const JobId = req.params.jobId;

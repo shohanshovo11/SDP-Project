@@ -91,9 +91,15 @@ export const Navbar = () => {
                 </ul>
               </details>
             </li>
-            <li>
-              <a to="">Contact Us</a>
-            </li>
+            {localStorage.getItem("loginType") === "employer" ? (
+              <li>
+                <Link to="/tutorjob">Post Job</Link>
+              </li>
+            ) : (
+              <li>
+                <Link to="">Contact Us</Link>
+              </li>
+            )}
           </ul>
         </div>
         <div className="flex-none gap-2 text-base font-poppins bg-white">
@@ -103,19 +109,35 @@ export const Navbar = () => {
                 {profileImg && <img src={profileImg} alt="Profile" />}
               </div>
             </label>
-
             <ul
               tabIndex={0}
               className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white rounded-box w-52"
             >
+              {localStorage.getItem("loginType") == "admin" ? null : (
+                <li>
+                  <Link
+                    to={
+                      localStorage.getItem("loginType") === "employer"
+                        ? "/employer-profile"
+                        : "/profile"
+                    }
+                    className="justify-between"
+                  >
+                    Profile
+                    <span className="badge">New</span>
+                  </Link>
+                </li>
+              )}
               <li>
-                <Link to="/profile" className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
+                <Link
+                  to={
+                    localStorage.getItem("loginType") === "employer"
+                      ? "/employerdash"
+                      : "/admin-dashboard"
+                  }
+                >
+                  Dashboard
                 </Link>
-              </li>
-              <li>
-                <Link to="/employerdash">Dashboard</Link>
               </li>
               <li>
                 <Link to="/" onClick={removeToken}>
