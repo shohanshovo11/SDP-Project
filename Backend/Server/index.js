@@ -908,3 +908,38 @@ app.put("/accept/:JID/:SID", async (req, res) => {
   res.json(data);
 });
 
+app.get('/studentshow/:email', async (req,res) => {
+  const email=req.params.email
+  const data= await db.collection("StudentDetails").findOne({email:email})
+  .catch(()=> res.status(500).json("Could not show data"));
+  res.json(data)
+})
+
+app.post('/giverate/:email', async (req,res) => {
+  console.log(req.body)
+  const email=req.params.email
+  const rating2=req.body.rating
+  const review=req.body
+  const res2=await db.collection("Rating").findOne({email:email})
+  if(!res2)
+  {
+    await db.collection("Rating").insertOne({email:email,rating:0,review:[]})
+  }
+  let rating3
+  const rating1=res2.rating || 0
+  rating3=(rating1+rating2)/2
+  console.log(res2)
+  const data= await db.collection("Rating").updateOne({email:email},{$set:{rating:Math.round(rating3)},$push:{review:review}})
+  .catch(()=> res.status(500).json("Could not show data"));
+  res.json(data)
+})
+
+app.get('/viewapprove', async (req,res) => {
+  const data= await db.collection("candidateemployers").find({},{projection:{assigned:1,_id:0}}).toArray()
+  let emails=[]
+  data.forEach(email => emails.push(email.assigned))
+  const data1=await db.collection("StudentDetails").find({email:{$in:emails}}).toArray()
+    .catch(()=> res.status(500).json("Could not show data"));
+  res.json(data1)
+  console.log(data)
+})

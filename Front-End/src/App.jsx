@@ -13,7 +13,7 @@ import { SignUp } from "./Components/SignUp";
 import SignUpOption from "./Components/SignUpOption";
 import { VerifyPassword } from "./Components/VerifyPassword/VerifyPassword";
 import { Job } from "./Components/postedJob/Job";
-import RatingReview from "./Components/ratingrev/RatingReview";
+import RatingReview from "./Components/Rating/RatingReview";
 import AdminDashboard from "./Components/AdminDashboard/AdminDashboard";
 import LoginOption from "./Components/LoginOption";
 import { SignUpEmployer } from "./Components/SignUpEmployer";
@@ -30,6 +30,7 @@ import { AdminLogin } from "./Components/AdminLogin";
 import ApplicantListShovo from "./Components/ApplicantList/ApplicantListShovo";
 import AppliedList from "./Components/ApplicantList/AppliedList";
 import CGrooming from "./Components/CGrooming/CGrooming"
+import ViewApprove from "./Components/Rating/ViewApprove";
 
 
 function App() {
@@ -65,6 +66,8 @@ function App() {
           <Route path="/employer-profile" element={<EmployerProfile />} />
           <Route path="/ApplicantList/AppliedList/:jobId" element={<AppliedList />} />
           <Route path="/courses" element={<CGrooming />} />
+          <Route path="/view-approve" element={<ViewApprove />} />
+          <Route path="/rating-review" element={<RatingReview />} />
         </Routes>
         <ToastContainer />
       </main>
