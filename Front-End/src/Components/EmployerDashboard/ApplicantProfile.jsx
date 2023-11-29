@@ -1,10 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { Axios } from "../api/api";
+export const ApplicantProfile = ({ closeModal, isModalOpen, email }) => {
+  const [profileData, setProfileData] = useState(null);
 
-// import { Axios } from "../../api/api";
+  useEffect(() => {
+    if (isModalOpen) {
+      Axios.get(`/getStdData/${email}`)
+        .then((response) => {
+          setProfileData(response.data.data);
+          console.log(response.data.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching profile data:", error);
+        });
+    }
+  }, [isModalOpen, email]);
 
-export const ApplicantProfile = ({ closeModal, isModalOpen }) => {
-  //   useEffect(() => {}, []);
   return (
     <Transition show={isModalOpen} as={React.Fragment}>
       <Dialog
@@ -13,11 +25,50 @@ export const ApplicantProfile = ({ closeModal, isModalOpen }) => {
         onClose={closeModal}
       >
         <div className="bg-white p-8 max-w-md mx-auto rounded-lg">
-          {/* Modal Content */}
-          <Dialog.Title className="text-2xl font-bold mb-4">
-            Profile
-          </Dialog.Title>
-          <div>{/* Add any additional content here */}</div>
+          {profileData ? (
+            <>
+              <h1 className="text-2xl font-bold mb-4">{profileData.name}</h1>
+              <div className="mx-auto w-4/5 pt-3 border-b-2 border-green-500 opacity-25" />
+
+              {/* Add other profile information */}
+              <p className="pt-4 text-base font-bold flex items-center justify-center lg:justify-start">
+                Address - {profileData.address}
+              </p>
+
+              {/* Add other profile information sections similarly */}
+
+              {/* <div className="flex pt-2">
+                <p className="text-gray-600 text-xs lg:text-sm">
+                  Gender - {profileData.gender}
+                </p>
+              </div> */}
+
+              {/* Add other profile information sections similarly */}
+
+              <div className=" pt-2 flex">
+                <p className="text-gray-600 text-xs lg:text-sm">
+                  Phone - {profileData.phone}
+                </p>
+              </div>
+              <div className=" pt-2 pb-4 flex">
+                <p className="text-gray-600 text-xs lg:text-sm">
+                  Email - {profileData.email}
+                </p>
+              </div>
+
+              {/* Add the image section similarly */}
+              {/* <div className="flex flex-col items-center justify-center">
+                <img
+                  src={profileData.image}
+                  alt="Profile"
+                  className="rounded-full w-32 h-32 object-cover shadow-2xl"
+                />
+              </div> */}
+            </>
+          ) : (
+            <div>Loading...</div>
+          )}
+
           <div className="flex mt-4 space-x-4">
             <button
               onClick={closeModal}
@@ -25,7 +76,6 @@ export const ApplicantProfile = ({ closeModal, isModalOpen }) => {
             >
               Close
             </button>
-            {/* Add other buttons or actions as needed */}
           </div>
         </div>
       </Dialog>
