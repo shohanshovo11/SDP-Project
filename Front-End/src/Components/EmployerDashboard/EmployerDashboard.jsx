@@ -3,6 +3,8 @@ import Aside from "./Aside";
 import Pendingjob from "../PostJob/Pendingjob";
 import EmployerProfile from "./EmployerProfile";
 import { Link, useNavigate } from "react-router-dom";
+import ViewApprove from "../Rating/ViewApprove";
+
 // import Element2 from "./Element2";
 // import Element3 from "./Element3";
 // import Element4 from "./Element4";
@@ -19,6 +21,7 @@ function EmployerDashboard() {
       <div className="flex w-screen h-screen bg-white">
         <Aside func={handleShowComponent} />
         {activeComponent === "Home" && navigate("/")}
+        {activeComponent === "viewapprove" && <ViewApprove />}
         {/* {activeComponent === "approveapplicant" && <Element3 />} */}
         {/* {activeComponent === "showElement4" && <Element4 />} */}
       </div>

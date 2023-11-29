@@ -13,7 +13,7 @@ import { SignUp } from "./Components/SignUp";
 import SignUpOption from "./Components/SignUpOption";
 import { VerifyPassword } from "./Components/VerifyPassword/VerifyPassword";
 import { Job } from "./Components/postedJob/Job";
-import RatingReview from "./Components/ratingrev/RatingReview";
+import RatingReview from "./Components/Rating/RatingReview";
 import AdminDashboard from "./Components/AdminDashboard/AdminDashboard";
 import LoginOption from "./Components/LoginOption";
 import { SignUpEmployer } from "./Components/SignUpEmployer";
@@ -29,7 +29,8 @@ import EmployerProfile from "./Components/EmployerProfile/EmployerProfile";
 import { AdminLogin } from "./Components/AdminLogin";
 import ApplicantListShovo from "./Components/ApplicantList/ApplicantListShovo";
 import AppliedList from "./Components/ApplicantList/AppliedList";
-// import CGrooming from "./Components/CGrooming/CGrooming";
+// import CGrooming from "./Components/CGrooming/CGrooming"
+import ViewApprove from "./Components/Rating/ViewApprove";
 import NotificationTable from "./Components/NotificationTable";
 import CGrooming from "./Components/CGrooming/CGrooming";
 // import ModalProfile from "./Components/PostJob/ModalProfile";
@@ -66,12 +67,10 @@ function App() {
           <Route path="/employers-joblist" element={<EmployersJoblist />} />
           <Route path="/employer-profile" element={<EmployerProfile />} />
           <Route path="/notification" element={<NotificationTable />} />
-          <Route
-            path="/ApplicantList/AppliedList/:jobId"
-            element={<AppliedList />}
-          />
-          {/* <Route path="/courses" element={<CGrooming />} /> */}
-          <Route path="/CareerGrooming" element={<CGrooming />} />
+          <Route path="/ApplicantList/AppliedList/:jobId" element={<AppliedList />}/>
+          <Route path="/courses" element={<CGrooming />} />
+          <Route path="/view-approve" element={<ViewApprove />} />
+          {/* <Route path="/rating-review" element={<RatingReview />} /> */}
           {/* <Route path="/modalopen" element={<ModalProfile />} /> */}
         </Routes>
         <ToastContainer />
