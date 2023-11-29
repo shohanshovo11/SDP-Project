@@ -11,13 +11,11 @@ export const ViewApprove = () => {
   const [loading, setLoading] = useState(false);
   const [viewapprove, setViewApprove] = useState([]);
 
-  
   async function getViewApprove() {
     const response = await axios.get(`http://localhost:5000/viewapprove`);
     const data = response.data;
     setViewApprove(data);
   }
-
 
   useEffect(() => {
     getViewApprove();
@@ -37,15 +35,12 @@ export const ViewApprove = () => {
         </div>
       ) : (
         <div className="bg-white h-screen text-black font-poppins">
-          {tokenAvailable ? <Navbar /> : <NavNolog />}
+          {/* {tokenAvailable ? <Navbar /> : <NavNolog />} */}
           <hr />
           <div className="grid grid-cols-5 gap-2 bg-white">
             <div className="col-span-4 p-5 bg-white flex flex-wrap gap-6 justify-center">
               {viewapprove.map((am, index) => (
-                <ApproveCard
-                 viewapprove={am}
-                  key={index}
-                />
+                <ApproveCard viewapprove={am} key={index} />
               ))}
             </div>
           </div>

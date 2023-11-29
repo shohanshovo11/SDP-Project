@@ -82,18 +82,18 @@ function Aside(props) {
             Go Home
           </button>
           <button
-            onClick={logoutHandler}
-            className="py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white"
-          >
-            Logout
-          </button>
-          <button
             className={`py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white ${
               selectedButton === "viewapprove" ? "bg-bt" : "text-slate-500"
             }`}
             onClick={() => handleButtonClick("viewapprove")}
           >
             Rate Employee
+          </button>
+          <button
+            onClick={logoutHandler}
+            className="py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white"
+          >
+            Logout
           </button>
           {/* <button
             className={`py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white ${
