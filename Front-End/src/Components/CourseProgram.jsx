@@ -37,14 +37,20 @@ function CourseProgram() {
           Join Our Career Course Program
         </h1>
         <p className="text-right mb-8">
-        Join our trending courses and become an expert of your chosen professions. 
-        Make your learning experience as complete, dynamic, and interesting as possible. 
-        Here you can find a wide range of categories and groups to help you enhance your skills and knowledge so that you can stand out from the crowd. 
-        You can achieve your goals with the help of our diverse educators. 
-        Attend our exciting live session, which includes recorded supplemental collaborative tools, on a regular basis. 
-        Don't put it off any longer, grab it right now and start learning from the best learning portal.
+          Join our trending courses and become an expert of your chosen
+          professions. Make your learning experience as complete, dynamic, and
+          interesting as possible. Here you can find a wide range of categories
+          and groups to help you enhance your skills and knowledge so that you
+          can stand out from the crowd. You can achieve your goals with the help
+          of our diverse educators. Attend our exciting live session, which
+          includes recorded supplemental collaborative tools, on a regular
+          basis. Don't put it off any longer, grab it right now and start
+          learning from the best learning portal.
         </p>
-        <Link className="btn btn-square h-16 w-72 bg-bt text-white" to="/courses" >
+        <Link
+          className="btn btn-square h-16 w-72 bg-bt text-white"
+          to="/CareerGrooming"
+        >
           Enroll in Career Courses
         </Link>
       </div>

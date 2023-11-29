@@ -1069,3 +1069,18 @@ app.delete('/removeCandidate/:jobId/:candidateEmail', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+const coursesModel = require("./Schema/courses");
+app.get("/courses", async (req, res) => {
+  const data = await coursesModel.find();
+  // console.log(data);
+  res.json(data);
+});
+
+app.get("/link/:cid", async (req, res) => {
+  const cId = req.params.cid;
+  const data = await db
+    .collection("courses")
+    .findOne({ course_id: cId }, { projection: { _id: 0, vidLink: 1 } });
+  // console.log(data);
+  res.json(data);
+});

@@ -1,7 +1,7 @@
 import "./App.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import CareerGrooming from "./Components/Careergroom/CareerGrooming";
+// import CareerGrooming from "./Components/Careergroom/CareerGrooming";
 import { BrowserRouter, Route, Routes, Outlet } from "react-router-dom";
 import "./App.css";
 import { ForgotPassword } from "./Components/ForgotPass";
@@ -29,8 +29,9 @@ import EmployerProfile from "./Components/EmployerProfile/EmployerProfile";
 import { AdminLogin } from "./Components/AdminLogin";
 import ApplicantListShovo from "./Components/ApplicantList/ApplicantListShovo";
 import AppliedList from "./Components/ApplicantList/AppliedList";
-import CGrooming from "./Components/CGrooming/CGrooming";
+// import CGrooming from "./Components/CGrooming/CGrooming";
 import NotificationTable from "./Components/NotificationTable";
+import CGrooming from "./Components/CGrooming/CGrooming";
 // import ModalProfile from "./Components/PostJob/ModalProfile";
 
 function App() {
@@ -69,7 +70,8 @@ function App() {
             path="/ApplicantList/AppliedList/:jobId"
             element={<AppliedList />}
           />
-          <Route path="/courses" element={<CGrooming />} />
+          {/* <Route path="/courses" element={<CGrooming />} /> */}
+          <Route path="/CareerGrooming" element={<CGrooming />} />
           {/* <Route path="/modalopen" element={<ModalProfile />} /> */}
         </Routes>
         <ToastContainer />
