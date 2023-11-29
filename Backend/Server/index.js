@@ -67,6 +67,7 @@ app.post("/post", async (req, res) => {
 
 const User = require("./Schema/userDetails");
 const Employer = require("./Schema/employer");
+const coursesModel = require("./Schema/courses");
 //sign-up user
 app.post("/register", async (req, res) => {
   try {
@@ -864,5 +865,20 @@ app.put("/accept/:JID/:SID", async (req, res) => {
     .collection("candidateemployers")
     .updateOne({ jobId: jid }, { $set: { assigned: sid } })
     .catch(() => res.status(500).json("Could not get data"));
+  res.json(data);
+});
+
+app.get("/courses", async (req, res) => {
+  const data = await coursesModel.find();
+  // console.log(data);
+  res.json(data);
+});
+
+app.get("/link/:cid", async (req, res) => {
+  const cId = req.params.cid;
+  const data = await db
+    .collection("courses")
+    .findOne({ course_id: cId }, { projection: { _id: 0, vidLink: 1 } });
+  console.log(data);
   res.json(data);
 });

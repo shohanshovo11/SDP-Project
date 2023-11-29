@@ -4,13 +4,27 @@ import Footer from "../Footer";
 import { CGcard } from "./CGcard";
 import Profile from "../Images/profile.png";
 import "./CGrooming.css";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 export const CGrooming = () => {
   const [checked, setChecked] = React.useState(false);
+  const [courses, setCourses] = useState([]);
+
+  async function getCourses() {
+    const response = await axios.get(`http://localhost:5000/courses`);
+    const data = response.data;
+    setCourses(data);
+  }
+
+  useEffect(() => {
+    getCourses();
+  }, []);
 
   const handleChange = () => {
     setChecked(!checked);
   };
+
   return (
     <>
       <Navbar />
@@ -81,84 +95,20 @@ export const CGrooming = () => {
             <div className="bigline"></div>
 
             <div className="wholecard">
-              <CGcard
-                profileImgUrl={Profile}
-                name="Mosh Hamedani"
-                vidcount="35 videos"
-                tag={["MERN", "React", "Web dev"]}
-              />
-              <CGcard
-                profileImgUrl={Profile}
-                name="Mosh Hamedani"
-                vidcount="35 videos"
-                tag={["MERN", "React", "Web dev"]}
-              />
-              <CGcard
-                profileImgUrl={Profile}
-                name="Mosh Hamedani"
-                vidcount="35 videos"
-                tag={["MERN", "React", "Web dev"]}
-              />
-              <CGcard
-                profileImgUrl={Profile}
-                name="Mosh Hamedani"
-                vidcount="35 videos"
-                tag={["MERN", "React", "Web dev"]}
-              />
-              <CGcard
-                profileImgUrl={Profile}
-                name="Mosh Hamedani"
-                vidcount="35 videos"
-                tag={["MERN", "React", "Web dev"]}
-              />
-              <CGcard
-                profileImgUrl={Profile}
-                name="Mosh Hamedani"
-                vidcount="35 videos"
-                tag={["MERN", "React", "Web dev"]}
-              />
-              <CGcard
-                profileImgUrl={Profile}
-                name="Mosh Hamedani"
-                vidcount="35 videos"
-                tag={["MERN", "React", "Web dev"]}
-              />
-              <CGcard
-                profileImgUrl={Profile}
-                name="Mosh Hamedani"
-                vidcount="35 videos"
-                tag={["MERN", "React", "Web dev"]}
-              />
-              <CGcard
-                profileImgUrl={Profile}
-                name="Mosh Hamedani"
-                vidcount="35 videos"
-                tag={["MERN", "React", "Web dev"]}
-              />
-              <CGcard
-                profileImgUrl={Profile}
-                name="Mosh Hamedani"
-                vidcount="35 videos"
-                tag={["MERN", "React", "Web dev"]}
-              />
-              <CGcard
-                profileImgUrl={Profile}
-                name="Mosh Hamedani"
-                vidcount="35 videos"
-                tag={["MERN", "React", "Web dev"]}
-              />
-              <CGcard
-                profileImgUrl={Profile}
-                name="Mosh Hamedani"
-                vidcount="35 videos"
-                tag={["MERN", "React", "Web dev"]}
-              />
-              <CGcard
-                profileImgUrl={Profile}
-                name="Mosh Hamedani"
-                vidcount="35 videos"
-                tag={["MERN", "React", "Web dev"]}
-              />
+              {courses.map((course, index) => (
+                <>
+                  {console.log(course, "nis")}
+                  <CGcard
+                    key={index}
+                    profile={course.profileImgUrl}
+                    name={course.creator}
+                    vidcount={course.videoAmount}
+                    description={course.description}
+                    tags={course.tags}
+                    cid={course.course_id}
+                  />
+                </>
+              ))}
             </div>
           </div>
         </div>
