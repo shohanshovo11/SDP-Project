@@ -31,10 +31,10 @@ const Internship = () => {
       toast.error("Data couldn't be inserted");
       return;
     }
-    // toast.success("Data successfully inserted");
-    // setTimeout(() => {
-    //   window.location.reload(true);
-    // }, 1000);
+    toast.success("Data successfully inserted");
+    setTimeout(() => {
+      window.location.reload(true);
+    }, 1000);
   };
   return (
     <div className={styles.postJobtutor}>

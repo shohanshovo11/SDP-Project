@@ -248,6 +248,7 @@ export const Job = () => {
               {Array.isArray(records) &&
                 records.map((job, index) => (
                   <React.Fragment key={index}>
+                    {console.log(job, "sdfklasd")}
                     {selectedOption === "tuition" && (
                       <Tutor
                         tutor={{
@@ -283,7 +284,7 @@ export const Job = () => {
                           postedBy: job.email,
                           title: job.title,
                           description: job.description,
-                          time: job.time,
+                          time: job.startingTime,
                           workingHour: job.workingHour,
                           salary: job.salary,
                         }}

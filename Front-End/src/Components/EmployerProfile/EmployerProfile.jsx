@@ -45,7 +45,7 @@ function EmployerProfile() {
         // Set the state variables based on the fetched data
         setName(employer.name);
         setOccupation(employer.occupation);
-        setInstitute(employer.institution);
+        setInstitute(employer.institute);
         setPosition(employer.position);
         setExperience(employer.experience);
         setPhone(employer.number);
@@ -73,7 +73,7 @@ function EmployerProfile() {
       const updatedInfo = {
         name,
         occupation,
-        institution: institute,
+        institute,
         position,
         experience,
         phone,
@@ -86,7 +86,7 @@ function EmployerProfile() {
         employerEmail: `${localStorage.getItem("email")}`, // Replace with the actual email
         updatedInfo,
       });
-
+      localStorage.setItem("profileImgUrl", profileImage);
       // Handle the response, you may want to check for success or display a message
       console.log(response.data);
 

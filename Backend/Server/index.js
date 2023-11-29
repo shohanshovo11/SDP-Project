@@ -765,6 +765,7 @@ app.get('/parttimejobcount', (req,res) => {
 
 app.post('/approve', async (req,res) => {
   let value=req.body
+  console.log(value,"shohan");
   delete value._id
   await db.collection("pendingjob").deleteOne(value)
   // value.id=req.params.id
@@ -794,6 +795,38 @@ app.post('/approve', async (req,res) => {
     .catch(()=> res.status(500).json("Could not insert data"))
   }
   res.json(data)
+})
+app.delete('/deletePendingJob', async (req,res) => {
+  let value=req.body
+  console.log(value,);
+  await db.collection("pendingjob").deleteOne(value)
+  // value.id=req.params.id
+  // let data
+  // if(value.category==="tuition")
+  // {
+  //   delete value.category
+  //   data= await db.collection("tuitions").insertOne(value)
+  //   .catch(()=> res.status(500).json("Could not insert data"))
+  // }
+  // else if(value.category==="internship")
+  // {
+  //   delete value.category
+  //   data= await db.collection("internships").insertOne(value)
+  //   .catch(()=> res.status(500).json("Could not insert data"))
+  // }
+  // else if(value.category==="parttime")
+  // {
+  //   delete value.category
+  //   data= await db.collection("parttimejobs").insertOne(value)
+  //   .catch(()=> res.status(500).json("Could not insert data"))
+  // }
+  // else if(value.category==="freelance")
+  // {
+  //   delete value.category
+  //   data= await db.collection("freelancers").insertOne(value)
+  //   .catch(()=> res.status(500).json("Could not insert data"))
+  // }
+  res.json("Deleted")
 })
 
 app.get('/pendingjobshow/:filter', async (req,res) => {
@@ -871,7 +904,7 @@ app.get('/getJobInfo/:id', async (req, res) => {
 app.put('/updateEmployerInfo', async (req, res) => {
   try {
     const { employerEmail, updatedInfo } = req.body;
-
+    console.log(updatedInfo,"shohan");
     // Find the employer by email
     const employer = await EmployerModel.findOne({ email: employerEmail });
 
