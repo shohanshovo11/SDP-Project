@@ -128,17 +128,36 @@ export const Navbar = () => {
                   </Link>
                 </li>
               )}
-              <li>
-                <Link
-                  to={
-                    localStorage.getItem("loginType") === "employer"
-                      ? "/employerdash"
-                      : "/admin-dashboard"
-                  }
-                >
-                  Dashboard
-                </Link>
-              </li>
+              {localStorage.getItem("loginType") == "student" ? (
+                <li>
+                  <Link
+                    to={
+                      // localStorage.getItem("loginType") === "employer"
+                      //   ? "/employer-profile"
+                      //   : "/profile"
+                      "/notification"
+                    }
+                    className="justify-between"
+                  >
+                    Notifications
+                    {/* <span className="badge">New</span> */}
+                  </Link>
+                </li>
+              ) : null}
+              {localStorage.getItem("loginType") == "employer" ||
+              localStorage.getItem("loginType") == "admin" ? (
+                <li>
+                  <Link
+                    to={
+                      localStorage.getItem("loginType") === "employer"
+                        ? "/employerdash"
+                        : "/admin-dashboard"
+                    }
+                  >
+                    Dashboard
+                  </Link>
+                </li>
+              ) : null}
               <li>
                 <Link to="/" onClick={removeToken}>
                   Logout

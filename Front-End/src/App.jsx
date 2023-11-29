@@ -31,7 +31,8 @@ import ApplicantListShovo from "./Components/ApplicantList/ApplicantListShovo";
 import AppliedList from "./Components/ApplicantList/AppliedList";
 import CGrooming from "./Components/CGrooming/CGrooming"
 import ViewApprove from "./Components/Rating/ViewApprove";
-
+import NotificationTable from "./Components/NotificationTable";
+// import ModalProfile from "./Components/PostJob/ModalProfile";
 
 function App() {
   return (
@@ -64,10 +65,12 @@ function App() {
           <Route path="/employerdash" element={<EmployerDashboard />} />
           <Route path="/employers-joblist" element={<EmployersJoblist />} />
           <Route path="/employer-profile" element={<EmployerProfile />} />
-          <Route path="/ApplicantList/AppliedList/:jobId" element={<AppliedList />} />
+          <Route path="/notification" element={<NotificationTable />} />
+          <Route path="/ApplicantList/AppliedList/:jobId" element={<AppliedList />}/>
           <Route path="/courses" element={<CGrooming />} />
           <Route path="/view-approve" element={<ViewApprove />} />
-          <Route path="/rating-review" element={<RatingReview />} />
+          {/* <Route path="/rating-review" element={<RatingReview />} /> */}
+          {/* <Route path="/modalopen" element={<ModalProfile />} /> */}
         </Routes>
         <ToastContainer />
       </main>

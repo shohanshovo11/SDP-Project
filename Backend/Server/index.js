@@ -301,7 +301,6 @@ app.post("/userData", verifyUser, async (req, res) => {
   try {
     const user = req.user;
     const userEmail = user.email;
-
     try {
       const data = await User.findOne({ email: userEmail });
       if (data) {
@@ -320,6 +319,26 @@ app.post("/userData", verifyUser, async (req, res) => {
 app.get("/userData", async (req, res) => {
   try {
     const { userEmail } = req.body;
+    // console.log(userEmail,req);
+    try {
+      const data = await UserModel.findOne({ email: userEmail }).select('-profileImgUrl').select('-password');
+
+      if (data) {
+        res.send({ data });
+      } else {
+        res.send({ data: "User not found" });
+      }
+    } catch (error) {
+      res.send({ status: "error", data: error.message });
+    }
+  } catch (err) {
+    res.send({ status: "error", message: "Token verification failed" });
+  }
+});
+
+app.get("/getStdData/:userEmail", async (req, res) => {
+  try {
+    const { userEmail } = req.params;
 
     try {
       const data = await UserModel.findOne({ email: userEmail }).select('-profileImgUrl').select('-password');
@@ -336,6 +355,7 @@ app.get("/userData", async (req, res) => {
     res.send({ status: "error", message: "Token verification failed" });
   }
 });
+
 
 
 app.post("/getEducation", async (req, res) => {
@@ -745,6 +765,7 @@ app.get('/parttimejobcount', (req,res) => {
 
 app.post('/approve', async (req,res) => {
   let value=req.body
+  console.log(value,"shohan");
   delete value._id
   await db.collection("pendingjob").deleteOne(value)
   // value.id=req.params.id
@@ -774,6 +795,38 @@ app.post('/approve', async (req,res) => {
     .catch(()=> res.status(500).json("Could not insert data"))
   }
   res.json(data)
+})
+app.delete('/deletePendingJob', async (req,res) => {
+  let value=req.body
+  console.log(value,);
+  await db.collection("pendingjob").deleteOne(value)
+  // value.id=req.params.id
+  // let data
+  // if(value.category==="tuition")
+  // {
+  //   delete value.category
+  //   data= await db.collection("tuitions").insertOne(value)
+  //   .catch(()=> res.status(500).json("Could not insert data"))
+  // }
+  // else if(value.category==="internship")
+  // {
+  //   delete value.category
+  //   data= await db.collection("internships").insertOne(value)
+  //   .catch(()=> res.status(500).json("Could not insert data"))
+  // }
+  // else if(value.category==="parttime")
+  // {
+  //   delete value.category
+  //   data= await db.collection("parttimejobs").insertOne(value)
+  //   .catch(()=> res.status(500).json("Could not insert data"))
+  // }
+  // else if(value.category==="freelance")
+  // {
+  //   delete value.category
+  //   data= await db.collection("freelancers").insertOne(value)
+  //   .catch(()=> res.status(500).json("Could not insert data"))
+  // }
+  res.json("Deleted")
 })
 
 app.get('/pendingjobshow/:filter', async (req,res) => {
@@ -851,7 +904,7 @@ app.get('/getJobInfo/:id', async (req, res) => {
 app.put('/updateEmployerInfo', async (req, res) => {
   try {
     const { employerEmail, updatedInfo } = req.body;
-
+    console.log(updatedInfo,"shohan");
     // Find the employer by email
     const employer = await EmployerModel.findOne({ email: employerEmail });
 
@@ -882,15 +935,14 @@ app.get("/candidatelist/:jobId", async (req, res) => {
     .findOne({ jobId: JobId }, { projection: { candidateList: 1, _id: 0 } })
     .catch(() => res.status(500).json("Could not get data"));
 
-  candidates = data.candidateList;
-
+  data ? (candidates = data.candidateList) : (candidates = []);
   console.log(candidates);
 
   const list = await db
     .collection("StudentDetails")
     .find(
       { email: { $in: candidates } },
-      { projection: { name: 1, profileImgUrl: 1, email: 1, _id: 0 } }
+            // { projection: { name: 1, profileImgUrl: 1, email: 1, _id: 0 } }
     )
     .toArray()
     .catch(() => res.status(500).json("Could not get data"));
@@ -943,3 +995,112 @@ app.get('/viewapprove', async (req,res) => {
   res.json(data1)
   console.log(data)
 })
+///job employer
+app.get('/jobs/:employerEmail', async (req, res) => {
+  try {
+    const employerEmail = req.params.employerEmail;
+
+    // Search in PartTimeJob collection
+    const partTimeJobs = await PartTimeJobModel.find({ email: employerEmail }).select('_id title');
+
+    // Search in Internship collection
+    const internships = await InternshipModel.find({ email: employerEmail }).select('_id title');
+
+    // Search in Freelancer collection
+    const freelancerJobs = await FreelancerModel.find({ email: employerEmail }).select('_id title');
+
+    // Search in Tuition collection
+    const tuitionJobs = await TuitionModel.find({ email: employerEmail }).select('_id title');
+
+    // Combine results into a single array
+    const jobsPostedByEmployer = [...partTimeJobs, ...internships, ...freelancerJobs, ...tuitionJobs];
+
+    // Respond with the array of job titles and _id
+    res.json({ jobs: jobsPostedByEmployer.map(job => ({ _id: job._id, title: job.title })) });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+app.get('/getAssignedCandidate/:candidateEmail', async (req, res) => {
+  try {
+    // Extract candidate email from the URL params
+    const { candidateEmail } = req.params;
+
+    // Find all documents where the candidate email matches the assigned field
+    const candidateEmployers = await CandidateEmployer.find({
+      assigned: candidateEmail
+    });
+
+    if (candidateEmployers.length === 0) {
+      // If no matching documents are found, respond with an appropriate message
+      return res.status(404).json({ message: 'Candidate not found in any job assignments' });
+    }
+
+    // Extract job IDs and employer emails from the found documents
+    const assignments = candidateEmployers.map(({ jobId, employerEmail }) => ({ jobId, employerEmail }));
+
+    // Respond with an array of job IDs and employer emails
+    res.json(assignments);
+  } catch (error) {
+    // Handle any errors that occur during the process
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+app.get('/appliedJobs/:candidateEmail', async (req, res) => {
+  try {
+    // Extract candidate email from the URL params
+    const { candidateEmail } = req.params;
+
+    // Find all documents where the candidate email is present in the candidateList array
+    const candidateEmployers = await CandidateEmployer.find({
+      candidateList: candidateEmail
+    });
+
+    if (candidateEmployers.length === 0) {
+      // If no matching documents are found, respond with an appropriate message
+      return res.status(404).json({ message: 'Candidate not found in any job lists' });
+    }
+
+    // Extract job IDs and employer emails from the found documents
+    const assignments = candidateEmployers.map(({ jobId, employerEmail }) => ({ jobId, employerEmail }));
+
+    // Respond with an array of job IDs and employer emails
+    res.json(assignments);
+  } catch (error) {
+    // Handle any errors that occur during the process
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+
+app.delete('/removeCandidate/:jobId/:candidateEmail', async (req, res) => {
+  try {
+    const { jobId, candidateEmail } = req.params;
+
+    // Find the document with the given jobId
+    const candidateEmployer = await CandidateEmployer.findOne({ jobId });
+
+    if (!candidateEmployer) {
+      return res.status(404).json({ error: 'Job not found' });
+    }
+
+    // Remove the candidateEmail from the candidateList array
+    candidateEmployer.candidateList = candidateEmployer.candidateList.filter(
+      (email) => email !== candidateEmail
+    );
+
+    // Save the updated document
+    const updatedCandidateEmployer = await candidateEmployer.save();
+    // , data: updatedCandidateEmployer
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error removing candidate:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});

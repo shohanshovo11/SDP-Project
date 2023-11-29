@@ -39,9 +39,6 @@ export const Internship = (props) => {
             {props.internship.description}
           </span>
           <span className="text-sm text-gray-500 ">
-            Area: {props.internship.area}
-          </span>
-          <span className="text-sm text-gray-500 ">
             Working Time: {props.internship.time}
           </span>
 

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import "./PendingCard.css";
 import { toast } from "react-toastify";
 import { Axios } from "../api/api";
-import ModalProfile from "./ModalProfile";
+import { ModalProfile } from "./ModalProfile";
 
 function PendingCard({ pendingjob }) {
+  const [isModalOpen, setModalOpen] = useState(false);
   async function insertpendingjob() {
     const am = await Axios.post(`/approve`, pendingjob);
     const data = am.data;
@@ -13,7 +14,32 @@ function PendingCard({ pendingjob }) {
       return;
     }
     toast.success("Data successfully inserted");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   }
+  async function deletePendingJob() {
+    // console.log("deleting");
+    const am = await Axios.delete(`/deletePendingJob`, pendingjob);
+    const data = am;
+    console.log(data);
+    if (!data.status === 200) {
+      toast.error("Data couldn't be deleted");
+      return;
+    }
+    toast.success("Data successfully deleted");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  }
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
   return (
     <>
       <div className="guava">
@@ -25,21 +51,22 @@ function PendingCard({ pendingjob }) {
           Payment: {pendingjob.rate ? pendingjob.rate : pendingjob.salary}
         </div>
         <div className="flex gap-4 w-full justify-between">
-          <button
-            className="peyara"
-            onClick={() =>
-              document.getElementById("admin_view_profile_modal").showModal()
-            }
-          >
+          <button className="peyara" onClick={openModal}>
             View Profile
           </button>
           <button className="peyara" onClick={insertpendingjob}>
             Approve
           </button>
-          <button className="peyara">Reject</button>
+          <button className="peyara" onClick={deletePendingJob}>
+            Reject
+          </button>
         </div>
       </div>
-      <ModalProfile />
+      <ModalProfile
+        closeModal={closeModal}
+        isModalOpen={isModalOpen}
+        pendingJob={pendingjob}
+      />
     </>
   );
 }

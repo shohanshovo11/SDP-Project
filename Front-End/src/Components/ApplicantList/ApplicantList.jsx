@@ -20,7 +20,7 @@ export const ApplicantList = () => {
         const data = response.data;
         setRecords(data);
         setLoading(false);
-        //console.log(data);
+        console.log(data);
       })
       .catch((error) => {
         console.error("Error fetching jobs:", error);
