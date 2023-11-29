@@ -1042,3 +1042,30 @@ app.get('/appliedJobs/:candidateEmail', async (req, res) => {
     res.status(500).json({ message: 'Internal Server Error' });
   }
 });
+
+
+app.delete('/removeCandidate/:jobId/:candidateEmail', async (req, res) => {
+  try {
+    const { jobId, candidateEmail } = req.params;
+
+    // Find the document with the given jobId
+    const candidateEmployer = await CandidateEmployer.findOne({ jobId });
+
+    if (!candidateEmployer) {
+      return res.status(404).json({ error: 'Job not found' });
+    }
+
+    // Remove the candidateEmail from the candidateList array
+    candidateEmployer.candidateList = candidateEmployer.candidateList.filter(
+      (email) => email !== candidateEmail
+    );
+
+    // Save the updated document
+    const updatedCandidateEmployer = await candidateEmployer.save();
+    // , data: updatedCandidateEmployer
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error removing candidate:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
