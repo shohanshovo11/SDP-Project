@@ -50,14 +50,23 @@ function PendingCard({ pendingjob }) {
         <div>
           Payment: {pendingjob.rate ? pendingjob.rate : pendingjob.salary}
         </div>
-        <div className="flex gap-4 w-full justify-between">
-          <button className="peyara" onClick={openModal}>
-            View Profile
+        <div className="flex gap-1 w-full justify-between">
+          <button
+            className="btn w-20 rounded-lg bg-bt text-white"
+            onClick={openModal}
+          >
+            Profile
           </button>
-          <button className="peyara" onClick={insertpendingjob}>
+          <button
+            className="btn rounded-lg w-20 bg-bt text-white"
+            onClick={insertpendingjob}
+          >
             Approve
           </button>
-          <button className="peyara" onClick={deletePendingJob}>
+          <button
+            className="btn rounded-lg w-20 bg-bt text-white"
+            onClick={deletePendingJob}
+          >
             Reject
           </button>
         </div>

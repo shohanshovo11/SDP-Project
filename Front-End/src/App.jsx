@@ -67,8 +67,11 @@ function App() {
           <Route path="/employers-joblist" element={<EmployersJoblist />} />
           <Route path="/employer-profile" element={<EmployerProfile />} />
           <Route path="/notification" element={<NotificationTable />} />
-          <Route path="/ApplicantList/AppliedList/:jobId" element={<AppliedList />}/>
-          <Route path="/courses" element={<CGrooming />} />
+          <Route
+            path="/ApplicantList/AppliedList/:jobId"
+            element={<AppliedList />}
+          />
+          <Route path="/careerGrooming" element={<CGrooming />} />
           <Route path="/view-approve" element={<ViewApprove />} />
           {/* <Route path="/rating-review" element={<RatingReview />} /> */}
           {/* <Route path="/modalopen" element={<ModalProfile />} /> */}
