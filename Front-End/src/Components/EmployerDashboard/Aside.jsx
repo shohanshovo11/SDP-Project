@@ -59,6 +59,14 @@ function Aside(props) {
           >
             Approve Applicant
           </button>
+          <button
+            className={`py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white ${
+              selectedButton === "viewapprove" ? "bg-bt" : "text-slate-500"
+            }`}
+            onClick={() => handleButtonClick("viewapprove")}
+          >
+            Rate Employee
+          </button>
           {/* <button
             className={`py-2 hover:bg-bt hover:text-white text-xl font-thin w-full text-white ${
               selectedButton === "showElement4" ? "bg-bt" : "text-slate-500"

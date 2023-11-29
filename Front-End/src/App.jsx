@@ -13,7 +13,7 @@ import { SignUp } from "./Components/SignUp";
 import SignUpOption from "./Components/SignUpOption";
 import { VerifyPassword } from "./Components/VerifyPassword/VerifyPassword";
 import { Job } from "./Components/postedJob/Job";
-// import RatingReview from "./Components/ratingrev/RatingReview";
+import RatingReview from "./Components/Rating/RatingReview";
 import AdminDashboard from "./Components/AdminDashboard/AdminDashboard";
 import LoginOption from "./Components/LoginOption";
 import { SignUpEmployer } from "./Components/SignUpEmployer";
@@ -26,6 +26,7 @@ import Freelance from "./Components/PostJob/Freelance";
 import EmployerDashboard from "./Components/EmployerDashboard/EmployerDashboard";
 
 import ApplicantList from "./Components/ApplicantList/ApplicantList";
+import ViewApprove from "./Components/Rating/ViewApprove";
 function App() {
   return (
     <BrowserRouter>
@@ -55,7 +56,8 @@ function App() {
           <Route path="/otp" element={<VerifyPassword />} />
           <Route path="/reset-password" element={<ResetPass />} />
           <Route path="/courses" element={<CareerGrooming />} />
-          {/* <Route path="/ratings" element={<RatingReview />} /> */}
+          {/* <Route path="/ratings/:email/assignedUser" element={<RatingReview />} /> */}
+          <Route path="/viewapprove" element={<ViewApprove />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/signup-option" element={<SignUpOption />} />
           <Route path="/ApplicantList" element={<ApplicantList />} />
