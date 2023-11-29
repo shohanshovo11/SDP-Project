@@ -106,8 +106,8 @@ function Aside(props) {
         </div>
       </div>
       {postjob && <PostJob />}
-      {/* {approveApplicant && <ApplicantList />} */}
-      {approveApplicant && <ApplicantListShovo />}
+      {approveApplicant && <ApplicantList />}
+      {/* {approveApplicant && <ApplicantListShovo />} */}
       {/* {console.log(postjob, "parent")} */}
     </>
   );
