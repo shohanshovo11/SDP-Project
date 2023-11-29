@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { JobDetailsModal } from "./JobDetailsModal";
 
 export const PartTime = (props) => {
-  console.log("hello hello");
+  // console.log("hello hello");
   const titleStyle = {
     fontSize: "1rem",
     textAlign: "center",
