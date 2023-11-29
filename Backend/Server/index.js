@@ -301,7 +301,6 @@ app.post("/userData", verifyUser, async (req, res) => {
   try {
     const user = req.user;
     const userEmail = user.email;
-
     try {
       const data = await User.findOne({ email: userEmail });
       if (data) {
@@ -320,6 +319,26 @@ app.post("/userData", verifyUser, async (req, res) => {
 app.get("/userData", async (req, res) => {
   try {
     const { userEmail } = req.body;
+    // console.log(userEmail,req);
+    try {
+      const data = await UserModel.findOne({ email: userEmail }).select('-profileImgUrl').select('-password');
+
+      if (data) {
+        res.send({ data });
+      } else {
+        res.send({ data: "User not found" });
+      }
+    } catch (error) {
+      res.send({ status: "error", data: error.message });
+    }
+  } catch (err) {
+    res.send({ status: "error", message: "Token verification failed" });
+  }
+});
+
+app.get("/getStdData/:userEmail", async (req, res) => {
+  try {
+    const { userEmail } = req.params;
 
     try {
       const data = await UserModel.findOne({ email: userEmail }).select('-profileImgUrl').select('-password');
@@ -336,6 +355,7 @@ app.get("/userData", async (req, res) => {
     res.send({ status: "error", message: "Token verification failed" });
   }
 });
+
 
 
 app.post("/getEducation", async (req, res) => {
@@ -987,5 +1007,32 @@ app.get('/appliedJobs/:candidateEmail', async (req, res) => {
     // Handle any errors that occur during the process
     console.error('Error:', error);
     res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+
+app.delete('/removeCandidate/:jobId/:candidateEmail', async (req, res) => {
+  try {
+    const { jobId, candidateEmail } = req.params;
+
+    // Find the document with the given jobId
+    const candidateEmployer = await CandidateEmployer.findOne({ jobId });
+
+    if (!candidateEmployer) {
+      return res.status(404).json({ error: 'Job not found' });
+    }
+
+    // Remove the candidateEmail from the candidateList array
+    candidateEmployer.candidateList = candidateEmployer.candidateList.filter(
+      (email) => email !== candidateEmail
+    );
+
+    // Save the updated document
+    const updatedCandidateEmployer = await candidateEmployer.save();
+    // , data: updatedCandidateEmployer
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error removing candidate:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
